@@ -12,9 +12,16 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "http": "0.0.0",
+    "morgan": "^1.9.1",
+    "path": "^0.12.7"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "_moduleAliases": {
     "root": ".",
     "routes": "./backend/routes",

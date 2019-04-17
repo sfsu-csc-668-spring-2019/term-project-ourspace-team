@@ -1,34 +1,26 @@
-const http = require('http');
-const fs = require('fs');
+const express = require('express');
 const path = require('path');
-const url = require('url')
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
-const mediaTypes = {
-  '.html': 'text/html',
-  '.js': 'text/javascript',
-  '.css': 'text/css',
-  '.ico': 'image/x-icon',
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.gif': 'image/gif',
-  '.svg': 'image/svg+xml',
-  '.json': 'application/json',
-  '.woff': 'font/woff',
-  '.woff2': 'font/woff2'
-}
+// Make use of environment variables defined in .env
+require('dotenv').config();
 
-const server = http.createServer();
+const port = process.env.PORT || '5000';
+// Declare Express App
+const app = express();
 
-server.on('request', (req, res) => {
-  //
-  console.log("user made request" + req.url);
-  res.writeHead(200, {
-    "Context-Type": "text/plain"
-  });
-  res.write("something");
-  res.end();
-})
+// uncomment after placing your favicon in /public
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
 
-server.listen(8888);
 
-console.log("Server is now runing");  
+app.listen(port, (err) => {
+  if (err) {
+    console.log(err);
+  };
+  console.log('Listening on port ' + port);
+});
+
+module.exports = app;

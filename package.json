@@ -1,0 +1,23 @@
+{
+  "name": "ourspace",
+  "version": "1.0.0",
+  "description": "CSC668 Term Project Spring 2019",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-lint": "eslint --ignore-pattern \"build\" --ignore-path .gitignore .",
+    "backend": "cd backend && node app.js",
+    "client": " cd client && npm run start",
+    "dev": "concurrently --kill-others-on-fail \"npm run backend\" \"npm run client\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "_moduleAliases": {
+    "root": ".",
+    "routes": "./backend/routes",
+    "backend": "./backend"
+  }
+}

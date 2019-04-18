@@ -5,23 +5,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "test-lint": "eslint --ignore-pattern \"build\" --ignore-path .gitignore .",
-    "backend": "cd backend && node app.js",
+    "backend": "cd backend && npm run start",
+    "build-backend": "cd backend && npm install",
     "client": " cd client && npm run start",
-    "dev": "concurrently --kill-others-on-fail \"npm run backend\" \"npm run client\""
+    "build-client": "cd client && npm install",
+    "build": "npm install && concurrently --kill-others-on-fail \"npm run build-backend\" \"npm run build-client\"",
+    "start": "concurrently --kill-others-on-fail \"npm run backend\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.3",
-    "concurrently": "^4.1.0",
-    "cookie-parser": "^1.4.4",
-    "dotenv": "^7.0.0",
-    "express": "^4.16.4",
-    "http": "0.0.0",
-    "morgan": "^1.9.1",
-    "path": "^0.12.7"
+    "concurrently": "^4.1.0"
   },
-  "devDependencies": {},
   "_moduleAliases": {
     "root": ".",
     "routes": "./backend/routes",

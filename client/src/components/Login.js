@@ -1,18 +1,21 @@
 import React,  { Component } from 'react';
-import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
 import TopBar from './TopBar';
+import LoginForm from './Login_Components/LoginForm'
 
 class Login extends Component{
-    render(){
 
-        return(
-            <TopBar/>
+  render(){
 
-        );
-    }
+    return(
+      <div>
+        <TopBar/>
+        <br />
+        <div>
+          < LoginForm / >
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Login;

@@ -2,7 +2,7 @@
   flex-basis: 200,
 }
 
-.nameField, .userNameField, .passwordField, .emailField {
+.nameField, .userNameField, .emailField, .passwordField, .confirmPasswordField {
   width: 100%;
 }
 

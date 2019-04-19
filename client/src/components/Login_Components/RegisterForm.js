@@ -18,7 +18,9 @@ class RegisterForm extends React.Component {
     username: '',
     email: '',
     password: '',
+    confirmPassword: '',
     showPassword: false,
+    showConfirmPassword: false
   };
 
   handleChange = prop => event => {
@@ -27,6 +29,10 @@ class RegisterForm extends React.Component {
 
   handleClickShowPassword = () => {
     this.setState(state => ({ showPassword: !state.showPassword }));
+  };
+
+  handleClickShowConfirmPassword = () => {
+    this.setState(state => ({ showConfirmPassword: !state.showConfirmPassword }));
   };
 
   // This function can be changed to send data to our API
@@ -111,6 +117,32 @@ class RegisterForm extends React.Component {
                       onClick={this.handleClickShowPassword}
                     >
                       {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+
+            <br/><br/>
+
+            {/* Confirm Password Field */}
+            <TextField
+              id="outlined-adornment-confirmPassword"
+              className="margin textField confirmPasswordField"
+              variant="outlined"
+              type={this.state.showConfirmPassword ? 'text' : 'password'}
+              label="Confirm Password"
+              value={this.state.confirmPassword}
+              onChange={this.handleChange('confirmPassword')}
+              InputProps={{
+                startAdornment: <InputAdornment position="start"></InputAdornment>,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="Toggle password visibility"
+                      onClick={this.handleClickShowConfirmPassword}
+                    >
+                      {this.state.showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 ),

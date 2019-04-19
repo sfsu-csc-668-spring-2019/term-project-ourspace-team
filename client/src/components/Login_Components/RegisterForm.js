@@ -39,15 +39,15 @@ class RegisterForm extends React.Component {
     return (
       <div>
         <br/>
-        <Card className='card RegisterCard'>
+        <Card className='card registerCard'>
           <CardContent>
-            <Typography className="RegisterCardTitle" variant="h4">Register</Typography>
+            <Typography className="registerCardTitle" variant="h4">Register</Typography>
 
             <br/>
 
             {/* Name Field */}
             <TextField
-              id="outlined-adornment-name"
+              id="outlined-name"
               className="margin textField nameField"
               variant="outlined"
               type="text"
@@ -58,6 +58,8 @@ class RegisterForm extends React.Component {
                 shrink: true,
               }}
             />
+
+            <br/><br/>
 
             {/* Username Field */}
             <TextField
@@ -73,9 +75,11 @@ class RegisterForm extends React.Component {
               }}
             />
 
+            <br/><br/>
+
             {/* Email Field */}
             <TextField
-              id="outlined-adornment-email"
+              id="outlined-email"
               className="margin textField emailField"
               variant="outlined"
               type="text"

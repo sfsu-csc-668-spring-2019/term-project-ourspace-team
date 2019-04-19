@@ -39,10 +39,9 @@ class LoginForm extends React.Component {
         <br/>
         <Card className='card loginCard'>
           <CardContent>
-            <Typography className="loginCardTitle" variant="h4">Login</Typography>
+            <Typography className="loginCardTitle" variant="h5">Login</Typography>
 
             <br/>
-
             {/* Username Field */}
             <TextField
               id="outlined-simple-start-adornment"

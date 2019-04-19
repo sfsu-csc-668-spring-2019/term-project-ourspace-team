@@ -47,7 +47,7 @@ class RegisterForm extends React.Component {
         <br/>
         <Card className='card registerCard'>
           <CardContent>
-            <Typography className="registerCardTitle" variant="h4">Register</Typography>
+            <Typography className="registerCardTitle" variant="h5">Register</Typography>
 
             <br/>
 

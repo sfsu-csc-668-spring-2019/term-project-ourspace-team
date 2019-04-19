@@ -1,6 +1,7 @@
 import React,  { Component } from 'react';
 import TopBar from './TopBar';
 import LoginForm from './Login_Components/LoginForm'
+import RegisterForm from './Login_Components/RegisterForm'
 
 class Login extends Component{
 
@@ -12,6 +13,7 @@ class Login extends Component{
         <br />
         <div>
           < LoginForm / >
+          < RegisterForm / >
         </div>
       </div>
     );

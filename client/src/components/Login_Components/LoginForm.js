@@ -93,7 +93,7 @@ class LoginForm extends React.Component {
             <br/><br/>
           </CardContent>
         </Card>
-        <br/>
+
       </div>
     );
   }

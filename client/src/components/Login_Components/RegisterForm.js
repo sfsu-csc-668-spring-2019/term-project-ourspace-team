@@ -160,7 +160,6 @@ class RegisterForm extends React.Component {
             <br/><br/>
           </CardContent>
         </Card>
-        <br/>
       </div>
     );
   }

@@ -27,13 +27,14 @@ function TopBar(props){
         <div className={classes.root}>
           <AppBar position="static">
             <Toolbar>
-              <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                <MenuIcon />
-              </IconButton>
+
               <Typography variant="h6" color="inherit" className={classes.grow}>
-                News
+                MapSpace
               </Typography>
-              <Button color="inherit">Login</Button>
+              <Typography variant="h6" color="inherit" className={classes.grow}>
+                Trending
+              </Typography>
+
             </Toolbar>
           </AppBar>
         </div>

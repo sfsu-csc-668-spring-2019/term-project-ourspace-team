@@ -3,12 +3,13 @@ import Grid from '@material-ui/core/Grid';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
 import TopBar from './TopBar';
 import LoginForm from './Login_Components/LoginForm';
 import RegisterForm from './Login_Components/RegisterForm';
 import Typography from '@material-ui/core/Typography';
 import '../App.css';
+import { CardContent } from '@material-ui/core';
 
 class Login extends Component{
 
@@ -16,12 +17,18 @@ class Login extends Component{
     return(
       <div>
         <TopBar/>
-        <Grid container spacing={8}>
+        <Grid container spacing={24}>
+          
           <Grid container item xs={12} direction="row" spacing={24}>
-            <Grid item xs={6} container direction="column" spacing={24}>
-              <Paper className="landing-text">
-              <Typography variant="title">Welcome to MapSpace</Typography>
-              </Paper>
+          
+            <Grid item xs={6} container direction="column">
+            <br/>
+              <Card className="landing-text">
+                <CardContent>
+                  
+                  <Typography variant="title">Welcome to MapSpace</Typography>
+                </CardContent>
+              </Card>
             </Grid>
             <Grid item xs={6} container direction="row" spacing={6}>
               <Grid item xs={12}>

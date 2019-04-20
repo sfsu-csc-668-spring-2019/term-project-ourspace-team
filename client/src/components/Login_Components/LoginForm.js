@@ -17,6 +17,28 @@ class LoginForm extends React.Component {
     username: '',
     password: '',
     showPassword: false,
+
+    //Demostration only
+    response: '',
+    post: '',
+    responseToPost: ''
+  };
+
+  componentDidMount() {
+    //this.setState({responseToGet: "before"});
+    this.callApi()
+      .then(res => this.setState({ response: res.express }))
+      .catch(err => console.log(err));
+    console.log(this.state.resposnse);
+  }
+
+  callApi = async () => {
+    const response = await fetch('/api/login/hello');
+    const body = await response.json();
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body;
   };
 
   handleChange = prop => event => {
@@ -28,14 +50,26 @@ class LoginForm extends React.Component {
   };
 
   // This function can be changed to send data to our API
-  clickedButton = () => {
-    alert(`${this.state.username} - ${this.state.password}`);
+  clickedButton = async e => {
+    //alert(`${this.state.username} - ${this.state.password}`);
+    //req api call
+    e.preventDefault();
+    const response = await fetch('api/login/world', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({post: this.state.username, username: this.state.username, password: this.state.password})
+    });
+    const body = await response.text();
+    this.setState({responseToPost: body});
     return;
   }
 
   render() {
     return (
       <div>
+        <p>{this.state.response}</p>
         <br/>
         <Card className='card loginCard'>
           <CardContent>
@@ -93,6 +127,9 @@ class LoginForm extends React.Component {
             <br/><br/>
           </CardContent>
         </Card>
+
+        <br/>
+        <p>{this.state.responseToPost}</p>
 
       </div>
     );

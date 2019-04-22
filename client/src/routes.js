@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, BrowserRouter, Switch } from 'react-router-dom';
-import Login from './components/Login'
+import Landing from './components/Landing'
 
 export default props => (
     <BrowserRouter>
         <Switch>
-          <Route exact path='/' component={ Login} />
-          <Route exact path='/login' component={ Login } />
+          <Route exact path='/' component={ Landing} />
+          <Route exact path='/login' component={ Landing } />
 
         </Switch>
     </BrowserRouter>

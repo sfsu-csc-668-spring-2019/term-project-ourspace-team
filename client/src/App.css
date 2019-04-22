@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -30,4 +31,12 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.logo{
+  max-height:50px;
+}
+h4{
+  font-family: Raleway;
+  font-weight: 400 !important;
 }

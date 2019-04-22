@@ -1,5 +1,5 @@
 .textField {
-  flex-basis: 200,
+  flex-basis: 200;
 }
 
 .nameField, .userNameField, .emailField, .passwordField, .confirmPasswordField {
@@ -11,8 +11,8 @@
 }
 
 .loginCard {
-  width: 350px;
-  margin: 25px;
+  /* width: 350px;
+  margin: 25px; */
 }
 
 .rightButton {

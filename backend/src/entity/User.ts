@@ -1,4 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import { threadId } from "worker_threads";
 
 @Entity()
 export class User extends BaseEntity{
@@ -18,6 +19,12 @@ export class User extends BaseEntity{
     @Column()
     lastname: string;
 
+    static findByName(firstname: string, lastname: string){
+        return this.createQueryBuilder("user")
+            .where("user.firstname = :firstname", {firstname})
+            .andWhere("user.lastname = :lastname", {lastname})
+            .getMany();
+    }
 
 
 }

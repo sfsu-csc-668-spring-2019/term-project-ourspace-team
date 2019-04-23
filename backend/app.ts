@@ -32,7 +32,7 @@ app.use('/api/login', login);
 
 app.use(function (req, response, next) {
   const err = new Error('Not Found');
-  err.status = 404;
+  //err.status = 404;
   next(err);
 });
 

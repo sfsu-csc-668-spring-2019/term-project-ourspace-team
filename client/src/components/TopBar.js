@@ -15,6 +15,11 @@ const styles = {
   grow: {
 
   },
+  link:{
+    fontFamily: 'Raleway',
+    color: '#fff',
+    textDecoration: 'none',
+  }
 
 };
 
@@ -25,16 +30,16 @@ function TopBar(props){
           <AppBar position="static">
             <Toolbar>
               <img src={logo} className="logo" alt="MapSpace" />
-              <h4>
+              <a href="/#" className={classes.link}>
                 Trending
-              </h4> 
+              </a> 
 
             </Toolbar>
           </AppBar>
         </div>
       );
-
 }
+
 TopBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };

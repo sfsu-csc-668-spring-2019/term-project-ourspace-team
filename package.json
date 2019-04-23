@@ -10,7 +10,9 @@
     "client": " cd client && npm run start",
     "build-client": "cd client && npm install",
     "build": "npm install && concurrently --kill-others-on-fail \"npm run build-backend\" \"npm run build-client\"",
-    "start": "concurrently --kill-others-on-fail \"npm run backend\" \"npm run client\""
+    "start": "concurrently --kill-others-on-fail \"npm run backend\" \"npm run client\"",
+    "startorm": "concurrently --kill-others-on-fail \"npm run backend\" \"npm run client\" \"npm run backendorm\"",
+    "backendorm": "cd backend && ts-node src/index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -21,5 +23,8 @@
     "root": ".",
     "routes": "./backend/routes",
     "backend": "./backend"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.4"
   }
 }

@@ -1,21 +1,31 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "MapSpace Backend",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "cookie-parser": "^1.4.4",
-    "dotenv": "^7.0.0",
-    "express": "^4.16.4",
-    "http": "0.0.0",
-    "morgan": "^1.9.1",
-    "path": "^0.12.7"
-  }
+   "name": "backend",
+   "version": "1.0.0",
+   "description": "MapSpace Backend",
+   "main": "app.js",
+   "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "start": "node app.js",
+      "ts-start": "ts-node src/index.ts"
+   },
+   "author": "",
+   "license": "ISC",
+   "dependencies": {
+      "@types/node": "^11.13.7",
+      "body-parser": "^1.18.3",
+      "cookie-parser": "^1.4.4",
+      "dotenv": "^7.0.0",
+      "express": "^4.16.4",
+      "http": "0.0.0",
+      "morgan": "^1.9.1",
+      "path": "^0.12.7",
+      "pg": "^7.10.0",
+      "reflect-metadata": "^0.1.13",
+      "typeorm": "0.2.16"
+   },
+   "devDependencies": {
+      "ts-node": "8.1.0",
+      "@types/node": "^11.13.7",
+      "typescript": "3.4.4"
+   }
 }

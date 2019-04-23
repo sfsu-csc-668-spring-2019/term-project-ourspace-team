@@ -25,8 +25,8 @@ app.listen(5000, (err) => {
   console.log('Listening on port ' + 5000);
 });
 
-app.get("/api/login", loginController.getHello);
-app.post("/api/login", loginController.postWorld);
+app.get("/hello", loginController.getHello);
+app.post("/world", loginController.postWorld);
 
 
 export default app;

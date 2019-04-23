@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "test-lint": "eslint --ignore-pattern \"build\" --ignore-path .gitignore .",
     "backend": "cd backend && npm run start",
-    "build-backend": "cd backend && npm install",
+    "build-backend": "cd backend && npm run build",
     "client": " cd client && npm run start",
     "build-client": "cd client && npm install",
     "build": "npm install && concurrently --kill-others-on-fail \"npm run build-backend\" \"npm run build-client\"",

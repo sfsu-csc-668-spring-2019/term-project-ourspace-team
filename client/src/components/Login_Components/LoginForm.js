@@ -33,7 +33,7 @@ class LoginForm extends React.Component {
   }
 
   callApi = async () => {
-    const response = await fetch('/');
+    const response = await fetch('/hello');
     const body = await response.json();
 
     if (response.status !== 200) throw Error(body.message);
@@ -54,7 +54,7 @@ class LoginForm extends React.Component {
     //alert(`${this.state.username} - ${this.state.password}`);
     //req api call
     e.preventDefault();
-    const response = await fetch('/', {
+    const response = await fetch('/world', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

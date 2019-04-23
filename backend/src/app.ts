@@ -1,9 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
 import logger from "morgan";
-import path from "path";
+//import path from "path";
 import cookieParser from 'cookie-parser';
 import dotenv from "dotenv";
+
+
+import * as loginController from "./controllers/login";
 
 
 
@@ -14,7 +17,7 @@ import dotenv from "dotenv";
 //const bodyParser = require('body-parser');
 
 // Make use of environment variables defined in .env
-dotenv.config();
+//dotenv.config();
 
 
 const app = express();
@@ -41,14 +44,19 @@ app.listen(5000, (err) => {
 });
 
 
-const login = require('./api/login');
+//const login = require('./api/login');
 
-app.use('/api/login', login);
+//app.use('/api/login', login);
+app.get("/", loginController.getHello);
+app.post("/", loginController.getWorld);
 
-app.use(function (req, response, next) {
+
+/*app.use(function (req, response, next) {
   const err = new Error('Not Found');
   //err.status = 404;
   next(err);
-});
+});*/
+
+
 
 export default app;

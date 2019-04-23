@@ -26,6 +26,5 @@ export class User extends BaseEntity{
             .getMany();
     }
 
-
 }
 

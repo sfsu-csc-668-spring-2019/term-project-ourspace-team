@@ -1,8 +1,7 @@
 import React,  { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
-
 import Card from '@material-ui/core/Card';
-import TopBar from './TopBar';
+import LoggedInTopBar from './LoggedInTopBar';
 import LoginForm from './Login_Components/LoginForm';
 import RegisterForm from './Login_Components/RegisterForm';
 import Typography from '@material-ui/core/Typography';
@@ -14,7 +13,7 @@ class HomePage extends Component{
   render(){
     return(
       <div>
-        <TopBar/>
+        <LoggedInTopBar/>
         <Grid container spacing={24}>
 
         </Grid>

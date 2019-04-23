@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
-import { threadId } from "worker_threads";
+//import { threadId } from "worker_threads";
 
 @Entity()
 export class User extends BaseEntity{

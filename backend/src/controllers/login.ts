@@ -1,5 +1,5 @@
 import {Response, Request, NextFunction } from "express";
-import { Http2ServerResponse } from "http2";
+//import { Http2ServerResponse } from "http2";
 
 export let getHello = (req: Request, res: Response, next: NextFunction) => {
     console.log("got to hello");

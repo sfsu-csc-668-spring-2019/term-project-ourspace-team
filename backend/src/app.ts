@@ -3,8 +3,12 @@ import bodyParser from "body-parser";
 import logger from "morgan";
 import dotenv from "dotenv";
 
+import "reflect-metadata";
+import {createConnection} from "typeorm";
+import * as appConfig from "./app-config"
 
 import * as loginController from "./controllers/login";
+import { create } from "domain";
 
 dotenv.config({path: ".env.example"});
 
@@ -21,5 +25,8 @@ app.use(bodyParser.json());
 app.get("/hello", loginController.getHello);
 app.post("/world", loginController.postWorld);
 
+createConnection(appConfig.dbOptions).then(async connection => {
+  console.log("Connected to DB");
+}).catch(error => console.log("TypeORM connection error: ", error));
 
 export default app;

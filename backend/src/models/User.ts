@@ -1,6 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
-@Entity()
+@Entity("user")
 export class User extends BaseEntity{
 
     @PrimaryGeneratedColumn()
@@ -26,6 +26,7 @@ export class User extends BaseEntity{
     }
 
     static registerNewUser(username: string, password:string){
+        return "hello"
     }
 
 }

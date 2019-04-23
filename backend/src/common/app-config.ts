@@ -9,7 +9,7 @@ import {ConnectionOptions} from "typeorm";
     password: "hello",
     database: "mapspace",
     entities: [
-         "./entities/*.js"
+         "./models/*.js"
     ],
     synchronize: true,
 }

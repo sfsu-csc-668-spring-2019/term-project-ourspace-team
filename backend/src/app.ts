@@ -5,10 +5,9 @@ import dotenv from "dotenv";
 
 import "reflect-metadata";
 import {createConnection} from "typeorm";
-import * as appConfig from "./app-config"
+import * as appConfig from "./common/app-config"
 
 import * as loginController from "./controllers/login";
-import { create } from "domain";
 
 dotenv.config({path: ".env.example"});
 
@@ -22,8 +21,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
-app.get("/hello", loginController.getHello);
-app.post("/world", loginController.postWorld);
+app.get("/hello", loginController.getAllUsers);
+app.post("/world", loginController.saveNewUser);
 
 createConnection(appConfig.dbOptions).then(async connection => {
   console.log("Connected to DB");

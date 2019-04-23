@@ -8,17 +8,17 @@
    "synchronize": true,
    "logging": false,
    "entities": [
-      "src/entity/**/*.ts"
+      "src/models/**/*.ts"
    ],
-   "migrations": [
-      "src/migration/**/*.ts"
+   "databaserq": [
+      "src/databaserq/**/*.ts"
    ],
-   "subscribers": [
-      "src/subscriber/**/*.ts"
+   "controllers": [
+      "src/controllers/**/*.ts"
    ],
    "cli": {
-      "entitiesDir": "src/entity",
-      "migrationsDir": "src/migration",
-      "subscribersDir": "src/subscriber"
+      "modelsDir": "src/models",
+      "databaserqDir": "src/databaserq",
+      "controllersDir": "src/controller"
    }
 }

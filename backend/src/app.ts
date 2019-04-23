@@ -7,9 +7,7 @@ import * as dotenv from "dotenv";
 
 import * as loginController from "./controllers/login";
 
-
 dotenv.config({path: ".env.example"});
-
 
 var app = express();
 
@@ -27,8 +25,8 @@ app.listen(5000, (err) => {
   console.log('Listening on port ' + 5000);
 });
 
-app.get("/", loginController.getHello);
-app.post("/", loginController.postWorld);
+app.get("/api/login", loginController.getHello);
+app.post("/api/login", loginController.postWorld);
 
 
 export default app;

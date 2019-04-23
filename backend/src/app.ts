@@ -17,7 +17,7 @@ import * as loginController from "./controllers/login";
 //const bodyParser = require('body-parser');
 
 // Make use of environment variables defined in .env
-//dotenv.config();
+dotenv.config({path: ".env.example"});
 
 
 const app = express();

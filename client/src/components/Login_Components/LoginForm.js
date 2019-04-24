@@ -132,7 +132,6 @@ class LoginForm extends React.Component {
 
         <br/>
         <p>{this.state.responseToPost}</p>
-
       </div>
     );
   }

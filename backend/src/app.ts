@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 import "reflect-metadata";
 import {createConnection} from "typeorm";
-import * as appConfig from "./common/app-config"
+import * as appConfig from "./common/app-config";
 
 import * as loginController from "./controllers/login";
 
@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.get("/hello", loginController.getAllUsers);
 app.post("/world", loginController.saveNewUser);
 
-createConnection(appConfig.dbOptions).then(async connection => {
+createConnection().then(async connection => {
   console.log("Connected to DB");
 }).catch(error => console.log("TypeORM connection error: ", error));
 

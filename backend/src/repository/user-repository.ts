@@ -1,5 +1,5 @@
 
-import { User } from "../entities/UserEntity";
+import { User } from "../entity/UserEntity";
 import { getManager } from "typeorm";
  
 export class UserRepo {

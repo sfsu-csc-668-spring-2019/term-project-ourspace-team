@@ -1,6 +1,6 @@
 import {Response, Request, NextFunction } from "express";
 //import { userInfo } from "os";
-import { User } from "../entities/User";
+import { User } from "../entity/UserEntity";
 import { UserRepo } from "../repository/user-repository"
 
 import "reflect-metadata";
@@ -12,7 +12,7 @@ export let getHello = (req: Request, res: Response, next: NextFunction) => {
     res.send({ express: "getHello"});
 }
 
-export let postWorld = (req: Request, res: Response, next: NextFunction) => {
+export let postWorld = async (req: Request, res: Response, next: NextFunction) => {
     console.log("got to world");
     console.log(User.registerNewUser(req.body.username, req.body.password));
     res.send("I recieved your POST request. This is what you sent me: " + req.body.post + ", " + req.body.username + ", " + req.body.password);

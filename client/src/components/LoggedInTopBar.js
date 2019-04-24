@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import logo from '../assets/MapSpace.png';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 import '../App.css';
 
 const styles = {
@@ -31,34 +33,74 @@ const styles = {
 
 };
 
-function LoggedInTopBar(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <img src={logo} className="logo" alt="MapSpace" />
-          <a href="/#" className={classes.link}>
-            Trending
-          </a>
-          <span className={classes.menu}>
-            <a href="/friends" className={classes.menu}>
-              Find Friends</a>
+class LoggedInTopBar extends React.Component{
 
-            <a href="/messages" className={classes.menu}>
-              Messages </a>
-          </span>
-          <IconButton
-            color="inherit">
-            <AccountCircle />
-          </IconButton>
+  state={
+    accountIcon: null,
+  }
 
+  handleMenu = event => {
+    this.setState({ accountIcon: event.currentTarget });
+  };
 
+  handleProfile = () => {
+    this.setState({ accountIcon: null });
+  };
+  handleLogout = () => {
+    this.setState({ accountIcon: null });
+  };
 
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+  render(){
+    const { classes } = this.props;
+    const {accountIcon} = this.state;
+    const open = Boolean(accountIcon);
+
+    return (
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <img src={logo} className="logo" alt="MapSpace" />
+            <a href="/#" className={classes.link}>
+              Trending
+            </a>
+            <span className={classes.menu}>
+              <a href="/friends" className={classes.menu}>
+                Find Friends</a>
+  
+              <a href="/messages" className={classes.menu}>
+                Messages </a>
+            </span>
+            <IconButton
+              aria-owns={open ? 'menu-appbar' : undefined}
+              aria-haspopup="true"
+              onClick={this.handleMenu}
+              color="inherit">
+              <AccountCircle />
+            </IconButton>
+            <Menu
+                  id="menu-appbar"
+                  accountIcon={accountIcon}
+                  anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={open}
+                  onClose={this.handleClose}
+                >
+                  <MenuItem onClick={this.handleProfile}>Profile</MenuItem>
+                  <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
+                </Menu>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+
+  }
+
 }
 
 LoggedInTopBar.propTypes = {

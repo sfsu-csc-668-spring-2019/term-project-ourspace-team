@@ -69,7 +69,7 @@ class LoginForm extends React.Component {
   render() {
     return (
       <div>
-        <p>{this.state.response}</p>
+        {/* <p>{this.state.response}</p> */}
         <br/>
         <Card className='card loginCard'>
           <CardContent>

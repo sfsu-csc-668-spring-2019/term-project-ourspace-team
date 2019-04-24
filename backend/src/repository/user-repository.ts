@@ -6,11 +6,11 @@ export class UserRepo {
  
     getUsers() {
         // get Employee repository and find all employees
-        return getManager().getRepository(User).find();
+        return User.find();
     }
  
     saveUser(user: User) { 
-          return getManager().getRepository(User).save(user);
+        return User.save(user);
     }
  
 }

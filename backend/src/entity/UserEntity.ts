@@ -23,15 +23,4 @@ export class User extends BaseEntity{
     @Column()
     email: string;
 
-    static findByName(username: string, password: string){
-        return this.createQueryBuilder("user")
-            .where("user.username = :username", {username})
-            .andWhere("user.password = :password", {password})
-            .getMany();
-    }
-
-    static registerNewUser(username: string, password:string){
-        return "hello"
-    }
-
 }

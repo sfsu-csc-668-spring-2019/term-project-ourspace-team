@@ -27,7 +27,7 @@ class LoginForm extends React.Component {
   componentDidMount() {
     //this.setState({responseToGet: "before"});
     this.callApi()
-      .then(res => this.setState({ response: res.express }))
+      .then(res => this.setState({ response: res}))
       .catch(err => console.log(err));
     console.log(this.state.resposnse);
   }
@@ -35,10 +35,11 @@ class LoginForm extends React.Component {
   callApi = async () => {
     const response = await fetch('/hello');
     const body = await response.json();
+    const jsonintotext = JSON.stringify(body);
 
     if (response.status !== 200) throw Error(body.message);
 
-    return body;
+    return jsonintotext;
   };
 
   handleChange = prop => event => {
@@ -61,8 +62,9 @@ class LoginForm extends React.Component {
       },
       body: JSON.stringify({post: this.state.username, username: this.state.username, password: this.state.password})
     });
-    const body = await response.text();
-    this.setState({responseToPost: body});
+    const body = await response.json();
+    const jsonintotext = JSON.stringify(body);
+    this.setState({responseToPost: jsonintotext});
     return;
   }
 

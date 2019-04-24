@@ -1,267 +1,180 @@
-// import React, { Component } from 'react';
-// import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
-// import  SearchBox  from 'react-google-maps/lib/components/places/SearchBox';
-// import _ from 'lodash';
-
-// class Map extends Component {
-//   componentWillMount() {
-//     const refs = {}
-
-//     this.setState({
-//       bounds: null,
-//       center: {
-//         lat: 41.9,
-//         lng: -87.624
-//       },
-//       markers: [],
-//       onMapMounted: ref => {
-//         refs.map = ref;
-//       },
-//       onBoundsChanged: () => {
-//         this.setState({
-//           bounds: refs.map.getBounds(),
-//           center: refs.map.getCenter(),
-//         })
-//       },
-//       onSearchBoxMounted: ref => {
-//         refs.searchBox = ref;
-//       },
-//       onPlacesChanged: () => {
-//         const places = refs.searchBox.getPlaces();
-//         const bounds = new window.google.maps.LatLngBounds();
-
-//         places.forEach(place => {
-//           if (place.geometry.viewport) {
-//             bounds.union(place.geometry.viewport)
-//           } else {
-//             bounds.extend(place.geometry.location)
-//           }
-//         });
-//         const nextMarkers = places.map(place => ({
-//           position: place.geometry.location,
-//         }));
-//         const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
-
-//         this.setState({
-//           center: nextCenter,
-//           markers: nextMarkers,
-//         });
-//         refs.map.fitBounds(bounds);
-//       },
-//     })
-//   }
-
-//   render(){
-//     const Map = withScriptjs(withGoogleMap(props => (
-//       <GoogleMap
-//         defaultCenter = { { lat: 37.775, lng: -122.419 } }
-//         defaultZoom = { 12 }
-//       >
-//         <SearchBox
-//           ref={props.onSearchBoxMounted}
-//           bounds={props.bounds}
-//           controlPosition={window.google.maps.ControlPosition.TOP_LEFT}
-//           onPlacesChanged={props.onPlacesChanged}
-//         >
-//           <input
-//             type="text"
-//             placeholder="Search for a Place"
-//             style={{
-//               boxSizing: `border-box`,
-//               border: `1px solid transparent`,
-//               width: `240px`,
-//               height: `32px`,
-//               marginTop: `27px`,
-//               padding: `0 12px`,
-//               borderRadius: `3px`,
-//               boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-//               fontSize: `14px`,
-//               outline: `none`,
-//               textOverflow: `ellipses`,
-//             }}
-//           />
-//         </SearchBox>
-//       </GoogleMap>
-//     )));
-//     return (
-//       <div>
-//         <Map
-//           googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyBp1zbhrcngsbN8eIBJsrxBH2FGrsyHNjs&libraries=places"
-//           loadingElement={<div style={{ height: `100%` }} />}
-//           containerElement={ <div style={{ height: `700px`, width: '700px' }} /> }
-//           mapElement={ <div style={{ height: `100%` }} /> }
-//         />
-//       </div>
-//     );
-//   }
-// }
-
-// export default Map;
-
 import React, { Component } from 'react';
-import _ from 'lodash'
-import { compose, withProps, lifecycle } from 'recompose'
-import { withScriptjs,withGoogleMap,GoogleMap,Marker,} from 'react-google-maps';
-import{ SearchBox } from 'react-google-maps/lib/components/places/SearchBox';
+import './Map.css'
 
 class Map extends Component {
 
+  state = {
+    sfPosition : {
+      lat: 37.775,
+      lng: -122.410
+    },
+    zoom: 12.5,
+    google_place: []
+  }
+
+  // Lifecycle Event
+  componentDidMount() {
+    // TODO Render Map Specific Markers
+    this.renderMap();
+  }
+
+  // TODO - Delete this later
+  clickedGooglePlace = (id) => {
+    let index = this.state.google_place.map((place) => { return place.id; }).indexOf(id);
+    alert(this.state.google_place[index].name);
+  }
+
+  initMap = () => {
+    // Create a map
+    const map = new window.google.maps.Map(document.getElementById('map'), {
+      center:  this.state.sfPosition ,
+      zoom: this.state.zoom,
+      mapTypeControl: true,
+      mapTypeControlOptions: {
+        style: window.google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+        mapTypeIds: ['roadmap', 'satellite']
+      }
+    });
+
+    // Create an info window
+    let infowindow = new window.google.maps.InfoWindow();
+
+    // Set Functions in Client
+    window.clickedGooglePlace = this.clickedGooglePlace
+
+    // AUTO COMPLETE SECTION
+    // Create the search box and link it to the UI element
+    let input = document.getElementById('pac-input');
+    let searchBox = new window.google.maps.places.SearchBox(input);
+    map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
+
+    // Bound the SearchBox results towards current map's viewport.
+    map.addListener('bounds_changed', () => {
+      searchBox.setBounds(map.getBounds());
+    });
+
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener('places_changed', () => {
+      let places = searchBox.getPlaces();
+      // Close any open info windows
+      infowindow.close();
+
+      if (places.length === 0) {
+        return;
+      }
+
+      // For each place, get the icon, name and location.
+      let bounds = new window.google.maps.LatLngBounds();
+
+      places.forEach((place) => {
+        if (!place.geometry) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+
+        let newPlace = {
+          id: place.place_id,
+          name: place.name,
+          address: place.formatted_address,
+          position: place.geometry.location,
+          phone: place.international_phone_number,
+          price_level: place.price_level,
+          total_ratings: place.user_ratings_total,
+          icon: place.icon
+        }
+
+        this.addNewPlaceToState( newPlace );
+
+        // Create a marker
+        let marker = new window.google.maps.Marker({
+          position: place.geometry.location,
+          map: map,
+          title: place.name,
+        });
+
+        // Click on a marker
+        marker.addListener('click', () => {
+          // Change content
+          infowindow.setContent( this.getContentString(newPlace));
+          // Open info window
+          infowindow.open(map, marker);
+        })
+
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+    });
+  }
+
+  addNewPlaceToState = ( place ) => {
+    let updated_google_place = this.state.google_place.slice();
+    updated_google_place.push( place );
+    this.setState({ 
+      google_place: updated_google_place
+    });
+  }
+
+  getContentString = ( place ) => {
+     return `<div class="row">
+              <div class="column">
+                ${(place.icon !== undefined ? `<img src="${place.icon}" alt="Icon of Place">` : ``)}
+              </div>
+              <div class="column">
+                <strong>${place.name}</strong>
+                <p>Place ID: ${place.id}</p>
+                <p>${(place.address !== undefined ? place.address : 'Address: N/A')}</p>
+                <p>${(place.phone !== undefined ? place.phone : 'Phone #: N/A')}</p>
+                <button onclick="clickedGooglePlace(\'${place.id}\')">View More</button>
+              </div>
+            </div>`;
+  }
+
+  renderMap = () => {
+    this.loadGoogleMapsScript(`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}js&callback=initMap&libraries=places`);
+    window.initMap = this.initMap;
+  }
+
+  loadGoogleMapsScript = (url) => {
+    // Select first Script tag on page.
+    let index = window.document.getElementsByTagName("script")[0];
+
+    // Create New Script Tag for Google Maps API
+    let script = window.document.createElement("script");
+    script.src = url;
+    script.async = true;
+    script.defer = true;
+
+    // Prepend Google Maps API Script to the first of list of scripts
+    index.parentNode.insertBefore(script, index);
+  }
+
   render() {
-    const MapWithASearchBox = compose(
-      withProps({
-        googleMapURL: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBp1zbhrcngsbN8eIBJsrxBH2FGrsyHNjs&libraries=places",
-        loadingElement: <div style={{ height: `100%` }} />,
-        containerElement: <div style={{ height: `700px` }} />,
-        mapElement: <div style={{ height: `100%` }} />,
-      }),
-      lifecycle({
-        componentWillMount() {
-          const refs = {}
-
-          this.setState({
-            bounds: null,
-            center: {
-              lat: 37.775, lng: -122.419
-            },
-            zoom: 12,
-            google_place: [],
-            markers: [],
-            onMapMounted: ref => {
-              refs.map = ref;
-            },
-            onBoundsChanged: () => {
-              this.setState({
-                bounds: refs.map.getBounds(),
-                center: refs.map.getCenter(),
-              })
-            },
-            onSearchBoxMounted: ref => {
-              refs.searchBox = ref;
-            },
-            onPlacesChanged: () => {
-              const places = refs.searchBox.getPlaces();
-              const bounds = new window.google.maps.LatLngBounds();
-              const infowindow = new window.google.maps.InfoWindow();
-
-              places.forEach(place => {
-                if (!place.geometry) {
-                  console.log("Returned place contains no geometry");
-                  return;
-                }
-
-                console.log(place); // Remove later
-                let newPlace = {
-                  id: place.place_id,
-                  name: place.name,
-                  address: place.formatted_address,
-                  phone: place.international_phone_number,
-                  price_level: place.price_level,
-                  total_ratings: place.user_ratings_total
-                }
-
-                let updated_google_place = this.state.google_place.slice();
-                updated_google_place.push( newPlace );
-                this.setState({ google_place: updated_google_place });
-
-                // Create a marker
-                let marker = new window.google.maps.Marker({
-                  position: place.geometry.location,
-                  map: refs.map,
-                  title: place.name,
-                });
-
-                let contentString = `<strong>${newPlace.name}</strong>` +
-                                    `<p>Place ID: ${newPlace.id}</p>` +
-                                    `<p>${newPlace.address}</p>` +
-                                    `<p>${newPlace.phone}</p>` +
-                                    `<p>Price Level: ${newPlace.price_level}</p>` +
-                                    `<p>Total Google Ratings: ${newPlace.total_ratings}</p>` +
-                                    `<button onclick="clickedGooglePlace(\'${newPlace.id}\')">View More</button>`;
-
-                // Click on a marker
-                marker.addListener('click', () => {
-                  // Change content
-                  infowindow.setContent(contentString);
-                  // Open info window
-                  infowindow.open(marker.map, marker);
-                })
-
-                this.setState({
-                  markers: [ marker ]
-                });
-
-                if (place.geometry.viewport) {
-                  // Only geocodes have viewport.
-                  bounds.union(place.geometry.viewport);
-                } else {
-                  bounds.extend(place.geometry.location);
-                }
-              });
-              refs.map.fitBounds(bounds);
-                // if (place.geometry.viewport) {
-                //   bounds.union(place.geometry.viewport)
-                // } else {
-                //   bounds.extend(place.geometry.location)
-                // }
-              // });
-              // const nextMarkers = places.map(place => ({
-              //   position: place.geometry.location,
-              // }));
-              // const nextCenter = _.get(nextMarkers, '0.position', this.state.center);
-
-              // this.setState({
-              //   center: nextCenter,
-              //   markers: nextMarkers,
-              //   zoom: 12.5
-              // });
-              // refs.map.fitBounds(bounds);
-            },
-          })
-        },
-      }),
-      withScriptjs,
-      withGoogleMap
-    )(props =>
-      <GoogleMap
-        ref={props.onMapMounted}
-        defaultZoom={props.zoom}
-        center={props.center}
-        onBoundsChanged={props.onBoundsChanged}
+    return (
+      <div 
+        id="mapContainer" 
+        clasName="mapContainer"
       >
-        <SearchBox
-          ref={props.onSearchBoxMounted}
-          bounds={props.bounds}
-          controlPosition={window.google.maps.ControlPosition.TOP_LEFT}
-          onPlacesChanged={props.onPlacesChanged}
-        >
-          <input
-            type="text"
-            placeholder="Search for a Place"
-            style={{
-              boxSizing: `border-box`,
-              border: `1px solid transparent`,
-              width: `600px`,
-              height: `45px`,
-              marginTop: `27px`,
-              padding: `0 12px`,
-              borderRadius: `3px`,
-              boxShadow: `0 2px 6px rgba(0, 0, 0, 0.3)`,
-              fontSize: `14px`,
-              outline: `none`,
-              textOverflow: `ellipses`,
-            }}
-          />
-        </SearchBox>
-        {props.markers.map((marker, index) =>
-          <Marker key={index} position={marker.position} clickable={true}/>
-        )}
-      </GoogleMap>
-    );
-    return(
-      <MapWithASearchBox/>
+        {/* Search Box */}
+        <input 
+          id="pac-input"
+          className ="controls searchBox"
+          type="text"
+          placeholder="Search Here"
+        ></input>
+
+        {/* Map */}
+        <div 
+          id="map"
+        ></div>
+      </div>
     );
   }
 }
 
 export default Map;
-

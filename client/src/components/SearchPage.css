@@ -1,3 +1,35 @@
+/*Buttons*/
 .viewProfileButton, .followButton{
     float: right;
+}
+
+/*Cards*/
+.innerCardStyle {
+    max-width: 500px;
+    margin-left: 75px;
+    margin-right: 75px;
+    margin-top: 75px;
+    transition-duration: 0.3s;
+  }
+
+.outerCardStyle{
+    max-width: 50;
+    margin-left: 75px;
+    margin-right: 75px;
+    margin-top: 75px;
+    transition-duration: 0.3s;
+}
+
+/*Textfields
+
+    Doesn't seem to work
+*/
+
+.searchField{
+    padding-left: 50%;
+}
+
+/*Typography*/
+.findFriends{
+    padding-left: 75px;
 }

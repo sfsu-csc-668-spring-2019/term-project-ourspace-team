@@ -7,11 +7,10 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import { CardContent } from '@material-ui/core';
+import CardContent from '@material-ui/core/CardContent';
 import '../App.css';
 import './SearchPage.css';
 import LoggedInTopBar from './LoggedInTopBar';
-
 
 
 class SearchPage extends Component{
@@ -28,17 +27,17 @@ class SearchPage extends Component{
     return(
       <div>
         <LoggedInTopBar />
-        <Card>
+        <Card className="card outerCardStyle">
             <CardContent>
-            <Typography className="findFriends" variant="h5">Find Friends</Typography>
 
+            <Typography className="findFriends" variant="h6">Find Friends</Typography>
              {/* Search Field */}
              <TextField
-              id="search"
               className="searchField"
+              id="search"
               variant="outlined"
               type="text" 
-              value={this.state.username}
+              value={this.state.search}
               onChange={this.handleChange('search')}
               placeholder="Search Username"
               InputProps={{
@@ -47,7 +46,7 @@ class SearchPage extends Component{
             />
              <br/><br/>
               {/* Finding Friends */}
-              <Card>
+              <Card className="innerCardStyle">
                 <Typography className="userNames" variant="h5">@Username
 
                   <Button className="followButton">

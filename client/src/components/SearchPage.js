@@ -46,7 +46,17 @@ class SearchPage extends Component {
 
   state = {
     search: '',
-    result:''
+    results: [
+      {
+        name: "Tony"
+      },
+      {
+        name: "Tiger"
+      },
+      {
+        name: "Meow"
+      }
+    ]
   };
 
   handleChange = prop => event => {
@@ -54,6 +64,11 @@ class SearchPage extends Component {
   };
 
   render() {
+    let cards = this.state.results.map(name => {
+      return (
+        <SearchResults resultTest={name} />
+      );
+    });
     return (
       <div>
         <LoggedInTopBar />
@@ -83,7 +98,7 @@ class SearchPage extends Component {
                   }}
                 />
                
-                <SearchResults resultTest={4} />
+                {cards}
               </Grid>
             </CardContent>
           </Card>

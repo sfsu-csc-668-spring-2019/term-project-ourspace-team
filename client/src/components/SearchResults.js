@@ -56,7 +56,7 @@ class SearchResults extends Component {
                     value={this.state.result}
                     onChange={this.handleChange('results')}
                   > 
-                    @  {this.props.resultTest.name}
+                    @  {this.props.resulting.name2}
                     <AccountCircle className={classes.AccountCircleIcon} />
                     <Button className={classes.viewProfileButton} href="#">View Profile</Button>
                     <Button className={classes.followButton}> + Follow</Button>

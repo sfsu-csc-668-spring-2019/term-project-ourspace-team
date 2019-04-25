@@ -48,13 +48,16 @@ class SearchPage extends Component {
     search: '',
     results: [
       {
-        name: "Tony"
+        name: "Tony",
+        name2: "Tony2"
       },
       {
-        name: "Tiger"
+        name: "Tiger",
+        name2: "Tiger2"
       },
       {
-        name: "Meow"
+        name: "Meow",
+        name2: "Meow2"
       }
     ]
   };
@@ -66,7 +69,8 @@ class SearchPage extends Component {
   render() {
     let cards = this.state.results.map(name => {
       return (
-        <SearchResults resultTest={name} />
+        // Props name is resulting, passing in the state stuff to SearchResults
+        <SearchResults resulting={name} />
       );
     });
     return (
@@ -98,6 +102,7 @@ class SearchPage extends Component {
                   }}
                 />
                
+               {/* Renders all the cards here*/}
                 {cards}
               </Grid>
             </CardContent>

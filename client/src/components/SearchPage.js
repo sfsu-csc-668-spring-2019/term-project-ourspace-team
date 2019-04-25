@@ -45,7 +45,8 @@ const styles = {
 class SearchPage extends Component {
 
   state = {
-    search: ''
+    search: '',
+    result:''
   };
 
   handleChange = prop => event => {
@@ -53,7 +54,6 @@ class SearchPage extends Component {
   };
 
   render() {
-    
     return (
       <div>
         <LoggedInTopBar />
@@ -62,7 +62,6 @@ class SearchPage extends Component {
           direction="row"
           justify="center"
           alignItems="center"
-          spacing="40"
         >
           <Card className="card outerCardStyle">
             <CardContent>
@@ -70,10 +69,6 @@ class SearchPage extends Component {
               {/* Search Field */}
               <Grid
                 className="searchFieldGrid"
-                item xs
-                direction="row"
-                justify="flex-start"
-                alignItems="center"
               >
                 <TextField
                   className="searchField"
@@ -87,7 +82,8 @@ class SearchPage extends Component {
                     startAdornment: <InputAdornment position="start">@</InputAdornment>,
                   }}
                 />
-                <SearchResults />
+               
+                <SearchResults resultTest={4} />
               </Grid>
             </CardContent>
           </Card>

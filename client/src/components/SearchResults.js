@@ -45,8 +45,10 @@ class SearchResults extends Component {
       };
 
     render() {
+        
         const { classes } = this.props;
         return (
+        <div>
                 <Grid className="innerCardGrid">
                 <Card className="innerCardStyle">
                   <Typography className="userNames" 
@@ -61,9 +63,11 @@ class SearchResults extends Component {
                   </Typography>
                   </Card>
                 </Grid>
+        </div>
         );
     }
 }
+
 
 SearchResults.propTypes = {
     classes: PropTypes.object.isRequired,

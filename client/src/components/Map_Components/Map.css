@@ -1,8 +1,9 @@
  /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
 #map {
-  height: 700px;
-  width: 700px;
+  padding: 1rem;
+  height: 31rem;
+  width: 100%;
   overflow: auto;
 }
 

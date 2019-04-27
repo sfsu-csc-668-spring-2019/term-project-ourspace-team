@@ -16,7 +16,6 @@ const styles = {
     flexGrow: 1,
   },
   grow: {
-    flexGrow: 1,
   },
   link: {
     fontFamily: 'Raleway',
@@ -33,9 +32,9 @@ const styles = {
 
 };
 
-class LoggedInTopBar extends React.Component{
+class LoggedInTopBar extends React.Component {
 
-  state={
+  state = {
     accountIcon: null,
   }
 
@@ -50,9 +49,9 @@ class LoggedInTopBar extends React.Component{
     this.setState({ accountIcon: null });
   };
 
-  render(){
+  render() {
     const { classes } = this.props;
-    const {accountIcon} = this.state;
+    const { accountIcon } = this.state;
     const open = Boolean(accountIcon);
 
     return (
@@ -66,34 +65,36 @@ class LoggedInTopBar extends React.Component{
             <span className={classes.menu}>
               <a href="/friends" className={classes.menu}>
                 Find Friends</a>
-  
+
               <a href="/messages" className={classes.menu}>
                 Messages </a>
             </span>
-            <IconButton
-              aria-owns={open ? 'menu-appbar' : undefined}
-              aria-haspopup="true"
-              onClick={this.handleMenu}
-              color="inherit">
-              <AccountCircle />
-            </IconButton>
-            <Menu
-                  id="menu-appbar"
-                  accountIcon={accountIcon}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open}
-                  onClose={this.handleClose}
-                >
-                  <MenuItem onClick={this.handleProfile}>Profile</MenuItem>
-                  <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
-                </Menu>
+            <div>
+              <IconButton
+                aria-owns={open ? 'menu-appbar' : undefined}
+                aria-haspopup="true"
+                onClick={this.handleMenu}
+                color="inherit">
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                accountIcon={accountIcon}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={open}
+                onClose={this.handleClose}
+              >
+                <MenuItem onClick={this.handleProfile}>Profile</MenuItem>
+                <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
+              </Menu>
+            </div>
           </Toolbar>
         </AppBar>
       </div>

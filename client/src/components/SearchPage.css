@@ -1,0 +1,33 @@
+/*Cards*/
+.innerCardStyle {
+    width: 80%;
+    margin-right: 575px;
+    margin-top: 50px;
+    height: 50px;
+    transition-duration: 0.3s;
+  }
+
+.outerCardStyle{
+   
+    margin-left: 75px;
+    margin-right: 75px;
+    margin-top: 75px;
+    transition-duration: 0.3s;
+}
+
+/*Search field in Grid*/
+.searchFieldGrid{
+    padding-top: 10px;
+    padding-left: 75px;
+    
+}
+
+/*Typography*/
+.findFriends {
+    padding-left: 75px;
+}
+
+.userNames{
+    padding-top: 8px;
+    margin-top: 75px;
+}

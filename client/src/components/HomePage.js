@@ -18,7 +18,7 @@ class HomePage extends Component {
                 <div>
                     <Grid container spacing={24}>
                         <Grid container item sm={12} direction="row" spacing={24}>
-                            <Grid container direction="column" item sm={4} spacing={8}>
+                            <Grid container direction="column" item sm={3} spacing={8}>
                                 <Grid item >
                                   <ProfileCard/>
                                 </Grid>
@@ -26,7 +26,7 @@ class HomePage extends Component {
                                   <PlacesList/>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={8} container direction="column">
+                            <Grid item xs={9} container direction="column">
                                 <Map />
                             </Grid>
                         </Grid>

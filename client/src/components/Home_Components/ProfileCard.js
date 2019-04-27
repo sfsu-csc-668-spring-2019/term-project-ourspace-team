@@ -58,7 +58,7 @@ class ProfileCard extends React.Component {
             <Grid item xs={12} sm container>
               <Grid item xs container direction="row" spacing={16}>
                 <Grid item xs>
-                  <Typography gutterBottom variant="h6">
+                  <Typography gutterBottom variant="subtitle1">
                     @Username
                   </Typography>
                 </Grid>

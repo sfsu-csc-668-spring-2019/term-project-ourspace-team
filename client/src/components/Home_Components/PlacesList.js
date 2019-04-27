@@ -18,15 +18,14 @@ const styles = theme => ({
     marginLeft: '1rem',
     margin: 'auto',
     maxWidth: '100%',
-    maxHeight: '20rem',
-
-
+    maxHeight: '22rem',
+    overflowY: 'auto',
   },
 
 });
 
 function generate(element) {
-  return [0, 1, 2, 3, 4, 5, 6].map(value =>
+  return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(value =>
       React.cloneElement(element, {
           key: value,
       }),

@@ -19,10 +19,10 @@ class HomePage extends Component {
                     <Grid container spacing={24}>
                         <Grid container item sm={12} direction="row" spacing={24}>
                             <Grid container direction="column" item sm={4} spacing={8}>
-                                <Grid item sm>
+                                <Grid item >
                                   <ProfileCard/>
                                 </Grid>
-                                <Grid item sm>
+                                <Grid item >
                                   <PlacesList/>
                                 </Grid>
                             </Grid>

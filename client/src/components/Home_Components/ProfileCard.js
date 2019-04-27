@@ -19,14 +19,8 @@ const styles = theme => ({
     maxWidth: 500,
   },
   image: {
-    width: 128,
-    height: 128,
-  },
-  img: {
-    margin: 'auto',
-    display: 'block',
-    maxWidth: '100%',
-    maxHeight: '100%',
+    width: 75,
+    height: 75,
   },
   avatar:{
     margin: 'auto',
@@ -62,9 +56,9 @@ class ProfileCard extends React.Component {
               </ButtonBase>
             </Grid>
             <Grid item xs={12} sm container>
-              <Grid item xs container direction="column" spacing={16}>
+              <Grid item xs container direction="row" spacing={16}>
                 <Grid item xs>
-                  <Typography gutterBottom variant="subtitle1">
+                  <Typography gutterBottom variant="h6">
                     @Username
                   </Typography>
                 </Grid>

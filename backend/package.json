@@ -5,9 +5,9 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run serve",
+    "start": "npm run server",
     "build": "npm install && npm run build-ts",
-    "serve": "node dist/server.js",
+    "server": "node dist/server.js",
     "build-ts": "tsc"
   },
   "author": "",

@@ -2,6 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import logger from "morgan";
 import dotenv from "dotenv";
+import session from "express-session";
+import passport from "passport";
 
 import "reflect-metadata";
 import {createConnection} from "typeorm";
@@ -14,6 +16,10 @@ dotenv.config({path: ".env.example"});
 const app = express();
 
 app.set("port", process.env.PORT || 5000);
+
+//app.use(session({ secret: SESSION_SECRET}));
+//app.use(passport.initialize());
+//app.use(passport.session());
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

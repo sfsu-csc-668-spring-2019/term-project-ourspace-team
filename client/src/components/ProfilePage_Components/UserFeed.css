@@ -1,0 +1,15 @@
+/*Cards */
+.outerCard{
+    margin-top: 50px;
+    margin-left: 150px;
+    margin-right: 150px;
+}
+.innerCardContents {
+    padding-right: 50%;
+    padding-left: 50%;
+}
+.placesSavedValues{
+    padding-left: 50px;
+}
+
+

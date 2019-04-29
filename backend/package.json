@@ -16,6 +16,7 @@
   "dependencies": {
     "@types/node": "^11.13.7",
     "async": "2.6.2",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
     "dotenv": "^7.0.0",

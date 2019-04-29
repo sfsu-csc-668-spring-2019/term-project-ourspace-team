@@ -7,3 +7,4 @@ build/
 tmp/
 temp/
 npm-debug.log
+ormconfig.json

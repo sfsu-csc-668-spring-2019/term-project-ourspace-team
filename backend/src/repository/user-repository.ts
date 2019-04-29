@@ -1,12 +1,7 @@
-
 import { User } from "../entity/UserEntity";
+import bcrypt from "bcrypt-nodejs";
  
 export class UserRepo {
- 
-    getUsers() {
-        // get Employee repository and find all employees
-        return User.find();
-    }
  
     saveUser(user: User) { 
         return User.save(user);

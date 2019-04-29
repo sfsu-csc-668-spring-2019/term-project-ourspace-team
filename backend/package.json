@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npm run server",
-    "build": "npm install && npm run build-ts",
+    "build": "npm install && npm run clean && npm run build-ts",
     "server": "node dist/server.js",
-    "build-ts": "tsc"
+    "build-ts": "tsc",
+    "clean": "rm -rf dist/"
   },
   "author": "",
   "license": "ISC",

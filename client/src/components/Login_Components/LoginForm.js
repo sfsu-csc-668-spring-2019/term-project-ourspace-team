@@ -26,20 +26,20 @@ class LoginForm extends React.Component {
 
   componentDidMount() {
     //this.setState({responseToGet: "before"});
-    this.callApi()
-      .then(res => this.setState({ response: res}))
-      .catch(err => console.log(err));
-    console.log(this.state.resposnse);
+    // this.callApi()
+    //   .then(res => this.setState({ response: res}))
+    //   .catch(err => console.log(err));
+    // console.log(this.state.resposnse);
   }
 
   callApi = async () => {
-    const response = await fetch('/login');
-    const body = await response.json();
-    const jsonintotext = JSON.stringify(body);
+    // const response = await fetch('/login');
+    // const body = await response.json();
+    // const jsonintotext = JSON.stringify(body);
 
-    if (response.status !== 200) throw Error(body.message);
+    // if (response.status !== 200) throw Error(body.message);
 
-    return jsonintotext;
+    // return jsonintotext;
   };
 
   handleChange = prop => event => {
@@ -55,16 +55,16 @@ class LoginForm extends React.Component {
     //alert(`${this.state.username} - ${this.state.password}`);
     //req api call
     e.preventDefault();
-    const response = await fetch('/registration', {
+    const response = await fetch('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({username: this.state.username, password: this.state.password, email: "email", name: "name"})
+      body: JSON.stringify({username: this.state.username, password: this.state.password})
     });
-    const body = await response.json();
-    const jsonintotext = JSON.stringify(body);
-    this.setState({responseToPost: "got to here"});
+    // const body = await response.json();
+    // const jsonintotext = JSON.stringify(body);
+    // this.setState({responseToPost: body});
     return;
   }
 

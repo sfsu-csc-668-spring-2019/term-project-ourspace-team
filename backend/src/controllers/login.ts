@@ -1,5 +1,4 @@
 import {Response, Request, NextFunction } from "express";
-//import { userInfo } from "os";
 import { User } from "../entity/UserEntity";
 import { UserRepo } from "../repository/user-repository"
 

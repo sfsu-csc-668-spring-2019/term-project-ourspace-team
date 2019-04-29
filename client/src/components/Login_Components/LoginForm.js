@@ -21,7 +21,7 @@ class LoginForm extends React.Component {
     //Demostration only
     response: '',
     post: '',
-    responseToPost: ''
+    responseToPost: '',
   };
 
   componentDidMount() {
@@ -33,7 +33,7 @@ class LoginForm extends React.Component {
   }
 
   callApi = async () => {
-    const response = await fetch('/hello');
+    const response = await fetch('/login');
     const body = await response.json();
     const jsonintotext = JSON.stringify(body);
 
@@ -55,16 +55,16 @@ class LoginForm extends React.Component {
     //alert(`${this.state.username} - ${this.state.password}`);
     //req api call
     e.preventDefault();
-    const response = await fetch('/world', {
+    const response = await fetch('/registration', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({post: this.state.username, username: this.state.username, password: this.state.password})
+      body: JSON.stringify({username: this.state.username, password: this.state.password, email: "email", name: "name"})
     });
     const body = await response.json();
     const jsonintotext = JSON.stringify(body);
-    this.setState({responseToPost: jsonintotext});
+    this.setState({responseToPost: "got to here"});
     return;
   }
 

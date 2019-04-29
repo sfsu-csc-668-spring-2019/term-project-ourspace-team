@@ -1,6 +1,5 @@
 
 import { User } from "../entity/UserEntity";
-import { getManager } from "typeorm";
  
 export class UserRepo {
  
@@ -11,6 +10,12 @@ export class UserRepo {
  
     saveUser(user: User) { 
         return User.save(user);
+    }
+
+    doesUserAlreadyExist(username){
+        console.log(User.find(username));
+        return false;
+        //return User.find(username);
     }
  
 }

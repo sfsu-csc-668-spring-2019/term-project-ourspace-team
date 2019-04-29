@@ -18,10 +18,6 @@ class LoginForm extends React.Component {
     password: '',
     showPassword: false,
 
-    //Demostration only
-    response: '',
-    post: '',
-    responseToPost: '',
   };
 
   componentDidMount() {
@@ -64,7 +60,7 @@ class LoginForm extends React.Component {
     });
     // const body = await response.json();
     // const jsonintotext = JSON.stringify(body);
-    // this.setState({responseToPost: body});
+    // this.setState({STATEGOESHERE: body});
     return;
   }
 

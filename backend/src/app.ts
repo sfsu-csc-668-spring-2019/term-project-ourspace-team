@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
-app.get("/login", loginController.getAllUsers);
+app.post("/login", loginController.tryToLogin);
 app.post("/register", registrationController.saveNewUser);
 
 createConnection().then(async connection => {

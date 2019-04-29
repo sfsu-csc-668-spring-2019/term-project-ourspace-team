@@ -36,7 +36,7 @@ class RegisterForm extends React.Component {
   };
 
   // This function can be changed to send data to our API
-  clickedButton = () => {
+  clickedButton = async e => {
     //alert(`${this.state.username} - ${this.state.password}`);
     //req api call
     e.preventDefault();
@@ -45,12 +45,12 @@ class RegisterForm extends React.Component {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({username: this.state.username, password: this.state.password, email: this.body.email, name: this.body.name})
+      body: JSON.stringify({username: this.state.username, password: this.state.password, email: this.state.email, name: this.state.name})
     });
     // const body = await response.json();
     // const jsonintotext = JSON.stringify(body);
     // console.log(jsonintotext);
-    //this.setState({: jsonintotext});
+    //this.setState({STATEGOESHERE: jsonintotext});
     return;
   }
 

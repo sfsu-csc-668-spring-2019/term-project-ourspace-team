@@ -26,7 +26,7 @@ const styles = {
         marginRight: 40,
         paddingLeft: 170,
         paddingRight: 170,
-
+        color: '#fff',
     },
     userName:{
         useNextVariants: true,

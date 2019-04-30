@@ -4,7 +4,7 @@ import Card from '@material-ui/core/Card';
 import TopBar from './TopBar';
 import LoginForm from './Login_Components/LoginForm';
 import RegisterForm from './Login_Components/RegisterForm';
-import Map from './Map_Components/Map';
+
 import Typography from '@material-ui/core/Typography';
 import '../App.css';
 import { CardContent } from '@material-ui/core';
@@ -36,14 +36,6 @@ class Login extends Component{
           </Grid>
         </Grid>
 
-        {/* Map Area */}
-        <Grid container spacing={24}>
-          <Grid container item xs={12} direction="row" spacing={24}>
-            <Grid item xs={6} container direction="column">
-              <Map /> 
-            </Grid>
-          </Grid>
-        </Grid>
       </div>
     );
   }

@@ -1,32 +1,43 @@
 import {Response, Request, NextFunction } from "express";
 import { User } from "../entity/UserEntity";
-import { UserRepo } from "../repository/user-repository"
+import { UserRepo } from "../repository/user-repository";
+import * as bcrypt from 'bcryptjs';
 
 import "reflect-metadata";
 
 
-export let saveNewUser = (req: Request, res: Response, next: NextFunction) => {
-    let userRepo : UserRepo = new UserRepo();
+export let saveNewUser = async (req: Request, res: Response, next: NextFunction) => {
+    const userRepo : UserRepo = new UserRepo();
+
+    const username: string = req.body.username;
+    const email : string = req.body.email;
+    const password: any = req.body.password;
+    const name : string = req.body.name;
 
     console.log("Received Save User => POST");
-    //console.log(req.body.username, req.body.password, req.body.email, req.body.name);
+    let user = await userRepo.doesUserAlreadyExist(username, email);
+    console.log(user);
+    if (user.length === 0){
+        console.log("....it came inside the if.....")
+        const newUser: User = new User();
+        const hashPassword = await bcrypt.hash(password, 10);
 
-    //check if user exists: YES -> Send error back  || NO -> create and save new user after password encryption
+        newUser.name = name;
+        newUser.username = username;
+        newUser.email = email;
+        newUser.password = hashPassword;
 
-    // if (userRepo.doesUserAlreadyExist(req.body.username) == true){
-    //     console.log("User does exist, send error!");
-    //     res.send("ERROR USERNAME EXISTS");
-    // } else {
-    //     console.log("Username does not exist: Add user!");
-    //     let newUser:User = new User();
-    //     newUser.name = req.body.name;
-    //     newUser.password = req.body.password;
-    //     newUser.email = req.body.email;
-    //     newUser.username = req.body.username;
+        userRepo.saveUser(newUser)
+    }else if (user.length > 0) {
+        console.log("it came inside the else if!!!!!!")
+        if(user[0].username == username) {
+            console.log(`User: ${username} is taken`);
+        }
 
-    //     userRepo.saveUser(newUser).then((result: any) => {
-    //         console.log("Result: " + result);
-    //         res.send(result);
-    //     });
-    // }
+        if(user[0].email == email){
+            console.log(`E-mail: ${email} is taken`);
+        }
+    } else {
+        console.log('something is broken');
+    }
 }

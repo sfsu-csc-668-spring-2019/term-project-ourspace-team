@@ -73,6 +73,7 @@ class Map extends Component {
           return;
         }
 
+        // console.log( place.photos[0].getUrl({ maxWidth: 45, maxWidth: 45 }) );
         let newPlace = {
           id: place.place_id,
           name: place.name,
@@ -81,7 +82,8 @@ class Map extends Component {
           phone: place.international_phone_number,
           price_level: place.price_level,
           total_ratings: place.user_ratings_total,
-          icon: place.icon
+          photos: place.photos,
+          icon: place.photos[0].getUrl({ maxHeight: 256, maxWidth: 256 })
         }
 
         this.addNewPlaceToState( newPlace );
@@ -123,7 +125,7 @@ class Map extends Component {
   getContentString = ( place ) => {
      return `<div class="row">
               <div class="column">
-                ${(place.icon !== undefined ? `<img src="${place.icon}" alt="Icon of Place">` : ``)}
+                ${(place.icon !== undefined ? `<img class="icon" src="${place.icon}" alt="Icon of Place">` : ``)}
               </div>
               <div class="column">
                 <strong>${place.name}</strong>

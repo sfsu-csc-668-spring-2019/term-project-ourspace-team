@@ -10,37 +10,10 @@ import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
-import SearchResults from './SearchResults'
+import SearchResults from './SearchPage_Components/SearchResults'
 import '../App.css';
-import './SearchPage.css';
+import './SearchPage_Components/SearchPage.css';
 import LoggedInTopBar from './LoggedInTopBar';
-
-
-const styles = {
-  viewProfileButton:{
-    background: '#83bc45',
-    color: '#fff',
-    marginRight: 15,
-    float: 'right',
-    textTransform: 'none',
-  },
-  followButton:{
-    background: '#4490e6',
-    color: '#fff',
-    fontFamily: 'Raleway',
-    float: 'right',
-    marginRight: 15,
-    textTransform: 'none',
-  },
-  AccountCircleIcon:{
-    float: 'left',
-    paddingTop: 5,
-    paddingRight: 25,
-    paddingLeft: 40,
-    
-  }
-};
-
 
 class SearchPage extends Component {
 
@@ -113,8 +86,4 @@ class SearchPage extends Component {
   }
 }
 
-SearchPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(SearchPage);
+export default SearchPage;

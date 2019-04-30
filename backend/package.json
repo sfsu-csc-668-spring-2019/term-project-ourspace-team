@@ -16,6 +16,7 @@
   "dependencies": {
     "@types/node": "^11.13.7",
     "async": "2.6.2",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.4",
     "dotenv": "^7.0.0",
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "@types/async": "^2.0.45",
+    "@types/bcryptjs": "^2.4.2",
     "@types/body-parser": "^1.16.8",
     "@types/compression": "^0.0.35",
     "@types/dotenv": "^4.0.2",

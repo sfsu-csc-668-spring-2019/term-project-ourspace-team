@@ -1,5 +1,6 @@
 import { User } from "../entity/UserEntity";
-import bcrypt from "bcrypt-nodejs";
+import { json } from "body-parser";
+// import bcrypt from "bcrypt-nodejs";
  
 export class UserRepo {
  
@@ -7,10 +8,16 @@ export class UserRepo {
         return User.save(user);
     }
 
-    doesUserAlreadyExist(username){
-        console.log(User.find(username));
-        return false;
-        //return User.find(username);
+    doesUserAlreadyExist(username, email): Promise<User[]> {
+       return User.find({
+           where: [ 
+                {username: username}, 
+                {email: email}
+            ]
+        }).then((data) => {
+            console.log(data)
+            return data;
+        }).catch((e) => {console.log(`this is the e: ${e}`); return [];});
     }
  
 }

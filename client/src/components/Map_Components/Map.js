@@ -84,6 +84,7 @@ class Map extends Component {
 
     window.clickedViewMore = this.clickedViewMore
     window.clickedAddToMap = this.clickedAddToMap
+    window.clickedRemoveFromMap = this.clickedRemoveFromMap
 
     this.addSearchBoxAndAutoComplete( map );
 
@@ -157,7 +158,7 @@ class Map extends Component {
         this.addNewPlaceToState(newPlace);
 
         // Create a marker and set its content
-        this.setMarkerInfoWindow(map, this.getMarker(map, newPlace), newPlace)
+        this.setMarkerInfoWindow(map, this.getMarker(map, newPlace), newPlace, false)
 
         if (place.geometry.viewport) {
           // Only geocodes have viewport.
@@ -172,7 +173,7 @@ class Map extends Component {
 
   renderSavedPlaces = ( map ) => {
     this.state.google_place.map((place) => {
-      this.setMarkerInfoWindow(map, this.getMarker(map, place), place);
+      this.setMarkerInfoWindow(map, this.getMarker(map, place), place, true);
     });
   }
 
@@ -204,16 +205,16 @@ class Map extends Component {
     });
   }
 
-  setMarkerInfoWindow = ( map,  marker, place) => {
+  setMarkerInfoWindow = ( map,  marker, place, saved) => {
     marker.addListener('click', () => {
       // Change content
-      this.state.infowindow.setContent(this.getContentString(place));
+      this.state.infowindow.setContent(this.getContentString(place, saved));
       // Open info window
       this.state.infowindow.open(map, marker);
     })
   }
 
-  getContentString = ( place ) => {
+  getContentString = ( place, saved ) => {
     return `<div class="row">
               <div class="column">
                 ${(place.icon !== undefined ? `<img class="icon" src="${place.icon}" alt="Icon of Place">` : ``)}
@@ -223,9 +224,8 @@ class Map extends Component {
                 <p>${(place.address !== undefined ? place.address : 'Address: N/A')}</p>
                 <p>${(place.phone !== undefined ? place.phone : 'Phone #: N/A')}</p>
                 <p>${(place.price_level !== undefined ? "<strong>Price Range:</strong> " + "$".repeat(place.price_level) : 'Price Range: N/A')}</p>
-                <button onclick="clickedViewMore(\'${place.place_id}\')">View More</button>
-                <button onclick="clickedAddToMap(\'${place.place_id}\')">+ Add to Map</button>
-              </div>
+                <button onclick="clickedViewMore(\'${place.place_id}\')">View Conversation</button>
+                ${ (saved === true) ? `<button onclick="clickedRemoveFromMap(\'${place.place_id}\')">Remove</button>`: `<button onclick="clickedAddToMap(\'${place.place_id}\')">Add</button>`}                
             </div>`;
   }
 
@@ -243,6 +243,10 @@ class Map extends Component {
       // TODO different stuff based on response
       console.log(response);
     });
+  }
+
+  clickedRemoveFromMap = () => {
+
   }
 
   render() {

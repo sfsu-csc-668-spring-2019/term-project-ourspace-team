@@ -54,6 +54,7 @@
   border-radius: 3px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   font-size: 14px;
+  font-family: Roboto;
   outline: none;
   text-overflow: ellipses;
 }
@@ -69,4 +70,8 @@
 .icon {
   height: 150px;
   width: 150px;
+}
+
+.roboto{
+  font-family: Roboto;
 }

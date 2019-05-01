@@ -15,7 +15,6 @@ export class UserRepo {
                 {email: email}
             ]
         }).then((data) => {
-            console.log(data)
             return data;
         }).catch((e) => {console.log(`this is the e: ${e}`); return [];});
     }

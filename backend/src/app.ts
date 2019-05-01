@@ -29,6 +29,10 @@ app.use(bodyParser.json());
 
 app.post("/login", loginController.tryToLogin);
 app.post("/register", registrationController.saveNewUser);
+app.post("/addPlaceToMap",);
+app.get("/getMaps",);
+app.post("/searchUser",);
+
 
 createConnection().then(async connection => {
   console.log("Connected to DB");

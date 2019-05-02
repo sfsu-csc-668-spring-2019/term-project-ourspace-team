@@ -21,4 +21,12 @@ export class User extends BaseEntity{
     @Column()
     email: string;
 
+    // other userids
+    // @Column()
+    // followers: Int16Array;
+
+    // other userids
+    // @Column()
+    // following: Int16Array;
+
 }

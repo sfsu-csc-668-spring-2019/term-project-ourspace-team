@@ -5,22 +5,22 @@ import * as bcrypt from 'bcryptjs';
 
 import "reflect-metadata";
 
-export class LoginObj {
+export class LoginObject {
 
-    async tryToLogin(req: Request, res: Response, next: NextFunction) {
+    async login(req: Request, res: Response, next: NextFunction) {
         let userRepo: UserRepo = new UserRepo();
-        const userName: string = req.body.username;
-        const userEmail: string = req.body.email;
-        const passWord: any = req.body.password;
+        const username: string = req.body.username;
+        const useremail: string = req.body.email;
+        const password: any = req.body.password;
         const name: string = req.body.name;
 
         console.log("Try to login");
-        const user = await userRepo.doesUserAlreadyExist(userName, userEmail);
+        const user = await userRepo.doesUserAlreadyExist(username, useremail);
 
         if (user.length != 0) {
             console.log('User exists');
-            if (userName === user[0].username) {
-                const match = await bcrypt.compare(passWord, user[0].password);
+            if (username === user[0].username) {
+                const match = await bcrypt.compare(password, user[0].password);
                 console.log(match);
                 if (match === true) {
                     //response.send('logged in');

@@ -8,13 +8,14 @@ import passport from "passport";
 import "reflect-metadata";
 import {createConnection} from "typeorm";
 
-import * as loginController from "./controllers/login";
-import * as registrationController from "./controllers/registration";
+import {LoginObject} from "./controllers/login";
+import {Registration} from "./controllers/registration";
 
 dotenv.config({path: ".env.example"});
 
 const app = express();
-const reg = new registrationController.Registration();
+const loginManager = new LoginObject();
+const registerManager = new Registration();
 
 app.set("port", process.env.PORT || 5000);
 
@@ -28,8 +29,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 
-app.post("/login", loginController.tryToLogin);
-app.post("/register", reg.saveUser);
+app.post("/login", loginManager.login);
+app.post("/register", registerManager.saveNewUser);
 
 createConnection().then(async connection => {
   console.log("Connected to DB");

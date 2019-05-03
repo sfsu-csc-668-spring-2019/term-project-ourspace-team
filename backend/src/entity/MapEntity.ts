@@ -14,6 +14,6 @@ export class Map extends BaseEntity{
     userid: number;
 
     //foreign key
-    @Column()
-    placeids: ;
+    // @Column()
+    // placeids: Int16Array;
 }

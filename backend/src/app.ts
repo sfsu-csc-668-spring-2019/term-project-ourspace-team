@@ -10,6 +10,7 @@ import {createConnection} from "typeorm";
 
 import * as loginController from "./controllers/login";
 import * as registrationController from "./controllers/registration";
+import * as passportConfig from "./config/passport";
 
 dotenv.config({path: ".env.example"});
 
@@ -17,9 +18,16 @@ const app = express();
 
 app.set("port", process.env.PORT || 5000);
 
-//app.use(session({ secret: SESSION_SECRET}));
-//app.use(passport.initialize());
-//app.use(passport.session());
+app.use(session({
+  resave: false,
+  saveUninitialized: false,
+  secret: 'keyboard cat',
+  proxy: true,
+  cookie: {
+  }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

@@ -12,4 +12,10 @@ export class Place extends BaseEntity{
     @Column()
     googleid: string;
 
+    //foriegn key for userid
+    @Column()
+    favorites: number[];
+
+    @Column()
+    comments: string[];
 }

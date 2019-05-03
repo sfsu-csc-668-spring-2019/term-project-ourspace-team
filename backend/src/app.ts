@@ -21,8 +21,8 @@ app.set("port", process.env.PORT || 5000);
 //Session secure is default
 app.use(session({
   resave: false,
-  saveUninitialized: true,
-  secret: 'keyboard cat',
+  saveUninitialized: false,
+  secret: 'qopiewuropquierkjhdsfd',
   //cookie: {secure: true}
 }));
 

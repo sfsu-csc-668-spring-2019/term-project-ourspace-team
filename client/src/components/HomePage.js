@@ -8,12 +8,11 @@ import { CardContent } from '@material-ui/core';
 import PlacesList from './Home_Components/PlacesList';
 
 var mapStyles={
-    height: '100%',
+    height: 'calc(100% - 64px)',
     width: '75%',
     left: 'auto',
     right: '0px',
-    top: '64px',
-    position: 'fixed',
+    position: 'absolute',
     display: 'block',
 
 };

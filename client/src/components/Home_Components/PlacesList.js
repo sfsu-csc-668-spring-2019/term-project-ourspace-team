@@ -17,10 +17,18 @@ const styles = theme => ({
     padding: theme.spacing.unit * 2,
     marginLeft: '1rem',
     margin: 'auto',
-    maxWidth: '100%',
-    maxHeight: '22rem',
     overflowY: 'auto',
+    maxHeight:'350px',
   },
+  list:{
+    flexDirection: 'column',
+    height:'100%',
+    overflowY: 'auto',
+
+  },
+  listItem:{
+    flexGrow:'1',
+  }
 
 });
 
@@ -40,10 +48,10 @@ class PlacesList extends React.Component {
     return (
       <Paper className={classes.paper}>
 
-          <div >
+          <div className={classes.list}>
               <List >
                   {generate(
-                      <ListItem>
+                      <ListItem className={classes.listItem}>
                           <ListItemText
                               primary="Single-line item"
                           />

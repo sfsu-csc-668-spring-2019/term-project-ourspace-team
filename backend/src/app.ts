@@ -10,7 +10,7 @@ import {createConnection} from "typeorm";
 
 import * as loginController from "./controllers/login";
 import * as registrationController from "./controllers/registration";
-//import * as passportConfig from "./config/passport";
+import * as passportConfig from "./config/passport";
 
 dotenv.config({path: ".env.example"});
 
@@ -25,10 +25,9 @@ app.use(session({
   secret: 'qopiewuropquierkjhdsfd',
   //cookie: {secure: true}
 }));
-
-
 app.use(passport.initialize());
 app.use(passport.session());
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

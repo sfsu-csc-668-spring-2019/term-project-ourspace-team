@@ -1,23 +1,23 @@
-// import passport from "passport";
-// import request from "request";
-// import passportLocal from "passport-local";
-// import _ from "lodash";
+import passport from "passport";
+import request from "request";
+import passportLocal from "passport-local";
+import _ from "lodash";
 
-// // import { User, UserType } from '../models/User';
-// import { User } from "../entity/UserEntity";
-// import { Request, Response, NextFunction } from "express";
+// import { User, UserType } from '../models/User';
+import { User } from "../entity/UserEntity";
+import { Request, Response, NextFunction } from "express";
 
-// const LocalStrategy = passportLocal.Strategy;
+const LocalStrategy = passportLocal.Strategy;
 
-// passport.serializeUser<any, any>((user, done) => {
-//   done(undefined, user.id);
-// });
+passport.serializeUser<any, any>((user, done) => {
+  done(undefined, user.id);
+});
 
-// passport.deserializeUser((id, done) => {
-//   User.findById(id, (err, user) => {
-//     done(err, user);
-//   });
-// });
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
 
 
 // /**

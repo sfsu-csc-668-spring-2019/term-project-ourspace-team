@@ -4,6 +4,8 @@ import { UserRepo } from "../repository/user-repository"
 import * as bcrypt from 'bcryptjs';
 
 import "reflect-metadata";
+import passport from "passport";
+import { doesNotReject } from "assert";
 
 export let tryToLogin = async (req: Request, res: Response, next: NextFunction) => {
     let userRepo: UserRepo = new UserRepo();
@@ -23,6 +25,10 @@ export let tryToLogin = async (req: Request, res: Response, next: NextFunction) 
             if (match === true) {
                 //response.send('logged in');
                 console.log('logged in');
+                req.login(user[0].id, function(err) {
+                    //redirected to user login
+                    console.log("login user passport");
+                });
             }
 
             if (!match) {
@@ -36,3 +42,14 @@ export let tryToLogin = async (req: Request, res: Response, next: NextFunction) 
     }
 
 }
+
+passport.serializeUser(function(user_id, done){
+    done(null, user_id);
+});
+
+passport.deserializeUser(function(user_id, done){
+    // User.find({id: user_id}){
+    //     done(null, user_id);
+    // };
+    done(null, user_id);
+});

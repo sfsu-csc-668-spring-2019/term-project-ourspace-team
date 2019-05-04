@@ -13,7 +13,7 @@ export class Map extends BaseEntity{
     @Column()
     userid: number;
 
-    //foreign key
+    //foreign key one map to many place ids?
     // @Column()
     // placeids: ;
 }

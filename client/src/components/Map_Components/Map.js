@@ -254,6 +254,7 @@ class Map extends Component {
       <div 
         id="mapContainer" 
         clasName="mapContainer"
+        style={mapContainerStyle} 
       >
         {/* Search Box */}
         <input 
@@ -271,5 +272,10 @@ class Map extends Component {
     );
   }
 }
+
+var mapContainerStyle = {
+  height: '100%',
+  overflow: 'hidden',
+};
 
 export default Map;

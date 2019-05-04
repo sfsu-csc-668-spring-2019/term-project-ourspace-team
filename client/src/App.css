@@ -33,6 +33,10 @@
   }
 }
 
+.mainContent{
+  min-height: calc(100% - 64px);
+}
+
 .logo{
   max-height:50px;
 }

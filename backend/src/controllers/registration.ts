@@ -7,7 +7,7 @@ import "reflect-metadata";
 
 export class Registration{
     
-    async saveUser(req: Request, res: Response, next: NextFunction) {
+    async saveNewUser(req: Request, res: Response, next: NextFunction) {
         const userRepo: UserRepo = new UserRepo();
         
         const username: string = req.body.username;
@@ -17,7 +17,6 @@ export class Registration{
 
         console.log("Received Save User => POST");
         let user = await userRepo.doesUserAlreadyExist(username, email);
-        console.log(user);
         if (user.length === 0){
             const newUser: User = new User();
             const hashPassword = await bcrypt.hash(password, 10);

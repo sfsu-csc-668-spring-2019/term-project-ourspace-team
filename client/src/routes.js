@@ -4,6 +4,7 @@ import Landing from './components/Landing'
 import SearchPage from './components/SearchPage'
 import Home from './components/HomePage'
 import ProfilePage from './components/ProfilePage'
+import TrendingPage from './components/TrendingPage';
 
 export default props => (
     <BrowserRouter>
@@ -13,6 +14,7 @@ export default props => (
           <Route exact path='/search' component={ SearchPage } />
           <Route exact path='/home' component={Home}/>
           <Route exact path='/profile' component={ProfilePage}/>
+          <Route exact path='/trending' component={TrendingPage}/>
         </Switch>
     </BrowserRouter>
   )

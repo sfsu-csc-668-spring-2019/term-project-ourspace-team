@@ -28,7 +28,7 @@ function TopBar(props){
           <AppBar position="static">
             <Toolbar>
               <img src={logo} className="logo" alt="MapSpace" />
-              <a href="/#" className={classes.link}>
+              <a href="/trending" className={classes.link}>
                 Trending
               </a> 
 

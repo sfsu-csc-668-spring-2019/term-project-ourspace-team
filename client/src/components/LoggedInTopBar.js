@@ -76,7 +76,7 @@ class LoggedInTopBar extends React.Component {
             <a href="/home">
             <img src={logo} className="logo" alt="MapSpace" />
             </a>
-            <a href="/#" className={classes.link}>
+            <a href="/trending" className={classes.link}>
               Trending
             </a>
             <span className={classes.menu}>

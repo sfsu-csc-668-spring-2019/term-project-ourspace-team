@@ -15,10 +15,10 @@ var mapStyles={
     display: 'block',
 
 };
-
+// Maps are rendered into the tab containers
 function TabContainer(props) {
   return (
-    <Grid direction="column" style={mapStyles}>              
+    <Grid direction="column" container style={mapStyles}>              
         <Map />
     </Grid>
   );

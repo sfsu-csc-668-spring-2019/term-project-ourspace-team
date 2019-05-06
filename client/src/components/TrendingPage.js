@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import Grid from '@material-ui/core/Grid';
 import LoggedInTopBar from './LoggedInTopBar';
-import ProfileCard from './Home_Components/ProfileCard';
 import Map from './Map_Components/Map';
 import '../App.css';
-import PlacesList from './Home_Components/PlacesList';
+import TrendingPlacesList from './Trending_Page_Components/TrendingPlacesList';
 
 var mapStyles={
     height: 'calc(100% - 64px)',
@@ -18,7 +17,7 @@ var mapStyles={
 
 
 
-class HomePage extends Component {
+class TrendingPage extends Component {
 
 
     render() {
@@ -29,15 +28,10 @@ class HomePage extends Component {
                     <section className="mainContent">
                     <Grid container spacing={24}>
                         <Grid container item sm={12} direction="row" spacing={24}>
-                            <Grid container direction="column" item sm={3} spacing={8}>
-                                <Grid item >
-                                  <ProfileCard/>
-                                </Grid>
-                                <Grid item >
-                                  <PlacesList/>
-                                </Grid>
+                            <Grid item sm={3} >
+                              <TrendingPlacesList/>
                             </Grid>
-                            <Grid item xs={9} container direction="column" style={mapStyles}>
+                            <Grid item sm={9} container direction="column" style={mapStyles}>
                                 <Map />
                             </Grid>
                         </Grid>
@@ -49,4 +43,4 @@ class HomePage extends Component {
     }
 }
 
-export default HomePage;
+export default TrendingPage;

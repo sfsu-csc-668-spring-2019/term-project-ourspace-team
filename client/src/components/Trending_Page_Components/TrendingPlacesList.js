@@ -5,9 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-
 
 const styles = theme => ({
   root: {
@@ -16,9 +13,10 @@ const styles = theme => ({
   paper: {
     padding: theme.spacing.unit * 2,
     marginLeft: '1rem',
+    marginTop:'.5rem',
     margin: 'auto',
     overflowY: 'auto',
-    maxHeight:'350px',
+    maxHeight:'450px',
   },
   list:{
     flexDirection: 'column',
@@ -40,7 +38,7 @@ function generate(element) {
   );
 }
 
-class PlacesList extends React.Component {
+class TrendingPlacesList extends React.Component {
 
   
   render() {
@@ -65,7 +63,7 @@ class PlacesList extends React.Component {
 
   }
 }
-PlacesList.propTypes = {
+TrendingPlacesList.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(PlacesList);
+export default withStyles(styles)(TrendingPlacesList);

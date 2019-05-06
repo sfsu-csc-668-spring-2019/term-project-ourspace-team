@@ -73,16 +73,18 @@ class LoggedInTopBar extends React.Component {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
+            <a href="/home">
             <img src={logo} className="logo" alt="MapSpace" />
-            <a href="/#" className={classes.link}>
+            </a>
+            <a href="/trending" className={classes.link}>
               Trending
             </a>
             <span className={classes.menu}>
-              <a href="/friends" className={classes.menu}>
+              <a href="/search" className={classes.menu}>
                 Find Friends</a>
 
-              <a href="/messages" className={classes.menu}>
-                Messages </a>
+              {/* <a href="/messages" className={classes.menu}>
+                Messages </a> */}
             </span>
             <IconButton
                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}

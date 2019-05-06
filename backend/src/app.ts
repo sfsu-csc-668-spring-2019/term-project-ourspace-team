@@ -44,9 +44,9 @@ app.use(bodyParser.json());
 app.get("/", homepageManager.indexpage);
 app.post("/login", loginManager.login);
 app.post("/register", registerManager.saveNewUser);
-app.post("/addPlaceToMap",);
-app.get("/getMaps",);
-app.post("/searchUser",);
+//app.post("/addPlaceToMap",);
+app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
+//app.post("/searchUser",);
 
 createConnection().then(async connection => {
   console.log("Connected to DB");

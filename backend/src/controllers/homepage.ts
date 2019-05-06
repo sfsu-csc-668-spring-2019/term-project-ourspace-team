@@ -15,5 +15,12 @@ export class Homepage {
     async indexpage(req: Request, res: Response, next: NextFunction) {
         console.log(req.user);
         console.log(req.isAuthenticated());
+        res.send("Index Page Hit");
+    }
+
+    //example get request using is authenticated
+    async exampleget(req: Request, res: Response, next: NextFunction) {
+        console.log("Auth has allowed this");
+        res.send("example get");
     }
 }

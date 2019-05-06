@@ -8,6 +8,7 @@ import passport from "passport";
 import "../config/passport";
 import { doesNotReject } from "assert";
 import { IVerifyOptions } from "passport-local";
+import request = require("request");
 
 export class LoginObject {
 
@@ -17,9 +18,8 @@ export class LoginObject {
         const username: string = req.body.username;
         const useremail: string = req.body.email;
         const password: any = req.body.password;
-        const name: string = req.body.name;
-
-    
+        //const name: string = req.body.name;
+        console.log("What is email shown as: " + useremail);
       
         console.log("Try to login");
         const user = await userRepo.doesUserAlreadyExist(username, useremail);
@@ -30,34 +30,28 @@ export class LoginObject {
                 const match = await bcrypt.compare(password, user[0].password);
                 console.log(match);
                 if (match === true) {
-                    //response.send('logged in');
                     console.log("passport autheticate");
-                    //passport.authenticate("local", {failureRedirect: '/'}), function (req, res) {
-                    //passport.authenticate("local", {});
-                    // passport.authenticate("local", function(err, user, info){
-                    //     console.log("inner auth");
-                    //     console.log(err);
-                    //     console.log(user);
-                    //     console.log(info);
-                    //     // handle succes or failure
-                    
-                    // })(req,res,next); 
                     req.login(user[0].id, function(err){
                         console.log("logging in");
-                        res.send('logged in look for cookie');
+                        res.send('Succesful Login');
                     });
-                    console.log(req.body);
                 }
 
                 if (!match) {
-                    //response.send('login failed');
+                    response.send('login failed');
                     console.log('login failed');
                 }
             }
         } else {
-            //response.send('User not found');
+            response.send('User not found');
             console.log('User not found');
         }
 
     }
+
+    async logout(req: Request, res: Response, next: NextFunction){
+        req.logout();
+        res.redirect("/");
+    }
+
 }

@@ -1,33 +1,31 @@
 import passport from "passport";
 import passportLocal from "passport-local";
-import request from "request";
 
-// import { User, UserType } from '../models/User';
 import { User } from "../entity/UserEntity";
 import { Request, Response, NextFunction } from "express";
 
 const LocalStrategy = passportLocal.Strategy;
+
 
 passport.serializeUser<any, any>((user, done) => {
   console.log("Serialize User");
   done(undefined, user);
 });
 
-passport.deserializeUser((user, done) => {
 
+passport.deserializeUser((user, done) => {
+  console.log("Deserialize User");
 // let user = User.find({
 //   where: [ 
-//     {username: username}
+//     {: username}
 //   ]
 //   }).then((user) => {
 //     console.log(user);
 //   })
-  console.log("DeserializeUser");
   done(null, user);
-  
 });
 
-
+//Unused
 passport.use(new LocalStrategy(function (username, password, done) {
   console.log("inner passport");
   User.findOne({
@@ -43,9 +41,8 @@ passport.use(new LocalStrategy(function (username, password, done) {
 
 
 export let isAuthenticated = (req: Request, res: Response, next: NextFunction) => {
-    if (req.isAuthenticated()) {
-      return next();
-    } 
-    res.redirect("/");
-
+  if (req.isAuthenticated()) {
+    return next();
+  } 
+  res.redirect("/");
 };

@@ -43,6 +43,7 @@ app.use(bodyParser.json());
 
 app.get("/", homepageManager.indexpage);
 app.post("/login", loginManager.login);
+app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.post("/register", registerManager.saveNewUser);
 //app.post("/addPlaceToMap",);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);

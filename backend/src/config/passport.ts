@@ -28,15 +28,16 @@ let user = User.find({
 });
 
 
-passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+passport.use(new LocalStrategy(function (username, password, done) {
+  console.log("inner passport");
   User.findOne({
-    where: { email: email.toLowerCase() },
+    where: { username: username },
   }).then((user) => {
     if (!user) {
-      return done(null, false, { message: `Email ${email} not found.` });
+      return done(null, false, { message: `Email ${username} not found.` });
     }
+    console.log("user is going to be passed");
     return done(null, user);
-    
   });
 }));
 

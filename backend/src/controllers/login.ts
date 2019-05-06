@@ -1,6 +1,6 @@
 import { Response, Request, NextFunction, response } from "express";
 import { User } from "../entity/UserEntity";
-import { UserRepo } from "../repository/user-repository"
+import { UserRepo } from "../repository/user-repository";
 import * as bcrypt from 'bcryptjs';
 
 import "reflect-metadata";
@@ -18,6 +18,8 @@ export class LoginObject {
         const useremail: string = req.body.email;
         const password: any = req.body.password;
         const name: string = req.body.name;
+
+    
       
         console.log("Try to login");
         const user = await userRepo.doesUserAlreadyExist(username, useremail);
@@ -29,15 +31,18 @@ export class LoginObject {
                 console.log(match);
                 if (match === true) {
                     //response.send('logged in');
-                    console.log('logging in');
-                    // req.login(user[0].id, function(err) {
-                    // //redirected to user login
-                    //     console.log("login user passport");
-                    // });
                     console.log("passport autheticate");
-                    passport.authenticate("local", (err: Error, user: User, info: IVerifyOptions) => {
+                    //passport.authenticate("local", {failureRedirect: '/'}), function (req, res) {
+                    //passport.authenticate("local", {});
+                    passport.authenticate("local", function(err, user, info){
                         console.log("inner auth");
-                    });
+                        console.log(err);
+                        console.log(user);
+                        console.log(info);
+                        // handle succes or failure
+                    
+                    })(req,res,next); 
+                    console.log(req.body);
                 }
 
                 if (!match) {

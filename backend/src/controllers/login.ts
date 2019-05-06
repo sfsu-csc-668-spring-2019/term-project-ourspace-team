@@ -5,10 +5,13 @@ import * as bcrypt from 'bcryptjs';
 
 import "reflect-metadata";
 import passport from "passport";
+import "../config/passport";
 import { doesNotReject } from "assert";
+import { IVerifyOptions } from "passport-local";
 
 export class LoginObject {
 
+    //Post /login
     async login(req: Request, res: Response, next: NextFunction) {
         let userRepo: UserRepo = new UserRepo();
         const username: string = req.body.username;
@@ -26,11 +29,15 @@ export class LoginObject {
                 console.log(match);
                 if (match === true) {
                     //response.send('logged in');
-                    console.log('logged in');
-                  req.login(user[0].id, function(err) {
-                    //redirected to user login
-                    console.log("login user passport");
-                });
+                    console.log('logging in');
+                    // req.login(user[0].id, function(err) {
+                    // //redirected to user login
+                    //     console.log("login user passport");
+                    // });
+                    console.log("passport autheticate");
+                    passport.authenticate("local", (err: Error, user: User, info: IVerifyOptions) => {
+                        console.log("inner auth");
+                    });
                 }
 
                 if (!match) {
@@ -42,5 +49,6 @@ export class LoginObject {
             //response.send('User not found');
             console.log('User not found');
         }
+
     }
 }

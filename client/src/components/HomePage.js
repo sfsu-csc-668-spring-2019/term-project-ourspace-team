@@ -6,6 +6,7 @@ import Map from './Map_Components/Map';
 import '../App.css';
 import { CardContent } from '@material-ui/core';
 import PlacesList from './Home_Components/PlacesList';
+import CommentsSection from './Map_Components/CommentsSection'
 
 
 

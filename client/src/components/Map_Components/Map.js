@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import * as MapFunction from './functions/index'
+import CommentsSection from './CommentsSection'
 import './Map.css'
 
 class Map extends Component {
@@ -10,6 +12,17 @@ class Map extends Component {
     },
     zoom: 12.5,
     infowindow: undefined,
+    openedPlace: {
+      place_id: undefined,
+      name: undefined,
+      address: undefined,
+      lat: undefined,
+      lng: undefined,
+      phone: undefined,
+      price_level: undefined,
+      photos: [],
+      icon: undefined,
+    },
     google_place : [
       {
         address: "982 Market St, San Francisco, CA 94102, USA",
@@ -59,26 +72,12 @@ class Map extends Component {
   }
 
   renderMap = () => {
-    this.loadGoogleMapsScript(`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}js&callback=initMap&libraries=places`);
+    MapFunction.loadGoogleMapsScript(`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}js&callback=initMap&libraries=places`);
     window.initMap = this.initMap;
   }
 
-  loadGoogleMapsScript = (url) => {
-    // Select first Script tag on page.
-    let index = window.document.getElementsByTagName("script")[0];
-
-    // Create New Script Tag for Google Maps API
-    let script = window.document.createElement("script");
-    script.src = url;
-    script.async = true;
-    script.defer = true;
-
-    // Prepend Google Maps API Script to the first of list of scripts
-    index.parentNode.insertBefore(script, index);
-  }
-
   initMap = () => {
-    const map = this.createNewMap();
+    const map = MapFunction.createNewMap( this.state.sfPosition, this.state.zoom );
 
     this.setState({ infowindow: new window.google.maps.InfoWindow() });
 
@@ -94,28 +93,27 @@ class Map extends Component {
   // TODO - Delete this later or change to modal
   clickedViewMore = (place_id) => {
     let index = this.state.google_place.map((place) => { return place.place_id; }).indexOf(place_id);
-    alert(this.state.google_place[index].name);
+    let place = this.state.google_place[index];
+    this.setOpenedPlace( place )
+    this.state.infowindow.close();
+    // let commentsSection = MapFunction.getCommentsSection( this.state.google_place[index] );
+    // document.getElementById('place-comments').innerHTML = commentsSection;
+    // document.getElementById('place-comments-title').innerHTML = this.state.google_place[index].name;
+    // document.getElementById('place-comments-phone').innerHTML = this.state.google_place[index].phone;
+    // document.getElementById('place-comments-address').innerHTML = this.state.google_place[index].address;
   }
 
-  createNewMap = () => {
-    return new window.google.maps.Map(document.getElementById('map'), {
-      center: this.state.sfPosition,
-      zoom: this.state.zoom,
-      clickableIcons: false,
-      mapTypeControl: true,
-      mapTypeControlOptions: {
-        style: window.google.maps.MapTypeControlStyle.DROPDOWN_MENU,
-        mapTypeIds: ['roadmap', 'satellite']
-      }
-    });
+  setOpenedPlace = ( place ) => {
+    this.setState({ openedPlace: place });
   }
 
   addSearchBoxAndAutoComplete = ( map ) => {
     // Create the search box and link it to the UI element
     let input = document.getElementById('pac-input');
+    let placeComments = document.getElementById('place-comments'); //TODO
     let searchBox = new window.google.maps.places.SearchBox(input);
-    map.controls[window.google.maps.ControlPosition.TOP_LEFT].push(input);
-
+    map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(input);
+    map.controls[window.google.maps.ControlPosition.BOTTOM_LEFT].push(placeComments);//TODO
     // Bound the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', () => {
       searchBox.setBounds(map.getBounds());
@@ -141,7 +139,7 @@ class Map extends Component {
           return;
         }
 
-        let place_photos = this.getPlacePhotos(place);
+        let place_photos = MapFunction.getPlacePhotos(place);
 
         let newPlace = {
           place_id: place.place_id,
@@ -151,14 +149,14 @@ class Map extends Component {
           lng: place.geometry.location.lng(),
           phone: place.international_phone_number,
           price_level: place.price_level,
-          photos: place_photos,
-          icon: place_photos[0]
+          photos: ( place_photos === undefined) ? [] : place_photos,
+          icon: (place_photos === undefined) ? undefined : place_photos[0],
         }
 
         this.addNewPlaceToState(newPlace);
 
         // Create a marker and set its content
-        this.setMarkerInfoWindow(map, this.getMarker(map, newPlace), newPlace, false)
+        this.setMarkerInfoWindow(map, MapFunction.getMarker(map, newPlace), newPlace, false)
 
         if (place.geometry.viewport) {
           // Only geocodes have viewport.
@@ -172,27 +170,10 @@ class Map extends Component {
   }
 
   renderSavedPlaces = ( map ) => {
-    this.state.google_place.map((place) => {
-      this.setMarkerInfoWindow(map, this.getMarker(map, place), place, true);
-    });
-  }
-
-  getMarker = ( map, place ) => {
-    return new window.google.maps.Marker({
-      position: { lat: place.lat, lng: place.lng },
-      map: map,
-      title: place.name,
-    });
-  }
-
-  getPlacePhotos = (place) => {
-    let place_photos = [];
-
-    place.photos.forEach((photo) => {
-      place_photos.push(photo.getUrl());
-    });
-
-    return place_photos;
+    // TODO UNCOMMENT THIS WHEN READY TO DEPLOY
+    // this.state.google_place.map((place) => {
+    //   this.setMarkerInfoWindow(map, this.getMarker(map, place), place, true);
+    // });
   }
 
   addNewPlaceToState = (place) => {
@@ -208,25 +189,10 @@ class Map extends Component {
   setMarkerInfoWindow = ( map,  marker, place, saved) => {
     marker.addListener('click', () => {
       // Change content
-      this.state.infowindow.setContent(this.getContentString(place, saved));
+      this.state.infowindow.setContent(MapFunction.getContentString(place, saved));
       // Open info window
       this.state.infowindow.open(map, marker);
     })
-  }
-
-  getContentString = ( place, saved ) => {
-    return `<div class="row">
-              <div class="column">
-                ${(place.icon !== undefined ? `<img class="icon" src="${place.icon}" alt="Icon of Place">` : ``)}
-              </div>
-              <div class="column">
-                <strong>${place.name}</strong>
-                <p>${(place.address !== undefined ? place.address : 'Address: N/A')}</p>
-                <p>${(place.phone !== undefined ? place.phone : 'Phone #: N/A')}</p>
-                <p>${(place.price_level !== undefined ? "<strong>Price Range:</strong> " + "$".repeat(place.price_level) : 'Price Range: N/A')}</p>
-                <button onclick="clickedViewMore(\'${place.place_id}\')">View Conversation</button>
-                ${ (saved === true) ? `<button onclick="clickedRemoveFromMap(\'${place.place_id}\')">Remove</button>`: `<button onclick="clickedAddToMap(\'${place.place_id}\')">Add</button>`}                
-            </div>`;
   }
 
   clickedAddToMap = (place_id) => {
@@ -263,10 +229,13 @@ class Map extends Component {
           placeholder="Search Here"
         ></input>
 
+        {/* Place Comments Section */}
+        <CommentsSection place={this.state.openedPlace} isShowing={"none"}/>
         {/* Map */}
         <div 
           id="map"
-        ></div>
+        >
+        </div>
       </div>
     );
   }

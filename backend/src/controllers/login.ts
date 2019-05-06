@@ -34,14 +34,18 @@ export class LoginObject {
                     console.log("passport autheticate");
                     //passport.authenticate("local", {failureRedirect: '/'}), function (req, res) {
                     //passport.authenticate("local", {});
-                    passport.authenticate("local", function(err, user, info){
-                        console.log("inner auth");
-                        console.log(err);
-                        console.log(user);
-                        console.log(info);
-                        // handle succes or failure
+                    // passport.authenticate("local", function(err, user, info){
+                    //     console.log("inner auth");
+                    //     console.log(err);
+                    //     console.log(user);
+                    //     console.log(info);
+                    //     // handle succes or failure
                     
-                    })(req,res,next); 
+                    // })(req,res,next); 
+                    req.login(user[0].id, function(err){
+                        console.log("logging in");
+                        res.send('logged in look for cookie');
+                    });
                     console.log(req.body);
                 }
 

@@ -10,18 +10,18 @@ const LocalStrategy = passportLocal.Strategy;
 
 passport.serializeUser<any, any>((user, done) => {
   console.log("Serialize User");
-  done(undefined, user.id);
+  done(undefined, user);
 });
 
-passport.deserializeUser((id, done) => {
+passport.deserializeUser((user, done) => {
 
-let user = User.find({
-  where: [ 
-    {id: id}
-  ]
-  }).then((user) => {
-    console.log(user);
-  })
+// let user = User.find({
+//   where: [ 
+//     {username: username}
+//   ]
+//   }).then((user) => {
+//     console.log(user);
+//   })
   console.log("DeserializeUser");
   done(null, user);
   

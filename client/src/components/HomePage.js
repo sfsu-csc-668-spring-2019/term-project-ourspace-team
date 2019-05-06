@@ -5,6 +5,7 @@ import ProfileCard from './Home_Components/ProfileCard';
 import Map from './Map_Components/Map';
 import '../App.css';
 import PlacesList from './Home_Components/PlacesList';
+import CommentsSection from './Map_Components/CommentsSection'
 
 var mapStyles={
     height: 'calc(100% - 64px)',

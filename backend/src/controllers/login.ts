@@ -1,19 +1,26 @@
 import { Response, Request, NextFunction, response } from "express";
 import { User } from "../entity/UserEntity";
-import { UserRepo } from "../repository/user-repository"
+import { UserRepo } from "../repository/user-repository";
 import * as bcrypt from 'bcryptjs';
 
 import "reflect-metadata";
+import passport from "passport";
+import "../config/passport";
+import { doesNotReject } from "assert";
+import { IVerifyOptions } from "passport-local";
+import request = require("request");
 
 export class LoginObject {
 
+    //Post /login
     async login(req: Request, res: Response, next: NextFunction) {
         let userRepo: UserRepo = new UserRepo();
         const username: string = req.body.username;
         const useremail: string = req.body.email;
         const password: any = req.body.password;
-        const name: string = req.body.name;
-
+        //const name: string = req.body.name;
+        console.log("What is email shown as: " + useremail);
+      
         console.log("Try to login");
         const user = await userRepo.doesUserAlreadyExist(username, useremail);
 
@@ -23,18 +30,28 @@ export class LoginObject {
                 const match = await bcrypt.compare(password, user[0].password);
                 console.log(match);
                 if (match === true) {
-                    //response.send('logged in');
-                    console.log('logged in');
+                    console.log("passport autheticate");
+                    req.login(user[0].email, function(err){
+                        console.log("logging in");
+                        res.send('Succesful Login');
+                    });
                 }
 
                 if (!match) {
-                    //response.send('login failed');
+                    res.send('login failed');
                     console.log('login failed');
                 }
             }
         } else {
-            //response.send('User not found');
+            res.send('User not found');
             console.log('User not found');
         }
+
     }
+
+    async logout(req: Request, res: Response, next: NextFunction){
+        req.logout();
+        res.redirect("/");
+    }
+
 }

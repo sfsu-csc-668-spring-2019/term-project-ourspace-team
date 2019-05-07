@@ -38,12 +38,12 @@ export class LoginObject {
                 }
 
                 if (!match) {
-                    response.send('login failed');
+                    res.send('login failed');
                     console.log('login failed');
                 }
             }
         } else {
-            response.send('User not found');
+            res.send('User not found');
             console.log('User not found');
         }
 

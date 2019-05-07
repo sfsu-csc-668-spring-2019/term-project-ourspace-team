@@ -14,9 +14,15 @@ export class UserRepo {
                 {username: username}, 
                 {email: email}
             ]
-        }).then((data) => {
-            return data;
-        }).catch((e) => {console.log(`this is the e: ${e}`); return [];});
+        })
+        .then( users => {
+            if( users.length === 0 ) {
+                return users;
+            } else {
+                throw "User is taken";
+            }
+        })
+        // .catch((e) => {console.log(`this is the e: ${e}`); return [];});
     }
  
 }

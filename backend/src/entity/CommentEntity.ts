@@ -4,7 +4,7 @@ import {Column} from "typeorm";
 import {BaseEntity} from "typeorm";
 
 @Entity("comment")
-export class comment extends BaseEntity{
+export class Comment extends BaseEntity{
 
     @PrimaryGeneratedColumn()
     id: number;

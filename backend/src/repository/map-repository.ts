@@ -3,7 +3,8 @@ import { json } from "body-parser";
  
 export class MapRepo {
     saveMap(map: Map){
-        return undefined
+        console.log(Map);
+        return
     }
 
 }

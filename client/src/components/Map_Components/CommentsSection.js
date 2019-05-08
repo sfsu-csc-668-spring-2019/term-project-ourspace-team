@@ -44,11 +44,10 @@ class CommentsSection extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log("These are the passed in props")
+    console.log("componentWillReceiveProps Enter - These are the passed in props")
     console.log(nextProps);
     if(nextProps.place !== this.state.place) {
 
-      console.log( nextProps.place.photos );
       this.setState({
         place_id: nextProps.place.place_id,
         name: nextProps.place.name,
@@ -57,7 +56,7 @@ class CommentsSection extends Component {
         lng: nextProps.place.lng,
         phone: nextProps.place.phone,
         price_level: nextProps.place.price_level,
-        // photos: nextProps.place.photos,
+        photos: nextProps.place.photos,
         icon: nextProps.place.icon,
         isShowing: (this.state.isShowing === "none") ? "" : "none" }
       );
@@ -65,17 +64,16 @@ class CommentsSection extends Component {
       console.log("I have set the new state");
     }
 
-    console.log("Place in State is Now");
+    console.log("componentWillReceiveProps End - Place in State is Now");
     console.log(this.state);
   }
 
   toggleShowing = () => {
-    console.log("I clicked the close button");
     this.setState({ isShowing: (this.state.isShowing === "none") ? "" : "none" });
-    console.log(this.state.isShowing);
   }
 
   render() {
+    console.log(this.props);
     return (
         <div
           id="place-comments"
@@ -97,7 +95,8 @@ class CommentsSection extends Component {
               <div className="row">
                 <div id="carouselExampleControls" className="carousel slide card-body col-sm-6" data-ride="carousel">
                   <div className="carousel-inner" style={{height: 200}}>
-                    {/* {this.state.place.photos.map((photo) => (
+                    { this.state.photos &&
+                      (this.state.photos.map((photo) => (
                       <div className="carousel-item">
                         <img className="d-block w-100 img-reponsive"
                               style={{ height: 200 }}
@@ -105,7 +104,7 @@ class CommentsSection extends Component {
                               alt="Slide"
                         />
                       </div>
-                    ))} */}
+                    )))}
                   </div>
                   <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>

@@ -72,7 +72,11 @@ class Map extends Component {
   }
 
   renderMap = () => {
-    MapFunction.loadGoogleMapsScript(`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}js&callback=initMap&libraries=places`);
+    MapFunction.loadScript(`https://code.jquery.com/jquery-3.2.1.slim.min.js`);
+    MapFunction.loadScript(`https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js`);
+    MapFunction.loadScript(`https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js`);
+    MapFunction.loadScript(`https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css`);
+    MapFunction.loadScript(`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}js&callback=initMap&libraries=places`);
     window.initMap = this.initMap;
   }
 
@@ -94,17 +98,17 @@ class Map extends Component {
   clickedViewMore = (place_id) => {
     let index = this.state.google_place.map((place) => { return place.place_id; }).indexOf(place_id);
     let place = this.state.google_place[index];
-    this.setOpenedPlace( place )
+    console.log("openedPlaceBefore Change is");
+    console.log(this.state.openedPlace)
+    this.setState({ openedPlace: place });    
+    console.log("openedPlace After Change is");
+    console.log(this.state.openedPlace)
     this.state.infowindow.close();
     // let commentsSection = MapFunction.getCommentsSection( this.state.google_place[index] );
     // document.getElementById('place-comments').innerHTML = commentsSection;
     // document.getElementById('place-comments-title').innerHTML = this.state.google_place[index].name;
     // document.getElementById('place-comments-phone').innerHTML = this.state.google_place[index].phone;
     // document.getElementById('place-comments-address').innerHTML = this.state.google_place[index].address;
-  }
-
-  setOpenedPlace = ( place ) => {
-    this.setState({ openedPlace: place });
   }
 
   addSearchBoxAndAutoComplete = ( map ) => {

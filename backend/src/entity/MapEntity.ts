@@ -4,7 +4,6 @@ import {Column} from "typeorm";
 import {BaseEntity} from "typeorm";
 import {User} from "./UserEntity";
 import {Place} from "./PlaceEntity";
-import { userInfo } from "os";
 
 @Entity("map")
 export class Map extends BaseEntity{
@@ -16,7 +15,7 @@ export class Map extends BaseEntity{
     @ManyToOne(type => User, user => user.maps)
     user: User;
 
-    //Many maps have many places
+    //Many maps have many places (Map is owner of relationship)
     @ManyToMany(type => Place, place => place.maps)
     @JoinTable()
     places: Place[]

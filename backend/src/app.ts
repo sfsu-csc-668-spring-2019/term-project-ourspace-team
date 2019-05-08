@@ -11,17 +11,19 @@ import {createConnection} from "typeorm";
 
 import * as passportConfig from "./config/passport";
 
-import {Homepage} from "./controllers/homepage";
-import {LoginObject} from "./controllers/login";
-import {Registration} from "./controllers/registration";
-
+import {HomepageController} from "./controllers/homepage";
+import {LoginController} from "./controllers/login";
+import {RegistrationController} from "./controllers/registration";
+import {MapController} from "./controllers/maps";
 
 dotenv.config({path: ".env.example"});
 
 const app = express();
-const loginManager = new LoginObject();
-const registerManager = new Registration();
-const homepageManager = new Homepage();
+const loginManager = new LoginController();
+const registerManager = new RegistrationController();
+const homepageManager = new HomepageController();
+const mapManager = new MapController();
+
 
 app.set("port", process.env.PORT || 5000);
 
@@ -46,9 +48,18 @@ app.post("/login", loginManager.login);
 app.get("/logout", passportConfig.isAuthenticated, loginManager.logout);
 //app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.post("/register", registerManager.saveNewUser);
-//app.post("/addPlaceToMap",);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
+
+//app.get("/getplaces", passportConfig.isAuthenticated,);
+//app.post("/addPlaceToMap")
+
+//app.get("/getUsersForSearch")
 //app.post("/searchUser",);
+
+//app.post("/putCommentOnPlace")
+//app.get("/getCommentsForPlace")
+
+
 
 createConnection().then(async connection => {
   console.log("Connected to DB");

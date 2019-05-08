@@ -10,6 +10,9 @@ export class Place extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
+    @Column()
+    placeid: string;
+    
     //Many places for Many Maps
     @ManyToMany(type => Map, map => map.places)
     maps: Map[];

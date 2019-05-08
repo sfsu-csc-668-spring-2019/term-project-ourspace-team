@@ -1,7 +1,9 @@
-import {PrimaryGeneratedColumn} from "typeorm";
+import {PrimaryGeneratedColumn, ManyToOne} from "typeorm";
 import {Entity} from "typeorm";
 import {Column} from "typeorm";
 import {BaseEntity} from "typeorm";
+import {User} from "./UserEntity";
+import { userInfo } from "os";
 
 @Entity("map")
 export class Map extends BaseEntity{
@@ -9,11 +11,7 @@ export class Map extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
-    //foreign key
-    @Column()
-    userid: number;
-
-    //foreign key one map to many place ids?
-    // @Column()
-    // placeids: ;
+    //Many maps to one user
+    @ManyToOne(type => User, user => user.maps)
+    user: User;
 }

@@ -1,4 +1,4 @@
-import {PrimaryGeneratedColumn, ManyToMany} from "typeorm";
+import {PrimaryGeneratedColumn, ManyToMany, OneToMany} from "typeorm";
 import {Entity, Column, BaseEntity} from "typeorm";
 import {Map} from "./MapEntity"
 
@@ -15,5 +15,9 @@ export class Place extends BaseEntity{
     //Many places for Many Maps
     @ManyToMany(type => Map, map => map.places)
     maps: Map[];
+
+    //One Place has many comments
+    // @OneToMany()
+    // comments: Comment[];
 
 }

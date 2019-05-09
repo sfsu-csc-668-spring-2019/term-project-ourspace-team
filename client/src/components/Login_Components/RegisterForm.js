@@ -7,6 +7,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -60,7 +61,7 @@ class RegisterForm extends React.Component {
         <br/>
         <Card className='card registerCard'>
           <CardContent>
-            <Typography className="registerCardTitle" variant="h5">Register</Typography>
+            <Typography className="registerCardTitle" variant="h6">Register</Typography>
 
             <br/>
 
@@ -78,8 +79,6 @@ class RegisterForm extends React.Component {
               }}
             />
 
-            <br/><br/>
-
             {/* Username Field */}
             <TextField
               id="outlined-simple-start-adornment"
@@ -94,7 +93,6 @@ class RegisterForm extends React.Component {
               }}
             />
 
-            <br/><br/>
 
             {/* Email Field */}
             <TextField
@@ -109,8 +107,6 @@ class RegisterForm extends React.Component {
                 shrink: true,
               }}
             />
-            
-            <br/><br/>
 
             {/* Password Field */}
             <TextField
@@ -136,7 +132,6 @@ class RegisterForm extends React.Component {
               }}
             />
 
-            <br/><br/>
 
             {/* Confirm Password Field */}
             <TextField
@@ -162,13 +157,9 @@ class RegisterForm extends React.Component {
               }}
             />
 
-            <br/><br/>
-
             {/* Register Button */}
-            <Button variant="contained" color="primary" className="button rightButton" onClick={this.clickedButton} >
+            <Button variant="contained" color="primary" className="button rightButton" float="right" onClick={this.clickedButton} >
               Sign Up
-              {/* This Button uses a Font Icon, see the installation instructions in the docs. */}
-              <Icon className="rightIcon">arrow_forward_ios</Icon>
             </Button>
             <br/><br/>
           </CardContent>

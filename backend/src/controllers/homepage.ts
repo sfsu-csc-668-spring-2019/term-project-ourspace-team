@@ -1,4 +1,4 @@
-import { Response, Request, NextFunction, response } from "express";
+import { Response, Request, NextFunction} from "express";
 
 export class HomepageController {
 

@@ -10,7 +10,7 @@ import { doesNotReject } from "assert";
 import { IVerifyOptions } from "passport-local";
 import request = require("request");
 
-export class LoginObject {
+export class LoginController {
 
     //Post /login
     async login(req: Request, res: Response, next: NextFunction) {

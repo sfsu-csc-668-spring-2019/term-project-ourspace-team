@@ -1,7 +1,5 @@
 import {PrimaryGeneratedColumn} from "typeorm";
-import {Entity} from "typeorm";
-import {Column} from "typeorm";
-import {BaseEntity} from "typeorm";
+import {Entity, Column, BaseEntity} from "typeorm";
 
 @Entity("comment")
 export class Comment extends BaseEntity{

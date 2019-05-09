@@ -1,4 +1,4 @@
-import {PrimaryGeneratedColumn} from "typeorm";
+import {PrimaryGeneratedColumn, ManyToOne} from "typeorm";
 import {Entity, Column, BaseEntity} from "typeorm";
 
 @Entity("comment")
@@ -10,8 +10,11 @@ export class Comment extends BaseEntity{
     @Column()
     description: string;
 
-    //foreign key one to one
-    // @Column()
-    // userid: number;
+    //Many Comments to One Place
+    // @ManyToOne()
+    // ;
 
+    //Many comments have one User
+    // @ManyToMany()
+    // 
 }

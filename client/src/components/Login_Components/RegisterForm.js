@@ -61,7 +61,7 @@ class RegisterForm extends React.Component {
         <br/>
         <Card className='card registerCard'>
           <CardContent>
-            <Typography className="registerCardTitle" variant="h6">Register</Typography>
+            <Typography className="registerCardTitle" variant="h5">Create a New Account</Typography>
 
             <br/>
 
@@ -72,11 +72,29 @@ class RegisterForm extends React.Component {
               variant="outlined"
               type="text"
               label="Name" 
+              autoComplete="name"
               value={this.state.name}
               onChange={this.handleChange('name')}
               InputLabelProps={{
                 shrink: true,
               }}
+              required
+            />
+
+            {/* Email Field */}
+            <TextField
+              id="outlined-email"
+              className="margin textField emailField"
+              variant="outlined"
+              type="text"
+              label="Email" 
+              autoComplete="email"
+              value={this.state.email}
+              onChange={this.handleChange('email')}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              required
             />
 
             {/* Username Field */}
@@ -86,27 +104,15 @@ class RegisterForm extends React.Component {
               variant="outlined"
               type="text"
               label="Username" 
+              autoComplete="username"
               value={this.state.username}
               onChange={this.handleChange('username')}
               InputProps={{
                 startAdornment: <InputAdornment position="start">@</InputAdornment>,
               }}
+              required
             />
 
-
-            {/* Email Field */}
-            <TextField
-              id="outlined-email"
-              className="margin textField emailField"
-              variant="outlined"
-              type="text"
-              label="Email" 
-              value={this.state.email}
-              onChange={this.handleChange('email')}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            />
 
             {/* Password Field */}
             <TextField
@@ -130,6 +136,7 @@ class RegisterForm extends React.Component {
                   </InputAdornment>
                 ),
               }}
+              required
             />
 
 
@@ -155,6 +162,7 @@ class RegisterForm extends React.Component {
                   </InputAdornment>
                 ),
               }}
+              required
             />
 
             {/* Register Button */}

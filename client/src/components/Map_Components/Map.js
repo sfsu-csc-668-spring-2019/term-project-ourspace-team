@@ -72,10 +72,10 @@ class Map extends Component {
   }
 
   renderMap = () => {
-    MapFunction.loadScript(`https://code.jquery.com/jquery-3.2.1.slim.min.js`);
-    MapFunction.loadScript(`https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js`);
-    MapFunction.loadScript(`https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js`);
-    MapFunction.loadScript(`https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css`);
+    // MapFunction.loadScript(`https://code.jquery.com/jquery-3.2.1.slim.min.js`);
+    // MapFunction.loadScript(`https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js`);
+    // MapFunction.loadScript(`https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js`);
+    // MapFunction.loadScript(`https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css`);
     MapFunction.loadScript(`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}js&callback=initMap&libraries=places`);
     window.initMap = this.initMap;
   }
@@ -99,7 +99,7 @@ class Map extends Component {
     let index = this.state.google_place.map((place) => { return place.place_id; }).indexOf(place_id);
     let place = this.state.google_place[index];
     console.log("openedPlaceBefore Change is");
-    console.log(this.state.openedPlace)
+    console.log(JSON.stringify(this.state.place));
     this.setState({ openedPlace: place });    
     console.log("openedPlace After Change is");
     console.log(this.state.openedPlace)
@@ -221,11 +221,16 @@ class Map extends Component {
 
   render() {
     return (
+      
       <div 
         id="mapContainer" 
         clasName="mapContainer"
         style={mapContainerStyle} 
       >
+        <link rel="stylesheet"
+              href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+              integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX"
+              crossorigin="anonymous"/>
         {/* Search Box */}
         <input 
           id="pac-input"
@@ -241,6 +246,11 @@ class Map extends Component {
           id="map"
         >
         </div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js" integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+
       </div>
     );
   }

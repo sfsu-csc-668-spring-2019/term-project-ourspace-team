@@ -10,7 +10,16 @@ export class Place extends BaseEntity{
     id: number;
 
     @Column()
-    placeid: string;
+    place_id: string;
+
+    @Column()
+    name: string;
+
+    @Column()
+    address: string;
+
+    @Column()
+    phone: string;
 
     //Many places for Many Maps
     @ManyToMany(type => Map, map => map.places)

@@ -72,10 +72,6 @@ class Map extends Component {
   }
 
   renderMap = () => {
-    // MapFunction.loadScript(`https://code.jquery.com/jquery-3.2.1.slim.min.js`);
-    // MapFunction.loadScript(`https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js`);
-    // MapFunction.loadScript(`https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js`);
-    // MapFunction.loadScript(`https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css`);
     MapFunction.loadScript(`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}js&callback=initMap&libraries=places`);
     window.initMap = this.initMap;
   }

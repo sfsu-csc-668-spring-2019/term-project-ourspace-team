@@ -7,6 +7,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 import Icon from '@material-ui/core/Icon';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -60,7 +61,7 @@ class RegisterForm extends React.Component {
         <br/>
         <Card className='card registerCard'>
           <CardContent>
-            <Typography className="registerCardTitle" variant="h5">Register</Typography>
+            <Typography className="registerCardTitle" variant="h5">Create a New Account</Typography>
 
             <br/>
 
@@ -71,30 +72,14 @@ class RegisterForm extends React.Component {
               variant="outlined"
               type="text"
               label="Name" 
+              autoComplete="name"
               value={this.state.name}
               onChange={this.handleChange('name')}
               InputLabelProps={{
                 shrink: true,
               }}
+              required
             />
-
-            <br/><br/>
-
-            {/* Username Field */}
-            <TextField
-              id="outlined-simple-start-adornment"
-              className="margin textField userNameField"
-              variant="outlined"
-              type="text"
-              label="Username" 
-              value={this.state.username}
-              onChange={this.handleChange('username')}
-              InputProps={{
-                startAdornment: <InputAdornment position="start">@</InputAdornment>,
-              }}
-            />
-
-            <br/><br/>
 
             {/* Email Field */}
             <TextField
@@ -103,14 +88,31 @@ class RegisterForm extends React.Component {
               variant="outlined"
               type="text"
               label="Email" 
+              autoComplete="email"
               value={this.state.email}
               onChange={this.handleChange('email')}
               InputLabelProps={{
                 shrink: true,
               }}
+              required
             />
-            
-            <br/><br/>
+
+            {/* Username Field */}
+            <TextField
+              id="outlined-simple-start-adornment"
+              className="margin textField userNameField"
+              variant="outlined"
+              type="text"
+              label="Username" 
+              autoComplete="username"
+              value={this.state.username}
+              onChange={this.handleChange('username')}
+              InputProps={{
+                startAdornment: <InputAdornment position="start">@</InputAdornment>,
+              }}
+              required
+            />
+
 
             {/* Password Field */}
             <TextField
@@ -134,9 +136,9 @@ class RegisterForm extends React.Component {
                   </InputAdornment>
                 ),
               }}
+              required
             />
 
-            <br/><br/>
 
             {/* Confirm Password Field */}
             <TextField
@@ -160,15 +162,12 @@ class RegisterForm extends React.Component {
                   </InputAdornment>
                 ),
               }}
+              required
             />
 
-            <br/><br/>
-
             {/* Register Button */}
-            <Button variant="contained" color="primary" className="button rightButton" onClick={this.clickedButton} >
+            <Button variant="contained" color="primary" className="button rightButton" float="right" onClick={this.clickedButton} >
               Sign Up
-              {/* This Button uses a Font Icon, see the installation instructions in the docs. */}
-              <Icon className="rightIcon">arrow_forward_ios</Icon>
             </Button>
             <br/><br/>
           </CardContent>

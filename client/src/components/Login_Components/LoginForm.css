@@ -1,5 +1,6 @@
 .textField {
-  flex-basis: 200;
+margin-bottom: 1rem !important;
+/* padding-bottom: 1rem !important; */
 }
 
 .nameField, .userNameField, .emailField, .passwordField, .confirmPasswordField {
@@ -10,11 +11,8 @@
   min-width: 275,
 }
 
-.loginCard {
-  /* width: 350px;
-  margin: 25px; */
-}
-
 .rightButton {
+  /* margin-left: auto; */
   float: right;
+  margin-bottom: 1rem !important;
 }

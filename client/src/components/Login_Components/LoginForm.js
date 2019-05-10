@@ -1,23 +1,53 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import TextField from '@material-ui/core/TextField';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import './LoginForm.css'
+import React from "react";
+import PropTypes from "prop-types";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import TextField from "@material-ui/core/TextField";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import withStyles from "@material-ui/core/styles/withStyles";
+import "./LoginForm.css";
+
+const styles = theme => ({
+  main: {
+    width: "auto",
+    display: "block", // Fix IE 11 issue.
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 400,
+      marginLeft: "auto",
+      marginRight: "auto"
+    }
+  },
+  paper: {
+    marginTop: theme.spacing.unit * 8,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
+      .spacing.unit * 3}px`
+  },
+  form: {
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing.unit,
+  },
+  field:{
+    width: "100%",
+  },
+  submit: {
+    marginTop: theme.spacing.unit * 3
+  }
+});
 
 class LoginForm extends React.Component {
   state = {
-    username: '',
-    password: '',
-    showPassword: false,
-
+    username: "",
+    password: "",
+    showPassword: false
   };
 
   componentDidMount() {
@@ -32,9 +62,7 @@ class LoginForm extends React.Component {
     // const response = await fetch('/login');
     // const body = await response.json();
     // const jsonintotext = JSON.stringify(body);
-
     // if (response.status !== 200) throw Error(body.message);
-
     // return jsonintotext;
   };
 
@@ -51,82 +79,99 @@ class LoginForm extends React.Component {
     //alert(`${this.state.username} - ${this.state.password}`);
     //req api call
     e.preventDefault();
-    const response = await fetch('/login', {
-      method: 'POST',
+    const response = await fetch("/login", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({username: this.state.username, password: this.state.password})
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
     });
     // const body = await response.json();
     // const jsonintotext = JSON.stringify(body);
     // this.setState({STATEGOESHERE: body});
     return;
-  }
+  };
 
   render() {
+    const { classes } = this.props;
     return (
-      <div>
-        {/* <p>{this.state.response}</p> */}
-        <br/>
-        <Card className='card loginCard'>
-          <CardContent>
-            <Typography className="loginCardTitle" variant="h5">Login</Typography>
+      <div className={classes.main}>
+        <Paper className={classes.paper}>
+          <Typography className="loginCardTitle" variant="h5">
+            Login
+          </Typography>
 
-            <br/>
+          <form className={classes.form}>
             {/* Username Field */}
             <TextField
               id="outlined-simple-start-adornment"
-              className="margin textField userNameField"
+              className={classes.field}
               variant="outlined"
               type="text"
-              label="Username" 
+              label="Username"
+              autoComplete="username"
+              margin="normal"
               value={this.state.username}
-              onChange={this.handleChange('username')}
+              onChange={this.handleChange("username")}
               InputProps={{
-                startAdornment: <InputAdornment position="start">@</InputAdornment>,
+                startAdornment: (
+                  <InputAdornment position="start">@</InputAdornment>
+                )
               }}
+              required
+              autoFocus
             />
-
-            <br/><br/>
 
             {/* Password Field */}
             <TextField
               id="outlined-adornment-password"
-              className="margin textField passwordField"
+              className={classes.field}
               variant="outlined"
-              type={this.state.showPassword ? 'text' : 'password'}
+              type={this.state.showPassword ? "text" : "password"}
               label="Password"
+              autocomplete="current-password"
+              margin="normal"
               value={this.state.password}
-              onChange={this.handleChange('password')}
+              onChange={this.handleChange("password")}
               InputProps={{
-                startAdornment: <InputAdornment position="start"></InputAdornment>,
                 endAdornment: (
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="Toggle password visibility"
                       onClick={this.handleClickShowPassword}
                     >
-                      {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                      {this.state.showPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
                     </IconButton>
                   </InputAdornment>
-                ),
+                )
               }}
+              required
+
             />
 
-            <br/><br/>
-
             {/* Login Button */}
-            <Button variant="contained" color="primary" className="button rightButton" onClick={this.clickedButton} >
-              Log In
-              {/* This Button uses a Font Icon, see the installation instructions in the docs. */}
-              <Icon className="rightIcon">arrow_forward_ios</Icon>
-            </Button>
-            <br/><br/>
-          </CardContent>
-        </Card>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={this.clickedButton}
+              classes={"align-items-xs-flex-end"}
+              fullWidth
 
-        <br/>
+            >
+              Log In
+            </Button>
+          </form>
+        </Paper>
+
+        <br />
         <p>{this.state.responseToPost}</p>
       </div>
     );
@@ -134,7 +179,7 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
 
-export default (LoginForm);
+export default withStyles(styles)(LoginForm);

@@ -21,7 +21,18 @@ const theme = createMuiTheme({
     // },
   },
   typography:{
-    fontFamily:['Raleway']
+    fontFamily:['Raleway'],
+    title:{
+      fontSize: '2.75rem',
+      paddingLeft: '1rem',
+      paddingBottom: '2rem',
+    },
+    display1:{
+      fontSize: '1.25rem',
+      paddingLeft: '1rem',
+      paddingBottom: '.5rem',
+    }
+
   }
 });
 

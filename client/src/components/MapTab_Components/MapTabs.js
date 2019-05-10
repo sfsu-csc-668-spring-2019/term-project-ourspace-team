@@ -19,7 +19,9 @@ var mapStyles={
 function TabContainer(props) {
   return (
     <Grid direction="column" container style={mapStyles}>              
-        <Map />
+    {/* This throws errors for calling Google Map API multiple times 
+        <Map /> 
+    */}
     </Grid>
   );
 }

@@ -8,6 +8,17 @@ import '../App.css';
 import PlacesList from './Home_Components/PlacesList';
 import CommentsSection from './Map_Components/CommentsSection'
 
+var mapStyles={
+    height: 'calc(100% - 64px)',
+    width: '75%',
+    left: 'auto',
+    right: '0px',
+    position: 'absolute',
+    display: 'block',
+
+};
+
+
 
 class HomePage extends Component {
 
@@ -28,8 +39,9 @@ class HomePage extends Component {
                                   <PlacesList/>
                                 </Grid>
                             </Grid>
-                            <Grid item xs={9} container direction="column" >
+                            <Grid item xs={9} container direction="column" style={mapStyles}>
                                 <MapTabs />
+                                <Map />
                             </Grid>
                         </Grid>
                     </Grid>

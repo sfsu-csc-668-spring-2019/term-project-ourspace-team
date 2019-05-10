@@ -1,7 +1,7 @@
-import {PrimaryGeneratedColumn} from "typeorm";
-import {Entity} from "typeorm";
-import {Column} from "typeorm";
-import {BaseEntity} from "typeorm";
+import {PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable} from "typeorm";
+import {Entity, Column, BaseEntity} from "typeorm";
+import {User} from "./UserEntity";
+import {Place} from "./PlaceEntity";
 
 @Entity("map")
 export class Map extends BaseEntity{
@@ -9,11 +9,12 @@ export class Map extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
-    //foreign key
-    @Column()
-    userid: number;
+    //Many maps to one user
+    @ManyToOne(type => User, user => user.maps)
+    user: User;
 
-    //foreign key one map to many place ids?
-    // @Column()
-    // placeids: ;
+    //Many maps have many places (Map is owner of relationship)
+    @ManyToMany(type => Place, place => place.maps)
+    @JoinTable()
+    places: Place[]
 }

@@ -1,7 +1,6 @@
-import {PrimaryGeneratedColumn} from "typeorm";
-import {Entity} from "typeorm";
-import {Column} from "typeorm";
-import {BaseEntity} from "typeorm";
+import {PrimaryGeneratedColumn, OneToMany} from "typeorm";
+import {Entity, Column, BaseEntity} from "typeorm";
+import {Map} from "./MapEntity";
 
 @Entity("user")
 export class User extends BaseEntity{
@@ -21,12 +20,7 @@ export class User extends BaseEntity{
     @Column()
     email: string;
 
-    // other userids
-    // @Column()
-    // followers: Int16Array;
-
-    // other userids
-    // @Column()
-    // following: Int16Array;
-
+    //One user to many maps
+    @OneToMany(type => Map, map => map.user)
+    maps: Map[];
 }

@@ -1,7 +1,7 @@
-import {PrimaryGeneratedColumn} from "typeorm";
-import {Entity} from "typeorm";
-import {Column} from "typeorm";
-import {BaseEntity} from "typeorm";
+import {PrimaryGeneratedColumn, ManyToMany, OneToMany} from "typeorm";
+import {Entity, Column, BaseEntity} from "typeorm";
+import {Map} from "./MapEntity"
+
 
 @Entity("place")
 export class Place extends BaseEntity{
@@ -10,13 +10,14 @@ export class Place extends BaseEntity{
     id: number;
 
     @Column()
-    googleid: string;
+    placeid: string;
 
-    //foriegn key for userid
-    // @Column()
-    // favorites: ;
+    //Many places for Many Maps
+    @ManyToMany(type => Map, map => map.places)
+    maps: Map[];
 
-    //foriegn key
-    // @Column()
-    // comments: ;
+    //One Place has many comments
+    // @OneToMany()
+    // comments: Comment[];
+
 }

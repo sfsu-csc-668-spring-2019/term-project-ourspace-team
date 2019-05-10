@@ -5,7 +5,7 @@ import * as bcrypt from 'bcryptjs';
 
 import "reflect-metadata";
 
-export class Registration{
+export class RegistrationController {
     
     async saveNewUser(req: Request, res: Response, next: NextFunction) {
         const userRepo: UserRepo = new UserRepo();

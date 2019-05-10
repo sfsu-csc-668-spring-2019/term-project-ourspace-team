@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import Routes from './routes';
-import store from './store';
+import store from './config/store';
 import './App.css';
 import * as MapFunction from './components/Map_Components/functions/index'
 import { MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';

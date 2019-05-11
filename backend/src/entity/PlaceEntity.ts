@@ -27,7 +27,6 @@ export class Place extends BaseEntity{
     @Column()
     icon: string;
 
-
     @Column("decimal", { precision: 12, scale: 10 })
     latitude: number;
 

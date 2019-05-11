@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import Routes from './routes'
+import { Provider } from 'react-redux';
+import Routes from './routes';
+import store from './config/store';
 import './App.css';
 import * as MapFunction from './components/Map_Components/functions/index'
 import { MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';
@@ -41,9 +42,11 @@ class App extends Component {
 
   render(){
     return(
-      <MuiThemeProvider theme={theme}>
-        <Routes />
-      </MuiThemeProvider>
+      <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
+          <Routes />
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }

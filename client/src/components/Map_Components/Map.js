@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { toggleShowing, setOpenedPlace } from '../../actions/mapActions';
 import * as MapFunction from './functions/index'
 import CommentsSection from './CommentsSection'
 import './Map.css'
@@ -12,51 +15,7 @@ class Map extends Component {
     },
     zoom: 12.5,
     infowindow: undefined,
-    openedPlace: {
-      place_id: undefined,
-      name: undefined,
-      address: undefined,
-      lat: undefined,
-      lng: undefined,
-      phone: undefined,
-      price_level: undefined,
-      photos: [],
-      icon: undefined,
-    },
-    google_place : [
-      {
-        address: "982 Market St, San Francisco, CA 94102, USA",
-        icon: "https://maps.googleapis.com/maps/api/place/js/PhotoService.GetPhoto?1sCmRaAAAAEPbpPmfI-5w-b1IUY8pCLhxHzMDR9ypZxB6a-DVWgaXt1R91x2jjKMHXRmyLKg_OF2iCdgkxzsWmTjpc19VEc-_MWePKVU09NGTBOtZjtjFIPSQnVsLLlS2yrj7thBbNEhAbdZz8RpaZ4ZgpFNs7boW0GhSp-RsscMdSBMODnMkknfHBN3sfuw&3u5312&5m1&2e1&callback=none&key=AIzaSyBp1zbhrcngsbN8eIBJsrxBH2FGrsyHNjs&token=63583",
-        lat: 37.7826737,
-        lng: -122.41042800000002,
-        name: "The Warfield",
-        phone: "+1 415-345-0900",
-        photos: [
-        ],
-        place_id: "ChIJ26vXqYWAhYAR-pHMSmLA0nA",
-        price_level: 3
-      }, {
-        address: "652 Polk St, San Francisco, CA 94102, USA",
-        icon: "https://maps.googleapis.com/maps/api/place/js/PhotoService.GetPhoto?1sCmRaAAAAy-HzOw1J-KW35H_EesxQSEENokJIu37_ibNulHHe7Pao4YSytw3NTuPjT3-ZOKcWCV2rK5pNHJKidLCYdGDhjdtphx-CI5O1yu6hh5X2YlrXiTcieBI5u6jYIFj1xO1nEhBi5MUHteFu2yZYuvQYaJ3SGhRIss9pECw3_d8ho2lEonqHKt2HTQ&3u1267&5m1&2e1&callback=none&key=AIzaSyBp1zbhrcngsbN8eIBJsrxBH2FGrsyHNjs&token=26619",
-        lat: 37.7829023,
-        lng: -122.41903580000002,
-        name: "Brenda's French Soul Food",
-        phone: "+1 415-345-8100",
-        photos: [],
-        place_id: "ChIJZ9s5SJeAhYARIX3Fxl6oj6c",
-        price_level: 2,
-      }, {
-        address: "Twin Peaks, San Francisco, CA, USA",
-        icon: "https://maps.googleapis.com/maps/api/place/js/PhotoService.GetPhoto?1sCmRaAAAAg408CS6CSSZRaE7l7j2qlJt7rosM9p5htHQcP3058Lucvk20XC1PwNc_R7N0EqK-OFFVAz243hpDitAZbhItZHX7offn0JKOQZPRFhjJSqZ7-eJ_YpPFgczrnQNSLibMEhDT4bTgp5TYvJD_MRRYPbxlGhQ2q-xkekgn7JGytcXPuMtEf5Hdow&3u1600&5m1&2e1&callback=none&key=AIzaSyBp1zbhrcngsbN8eIBJsrxBH2FGrsyHNjs&token=67600",
-        lat: 37.7544066,
-        lng: -122.44768449999998,
-        name: "Twin Peaks",
-        phone: undefined,
-        photos: [],
-        place_id: "ChIJp71fQgh-j4ARV7YEtWUmni0",
-        price_level: undefined,
-      }
-    ]
+    places : []
   }
 
   // Lifecycle Event
@@ -72,10 +31,6 @@ class Map extends Component {
   }
 
   renderMap = () => {
-    MapFunction.loadScript(`https://code.jquery.com/jquery-3.2.1.slim.min.js`);
-    MapFunction.loadScript(`https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js`);
-    MapFunction.loadScript(`https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js`);
-    MapFunction.loadScript(`https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css`);
     MapFunction.loadScript(`https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_API_KEY}js&callback=initMap&libraries=places`);
     window.initMap = this.initMap;
   }
@@ -90,34 +45,29 @@ class Map extends Component {
     window.clickedRemoveFromMap = this.clickedRemoveFromMap
 
     this.addSearchBoxAndAutoComplete( map );
-
+    this.addCommentsSection( map );
     this.renderSavedPlaces( map );
   }
 
   // TODO - Delete this later or change to modal
   clickedViewMore = (place_id) => {
-    let index = this.state.google_place.map((place) => { return place.place_id; }).indexOf(place_id);
-    let place = this.state.google_place[index];
-    console.log("openedPlaceBefore Change is");
-    console.log(this.state.openedPlace)
-    this.setState({ openedPlace: place });    
-    console.log("openedPlace After Change is");
-    console.log(this.state.openedPlace)
+    let index = this.state.places.map((place) => { return place.place_id; }).indexOf(place_id);
+    let place = this.state.places[index];
+
+    this.props.setOpenedPlace( place );
+
     this.state.infowindow.close();
-    // let commentsSection = MapFunction.getCommentsSection( this.state.google_place[index] );
-    // document.getElementById('place-comments').innerHTML = commentsSection;
-    // document.getElementById('place-comments-title').innerHTML = this.state.google_place[index].name;
-    // document.getElementById('place-comments-phone').innerHTML = this.state.google_place[index].phone;
-    // document.getElementById('place-comments-address').innerHTML = this.state.google_place[index].address;
+
+    const updateShowing = (this.props.isShowing === "none") ? "" : "none";
+    this.props.toggleShowing(updateShowing);
   }
 
   addSearchBoxAndAutoComplete = ( map ) => {
     // Create the search box and link it to the UI element
     let input = document.getElementById('pac-input');
-    let placeComments = document.getElementById('place-comments'); //TODO
     let searchBox = new window.google.maps.places.SearchBox(input);
     map.controls[window.google.maps.ControlPosition.TOP_CENTER].push(input);
-    map.controls[window.google.maps.ControlPosition.BOTTOM_LEFT].push(placeComments);//TODO
+
     // Bound the SearchBox results towards current map's viewport.
     map.addListener('bounds_changed', () => {
       searchBox.setBounds(map.getBounds());
@@ -173,20 +123,24 @@ class Map extends Component {
     });
   }
 
+  addCommentsSection = ( map ) => {
+    let placeComments = document.getElementById('place-comments');
+    map.controls[window.google.maps.ControlPosition.BOTTOM_LEFT].push(placeComments);
+  }
+
   renderSavedPlaces = ( map ) => {
     // TODO UNCOMMENT THIS WHEN READY TO DEPLOY
-    // this.state.google_place.map((place) => {
-    //   this.setMarkerInfoWindow(map, this.getMarker(map, place), place, true);
+    // this.state.places.map((place) => {
+    //   this.setMarkerInfoWindow(map, MapFunction.getMarker(map, place), place, true);
     // });
   }
 
   addNewPlaceToState = (place) => {
-    let updated_google_place = this.state.google_place.slice();
-
-    updated_google_place.push(place);
+    let updatedPlaces = this.state.places.slice();
+    updatedPlaces.push(place);
 
     this.setState({
-      google_place: updated_google_place
+      places: updatedPlaces
     });
   }
 
@@ -200,14 +154,14 @@ class Map extends Component {
   }
 
   clickedAddToMap = (place_id) => {
-    let index = this.state.google_place.map((place) => { return place.place_id; }).indexOf(place_id);
+    let index = this.state.places.map((place) => { return place.place_id; }).indexOf(place_id);
 
-    fetch(`/map/add/:mapId/${this.state.google_place[index].place_id}`, {
+    fetch(`/map/add/:mapId/${this.state.places[index].place_id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(this.state.google_place[index])
+      body: JSON.stringify(this.state.places[index])
 
     }).then(( response ) => {
       // TODO different stuff based on response
@@ -215,17 +169,24 @@ class Map extends Component {
     });
   }
 
-  clickedRemoveFromMap = () => {
+  // clickedRemoveFromMap = () => {
 
-  }
+  // }
 
   render() {
     return (
+      
       <div 
         id="mapContainer" 
         clasName="mapContainer"
         style={mapContainerStyle} 
       >
+
+        <link rel="stylesheet"
+              href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+              integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX"
+              crossorigin="anonymous"/>
+
         {/* Search Box */}
         <input 
           id="pac-input"
@@ -235,7 +196,10 @@ class Map extends Component {
         ></input>
 
         {/* Place Comments Section */}
-        <CommentsSection place={this.state.openedPlace} isShowing={"none"}/>
+        <CommentsSection 
+          place={this.state.openedPlace} 
+          isShowing={"none"}/>
+
         {/* Map */}
         <div 
           id="map"
@@ -251,4 +215,14 @@ var mapContainerStyle = {
   overflow: 'hidden',
 };
 
-export default Map;
+Map.propTypes = {
+  classes: PropTypes.object.isRequired,
+  toggleShowing: PropTypes.func.isRequired,
+  setOpenedPlace: PropTypes.func.isRequired
+};
+
+const mapStateToProps = state => ({
+  isShowing: state.maps.isShowing
+});
+
+export default connect(mapStateToProps, { toggleShowing, setOpenedPlace })(Map);

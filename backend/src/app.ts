@@ -50,8 +50,12 @@ app.get("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.post("/register", registerManager.saveNewUser);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
 
-app.get("/getplaces", passportConfig.isAuthenticated, mapManager.getPlacesFromMap);
-app.post("/addPlaceToMap", passportConfig.isAuthenticated, mapManager.addPlace);
+//app.get("/getplaces", passportConfig.isAuthenticated, mapManager.getPlacesFromMap);
+//app.post("/addPlaceToMap", passportConfig.isAuthenticated, mapManager.addPlace);
+
+app.get("/testUser", mapManager.exampleUser);
+app.get("/testMap", mapManager.exampleMap);
+app.get("/testPlace", mapManager.examplePlace);
 
 //app.get("/getUsersForSearch")
 //app.post("/searchUser",);

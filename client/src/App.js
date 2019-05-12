@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import Routes from './routes'
+import { Provider } from 'react-redux';
+import Routes from './routes';
+import store from './config/store';
 import './App.css';
+import * as MapFunction from './components/Map_Components/functions/index'
 import { MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -20,17 +22,31 @@ const theme = createMuiTheme({
     // },
   },
   typography:{
-    fontFamily:['Raleway']
+    fontFamily:['Raleway'],
+    title:{
+      fontSize: '2.75rem',
+      paddingLeft: '1rem',
+      paddingBottom: '2rem',
+    },
+    display1:{
+      fontSize: '1.25rem',
+      paddingLeft: '1rem',
+      paddingBottom: '.5rem',
+    }
+
   }
 });
 
 
 class App extends Component {
+
   render(){
     return(
-      <MuiThemeProvider theme={theme}>
-        <Routes />
-      </MuiThemeProvider>
+      <Provider store={store}>
+        <MuiThemeProvider theme={theme}>
+          <Routes />
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }

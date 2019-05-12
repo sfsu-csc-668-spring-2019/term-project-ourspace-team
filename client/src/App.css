@@ -44,3 +44,8 @@ h4{
   font-family: Raleway;
   font-weight: 400 !important;
 }
+
+.landing-block{
+  margin: auto !important;
+  padding-left: 2rem !important;
+}

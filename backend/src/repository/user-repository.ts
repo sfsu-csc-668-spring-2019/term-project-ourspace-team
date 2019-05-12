@@ -1,6 +1,5 @@
 import { User } from "../entity/UserEntity";
 import { json } from "body-parser";
-// import bcrypt from "bcrypt-nodejs";
  
 export class UserRepo {
  
@@ -18,5 +17,26 @@ export class UserRepo {
             return data;
         }).catch((e) => {console.log(`this is the e: ${e}`); return [];});
     }
- 
+
+    findUser(searchField: string){
+        /* 
+        Authentication could be required
+
+        search for user based on:
+            username
+            email
+            user
+
+        return array of users that fit this criteria
+        */
+    }
+    
+    findSpecificUser(){
+        /*
+        Authentication should be required
+
+        find a single user based on username, email, id, name
+        return this user array
+        */
+    }
 }

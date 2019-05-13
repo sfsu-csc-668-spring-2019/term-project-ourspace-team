@@ -99,6 +99,14 @@ export class MapController {
         const savedPlace = await placeRepo.savePlace(newPlace);
         //save place to map as the array of single place obj 
         //NOTE: create empty array on initial creation
+
+        if (newMap.places == null){
+            console.log("Value is null"); //Empty array is null by default
+
+        } else if (newMap.places.length == 0){
+            console.log("length is 0");
+        }
+
         newMap.places = [newPlace];
         //save place 2
         newMap.places = newMap.places.concat([newPlace2]);
@@ -107,39 +115,39 @@ export class MapController {
 
         //with returned data concat to existing array
         savedMap.places = savedMap.places.concat([newPlace2]);
-        const savedMapAgain = await mapRepo.saveMap(savedMap);
 
-        if (savedMap != newMap){
-            console.log("update did work");
-        } else {
-            console.log("Riperoni");
-        }
-        console.log(savedMapAgain);
+        //save updates user if existing in db already with new values
+        ////const savedMapAgain = await mapRepo.saveMap(savedMap);
+
+        ////console.log(savedMapAgain);
         res.send("Add Place Route");
-
     }
-
-
-    //add new map to user
-    async newMapForUser(req: Request, res: Response, next: NextFunction){
-        console.log(req.user);
-        res.send("Add ");
-
-    }
-
 
     //add map to auth user
+    async newMapForAuthUser(req: Request, res: Response, next: NextFunction){
+        console.log(req.user);
+        res.send("New Map for Auth User");
+
+        if()
+
+    }
+
+    //add place to auth user map x
+    async newPlaceForMap(req: Request, res: Response, next: NextFunction){
+        //grab auth user
+
+
+        res.send("New Place for Map");
+    }
+
+
+    //remove place from auth user map x
+    async removePlaceForMap(req: Request, res: Response, next: NextFunction){
+        res.send("Under Construction");
+    }
 
 
 
-    //add place to auth user
-
-
-
-    //remove place from auth user
-
-
-    
     
 
 }

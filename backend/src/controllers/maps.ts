@@ -128,6 +128,18 @@ export class MapController {
     }
 
 
+    //add map to auth user
+
+
+
+    //add place to auth user
+
+
+
+    //remove place from auth user
+
+
+    
     
 
 }

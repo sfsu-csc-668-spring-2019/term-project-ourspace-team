@@ -55,7 +55,7 @@ app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleg
 
 app.get("/testUser", mapManager.exampleUser);
 app.get("/testMap", mapManager.exampleMap);
-app.get("/testPlace", mapManager.examplePlace);
+app.get("/testPlace", mapManager.addPlace);
 
 //app.get("/getUsersForSearch")
 //app.post("/searchUser",);

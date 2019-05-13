@@ -6,4 +6,7 @@ export class MapRepo {
         return Map.save(map)
     }
 
+    findMap(){
+        
+    }
 }

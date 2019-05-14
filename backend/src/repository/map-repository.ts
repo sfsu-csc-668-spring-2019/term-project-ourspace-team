@@ -10,7 +10,7 @@ export class MapRepo {
         //return Map.update(map);
     }
 
-    findMap(){
-
+    findMap(findid: number){
+        return Map.findOne( { where: { id: findid } } )
     }
 }

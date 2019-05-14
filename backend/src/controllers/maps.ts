@@ -132,7 +132,7 @@ export class MapController {
         const mapRepo: MapRepo = new MapRepo();
         const userRepo: UserRepo = new UserRepo();
 
-        await mapRepo.saveMap(newMap);
+        const map = await mapRepo.saveMap(newMap);
 
         if (localuser.maps == null){
             localuser.maps = [newMap];
@@ -179,11 +179,15 @@ export class MapController {
         // reqPlace.photos = req.body.photos;
         // reqPlace.icon = req.body.icon;
         const tempPlace: Place = await placeRepo.findOneOrAddPlace(newPlace);
-        //const tempPlace: Place = await placeRepo.savePlace();
-
         
+        if (tempMap.places == null) {
+            tempMap.places = [tempPlace];
+        } else {
+            tempMap.places.concat([tempPlace]);
+        }
 
-
+        await mapRepo.saveMap(tempMap);
+        
         res.send("New Place for Map");
     }
 
@@ -192,9 +196,4 @@ export class MapController {
     async removePlaceForMap(req: Request, res: Response, next: NextFunction){
         res.send("Under Construction");
     }
-
-
-
-    
-
 }

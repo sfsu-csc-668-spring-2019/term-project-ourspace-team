@@ -51,7 +51,8 @@ app.post("/register", registerManager.saveNewUser);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
 
 //app.get("/getplaces", passportConfig.isAuthenticated, mapManager.getPlacesFromMap);
-//app.post("/addPlaceToMap", passportConfig.isAuthenticated, mapManager.addPlace);
+app.post("/addPlaceToMap", passportConfig.isAuthenticated, mapManager.newPlaceForMap);
+app.post("/addMap", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
 
 app.get("/testUser", mapManager.exampleUser);
 app.get("/testMap", mapManager.exampleMap);

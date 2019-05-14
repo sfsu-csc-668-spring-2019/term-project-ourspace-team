@@ -1,6 +1,7 @@
 import {PrimaryGeneratedColumn, ManyToMany, OneToMany} from "typeorm";
 import {Entity, Column, BaseEntity} from "typeorm";
-import {Map} from "./MapEntity"
+import {Map} from "./MapEntity";
+import {Comment} from "./CommentEntity";
 
 
 @Entity("place")
@@ -38,7 +39,7 @@ export class Place extends BaseEntity{
     maps: Map[];
 
     //One Place has many comments
-    // @OneToMany()
-    // comments: Comment[];
+    @OneToMany(type => Comment, comment => comment.placeid)
+    comments: Comment[];
 
 }

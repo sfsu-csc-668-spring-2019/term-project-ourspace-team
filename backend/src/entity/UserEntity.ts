@@ -1,6 +1,7 @@
 import {PrimaryGeneratedColumn, OneToMany} from "typeorm";
 import {Entity, Column, BaseEntity} from "typeorm";
 import {Map} from "./MapEntity";
+import {Comment} from "./CommentEntity";
 
 @Entity("user")
 export class User extends BaseEntity{
@@ -23,4 +24,7 @@ export class User extends BaseEntity{
     //One user to many maps
     @OneToMany(type => Map, map => map.user)
     maps: Map[];
+
+    @OneToMany(type => Comment, comment => comment.userid)
+    comments: Comment[];
 }

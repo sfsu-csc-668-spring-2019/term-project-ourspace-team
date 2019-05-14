@@ -14,7 +14,7 @@ import { userInfo } from "os";
 
 export class MapController {
 
-    async getPlacesFromMap(req: Request, res: Response, next: NextFunction){
+    async getMyMaps(req: Request, res: Response, next: NextFunction){
         const userid: number = req.user.id;
         const localuser: User = await User.findOne({where: {id: userid} });
         res.send(localuser.maps);

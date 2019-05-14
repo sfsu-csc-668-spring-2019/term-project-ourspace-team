@@ -15,6 +15,9 @@ import {HomepageController} from "./controllers/homepage";
 import {LoginController} from "./controllers/login";
 import {RegistrationController} from "./controllers/registration";
 import {MapController} from "./controllers/maps";
+import {PlaceController} from "./controllers/places";
+import {CommentController} from "./controllers/comments";
+import {Place} from "./entity/PlaceEntity";
 
 dotenv.config({path: ".env.example"});
 
@@ -23,6 +26,8 @@ const loginManager = new LoginController();
 const registerManager = new RegistrationController();
 const homepageManager = new HomepageController();
 const mapManager = new MapController();
+const placeManager = new PlaceController();
+const commentManager = new CommentController();
 
 
 app.set("port", process.env.PORT || 5000);
@@ -51,11 +56,13 @@ app.post("/register", registerManager.saveNewUser);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
 
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
-app.post("/addPlaceToMap", passportConfig.isAuthenticated, mapManager.newPlaceForMap);
+app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
+//app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
 
-//app.post("/putCommentOnPlace")
-//app.get("/getCommentsForPlace")
+//app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
+//app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);
+//app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 
 
 

@@ -1,6 +1,8 @@
 import {Response, Request, NextFunction } from "express";
 import { User } from "../entity/UserEntity";
+import { Map } from "../entity/MapEntity";
 import { UserRepo } from "../repository/user-repository";
+import { MapRepo } from "../repository/map-repository";
 import * as bcrypt from 'bcryptjs';
 
 import "reflect-metadata";
@@ -9,6 +11,7 @@ export class RegistrationController {
     
     async saveNewUser(req: Request, res: Response, next: NextFunction) {
         const userRepo: UserRepo = new UserRepo();
+        const mapRepo: MapRepo = new MapRepo();
         
         const username: string = req.body.username;
         const email : string = req.body.email;
@@ -26,7 +29,19 @@ export class RegistrationController {
             newUser.email = email;
             newUser.password = hashPassword;
 
-            userRepo.saveUser(newUser)
+            userRepo.saveUser(newUser);
+            
+            //Add 1st map for new User
+            const newMap: Map = new Map();
+            const map = await mapRepo.saveMap(newMap);
+    
+            if (newUser.maps == null){
+                newUser.maps = [newMap];
+            } else {
+                newUser.maps.concat([newMap]);
+            }
+            const value = await userRepo.saveUser(newUser);
+    
             return console.log('User created!');
         }else if (user.length > 0) {
             if(user[0].username == username) {

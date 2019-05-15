@@ -14,9 +14,9 @@ export class FollowController {
     const toBeFollowed: number = req.body.toBeFollowed;
 
     const localFollower: User = await User.findOne({where: {id: follower} });
-    const localFollowed: User = await User.findOne({where:{id: toBeFollowed}});
+    const localToBeFollowed: User = await User.findOne({where:{id: toBeFollowed}});
     
-    const createFollow = await followData.setFollow(localFollower, localFollowed);
+    const createFollow = await followData.setFollow(localFollower, localToBeFollowed);
         
     User.save(createFollow);
   }

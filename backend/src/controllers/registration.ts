@@ -42,7 +42,6 @@ export class RegistrationController {
             }
             const value = await userRepo.saveUser(newUser);
     
-            return console.log('User created!');
         }else if (user.length > 0) {
             if(user[0].username == username) {
                 return console.log(`User: ${username} is taken`);

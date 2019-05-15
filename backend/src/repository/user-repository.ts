@@ -1,15 +1,17 @@
 import { User } from "../entity/UserEntity";
 import { json } from "body-parser";
- 
-export class UserRepo {
- 
+import { Entity, EntityRepository, Repository } from "typeorm";
+
+@EntityRepository(User)
+export class UserRepo extends Repository<User> {
+
     saveUser(user: User) { 
         return User.save(user);
     }
 
     doesUserAlreadyExist(username, email): Promise<User[]> {
-       return User.find({
-           where: [ 
+        return User.find({
+            where: [ 
                 {username: username}, 
                 {email: email}
             ]

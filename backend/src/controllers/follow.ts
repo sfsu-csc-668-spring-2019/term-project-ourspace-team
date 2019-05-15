@@ -10,12 +10,14 @@ export class FollowController {
   async follow(req: Request, res: Response, next: NextFunction) {
     const followData: FollowData = new FollowData();
 
-    const follower: number = 1;
-    const followed: number = 3;
+    const follower: number = req.body.follower;
+    const toBeFollowed: number = req.body.toBeFollowed;
 
     const localFollower: User = await User.findOne({where: {id: follower} });
-    const localFollowed: User = await User.findOne({where:{id: followed}});
+    const localFollowed: User = await User.findOne({where:{id: toBeFollowed}});
+    
+    const createFollow = await followData.setFollow(localFollower, localFollowed);
         
-    User.save(await followData.setFollow(localFollower, localFollowed));
+    User.save(createFollow);
   }
 }

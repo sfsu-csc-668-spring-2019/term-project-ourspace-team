@@ -48,6 +48,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.get("/", homepageManager.indexpage);
+//app.get("/createDBTables", homepageManager.createTablesWithDummyData);
 app.post("/login", loginManager.login);
 app.get("/logout", passportConfig.isAuthenticated, loginManager.logout);
 //app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);

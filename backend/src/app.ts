@@ -17,7 +17,6 @@ import {RegistrationController} from "./controllers/registration";
 import {MapController} from "./controllers/maps";
 import {PlaceController} from "./controllers/places";
 import {CommentController} from "./controllers/comments";
-import {Place} from "./entity/PlaceEntity";
 
 dotenv.config({path: ".env.example"});
 

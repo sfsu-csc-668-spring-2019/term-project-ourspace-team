@@ -16,5 +16,5 @@ export class Map extends BaseEntity{
     //Many maps have many places (Map is owner of relationship)
     @ManyToMany(type => Place, place => place.maps)
     @JoinTable()
-    places: Place[]
+    places: Place[];
 }

@@ -3,8 +3,14 @@ import { json } from "body-parser";
  
 export class MapRepo {
     saveMap(map: Map){
-        console.log(Map);
-        return
+        return Map.save(map)
     }
 
+    updateMap(map: Map){
+        //return Map.update(map);
+    }
+
+    findMap(findid: number){
+        return Map.findOne( { where: { id: findid } } )
+    }
 }

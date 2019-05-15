@@ -15,7 +15,11 @@ import {HomepageController} from "./controllers/homepage";
 import {LoginController} from "./controllers/login";
 import {RegistrationController} from "./controllers/registration";
 import {MapController} from "./controllers/maps";
+
 import {SearchController} from "./controllers/search";
+import {PlaceController} from "./controllers/places";
+import {CommentController} from "./controllers/comments";
+
 
 dotenv.config({path: ".env.example"});
 
@@ -24,7 +28,11 @@ const loginManager = new LoginController();
 const registerManager = new RegistrationController();
 const homepageManager = new HomepageController();
 const mapManager = new MapController();
+
 const searchManager = new SearchController();
+const placeManager = new PlaceController();
+const commentManager = new CommentController();
+
 
 
 app.set("port", process.env.PORT || 5000);
@@ -54,14 +62,14 @@ app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleg
 app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication
 app.get("/search/like",  passportConfig.isAuthenticated, searchManager.returnPercentLikeUsers);//add check authentication
 
-//app.get("/getplaces", passportConfig.isAuthenticated,);
-//app.post("/addPlaceToMap")
+app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
+app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
+//app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
+app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
 
-//app.get("/getUsersForSearch")
-//app.post("/searchUser",);
-
-//app.post("/putCommentOnPlace")
-//app.get("/getCommentsForPlace")
+//app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
+//app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);
+//app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 
 
 

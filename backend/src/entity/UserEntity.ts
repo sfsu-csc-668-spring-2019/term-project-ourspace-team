@@ -25,6 +25,6 @@ export class User extends BaseEntity{
     @OneToMany(type => Map, map => map.user)
     maps: Map[];
 
-    @OneToMany(type => Comment, comment => comment.userid)
+    @OneToMany(type => Comment, comment => comment.user)
     comments: Comment[];
 }

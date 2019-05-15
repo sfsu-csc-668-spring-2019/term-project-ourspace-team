@@ -18,5 +18,5 @@ export class Comment extends BaseEntity{
 
     //Many comments have one User
     @ManyToOne(type => User, user => user.comments)
-    userid: number;
+    user: User;
 }

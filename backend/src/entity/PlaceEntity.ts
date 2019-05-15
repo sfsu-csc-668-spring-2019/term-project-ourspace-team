@@ -39,7 +39,7 @@ export class Place extends BaseEntity{
     maps: Map[];
 
     //One Place has many comments
-    @OneToMany(type => Comment, comment => comment.placeid)
+    @OneToMany(type => Comment, comment => comment.place)
     comments: Comment[];
 
 }

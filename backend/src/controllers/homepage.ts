@@ -16,6 +16,11 @@ export class HomepageController {
         res.send("Index Page Hit");
     }
 
+    async createTablesWithDummyData (req: Request, res: Response, next: NextFunction){
+        
+        res.send("Created tables with data");
+    }
+
     //example get request using is authenticated
     async exampleget(req: Request, res: Response, next: NextFunction) {
         //test route to console.log if user is authenticated

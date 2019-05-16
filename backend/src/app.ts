@@ -48,7 +48,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.get("/", homepageManager.indexpage);
-//app.get("/createDBTables", homepageManager.createTablesWithDummyData);
+app.get("/createDBTables", homepageManager.createTablesWithDummyData);
 app.post("/login", loginManager.login);
 app.get("/logout", passportConfig.isAuthenticated, loginManager.logout);
 //app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
@@ -60,7 +60,7 @@ app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlace
 //app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
 
-//app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
+app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
 //app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);
 //app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 

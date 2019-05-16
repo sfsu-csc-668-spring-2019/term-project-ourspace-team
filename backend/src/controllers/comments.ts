@@ -21,9 +21,11 @@ export class CommentController {
     const userid: number = req.user.id;
     //const placeid: string = req.body.place_id
     const placeid = "ChIJgeLABbB9j4AR00VqlJ98eqU";
+    
     const localuser: User = await User.findOne( { where: { id: userid } } );
     const localplace: Place = await Place.findOne( { where: { place_id: placeid } } );
     const newComment: Comment = new Comment();
+
     //newComment.description = req.body.description;
     newComment.description = "This place is dumb lelelelel";
     newComment.user = localuser;

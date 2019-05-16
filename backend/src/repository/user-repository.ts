@@ -26,6 +26,7 @@ export class UserRepo {
             .getMany();
         return userlist;
     }
+    
     //percent like users
     findSpecificUser(nameToSearch): Promise<User[]> {
         const userlist = getRepository(User)
@@ -35,6 +36,7 @@ export class UserRepo {
         console.log(userlist);
         return userlist;
     }
+    
     //user as reference
     getAllUsersInformation(): Promise<User[]> {
         //code below gets all information from all users

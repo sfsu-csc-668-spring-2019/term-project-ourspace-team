@@ -15,9 +15,12 @@ import {HomepageController} from "./controllers/homepage";
 import {LoginController} from "./controllers/login";
 import {RegistrationController} from "./controllers/registration";
 import {MapController} from "./controllers/maps";
+
+import {SearchController} from "./controllers/search";
 import {PlaceController} from "./controllers/places";
 import {CommentController} from "./controllers/comments";
 import {FollowController} from "./controllers/follow";
+
 
 dotenv.config({path: ".env.example"});
 
@@ -26,9 +29,12 @@ const loginManager = new LoginController();
 const registerManager = new RegistrationController();
 const homepageManager = new HomepageController();
 const mapManager = new MapController();
+
+const searchManager = new SearchController();
 const placeManager = new PlaceController();
 const commentManager = new CommentController();
 const followManager = new FollowController();
+
 
 app.set("port", process.env.PORT || 5000);
 
@@ -54,6 +60,8 @@ app.get("/logout", passportConfig.isAuthenticated, loginManager.logout);
 //app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.post("/register", registerManager.saveNewUser);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
+app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication
+app.get("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);//add check authentication
 
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);

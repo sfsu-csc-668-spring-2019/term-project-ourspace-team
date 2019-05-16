@@ -1,26 +1,56 @@
 import { User } from "../entity/UserEntity";
 import { json } from "body-parser";
+import { getRepository, Like } from "typeorm";
 import { Entity, EntityRepository, Repository } from "typeorm";
 
 @EntityRepository(User)
 export class UserRepo extends Repository<User> {
 
-    saveUser(user: User) { 
+    saveUser(user: User) {
         return User.save(user);
     }
 
     doesUserAlreadyExist(username, email): Promise<User[]> {
         return User.find({
-            where: [ 
-                {username: username}, 
-                {email: email}
+            where: [
+                { username: username },
+                { email: email }
             ]
         }).then((data) => {
             return data;
-        }).catch((e) => {console.log(`this is the e: ${e}`); return [];});
+        }).catch((e) => { console.log(`this is the e: ${e}`); return []; });
     }
 
-    findUser(searchField: string){
+    getAllUsers(): Promise<User[]> {
+        const userlist = getRepository(User)
+            .createQueryBuilder("user")
+            .select(["user.id", "user.name", "user.email",])
+            .getMany();
+        return userlist;
+    }
+    
+    //percent like users
+    findSpecificUser(nameToSearch): Promise<User[]> {
+        const userlist = getRepository(User)
+            .find({
+                username: Like(nameToSearch)
+            });
+        console.log(userlist);
+        return userlist;
+    }
+    
+    //user as reference
+    getAllUsersInformation(): Promise<User[]> {
+        //code below gets all information from all users
+        const list = getRepository(User)
+            .createQueryBuilder()
+            .select("*")
+            .from(User, "*")
+            .getMany();
+        return list;
+    }
+
+    findUser(searchField: string) {
         /* 
         Authentication could be required
 
@@ -32,13 +62,5 @@ export class UserRepo extends Repository<User> {
         return array of users that fit this criteria
         */
     }
-    
-    findSpecificUser(){
-        /*
-        Authentication should be required
 
-        find a single user based on username, email, id, name
-        return this user array
-        */
-    }
 }

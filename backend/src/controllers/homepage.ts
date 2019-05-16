@@ -29,10 +29,10 @@ export class HomepageController {
     dummyUser.username = "IamJohn"
     dummyUser.password = "NonHashedPassword"
     dummyUser.email = "IamJohn@gmail.com"
-    await User.save(dummyUser);
+    const temp1 = await User.save(dummyUser);
 
     const dummyMap: Map = new Map();
-    await Map.save(dummyMap);
+    const temp2 = await Map.save(dummyMap);
 
     const dummyPlace: Place = new Place();
     dummyPlace.place_id = "ChIJgeLABbB9j4AR00VqlJ98eqU";
@@ -55,22 +55,22 @@ export class HomepageController {
     ];
     dummyPlace.icon = "https://maps.googleapis.com/maps/api/place/js/PhotoService.GetPhoto?1sCmRaAAAA439-jAeXUUTsppIX8jow_3tL1ZwCnwaH3zGqW8GrPZ19tb3-sSROWI1VtcKdGDwehlQH-QuA7nGSLIEyADrdIk2baOSlxKVBQ-sJWRf0NvGPipb5GOox4APkXK-rflbsEhAuZHlBtpzNnCHpL0S-oFYEGhSj0SvkBVrGfAmc-BowkQsSKdgYhg&3u3096&5m1&2e1&callback=none&key=AIzaSyBp1zbhrcngsbN8eIBJsrxBH2FGrsyHNjs&token=4597"
 
-    await Place.save(dummyPlace);
+    const temp3 = await Place.save(dummyPlace);
 
     const dummyComment: Comment = new Comment();
     dummyComment.description = "This is a comment contents example.";
-    await Comment.save(dummyComment);
+    const temp4 = await Comment.save(dummyComment);
 
     //Connect Relations with created saved entities
     dummyUser.maps = [dummyMap];
     dummyUser.comments = [dummyComment];
-    await User.save(dummyUser);
+    const temp5 = await User.save(dummyUser);
 
     dummyMap.places = [dummyPlace];
-    await Map.save(dummyMap);
+    const temp6 = await Map.save(dummyMap);
 
     dummyPlace.comments = [dummyComment];
-    await Place.save(dummyPlace);
+    const temp7 = await Place.save(dummyPlace);
 
 
     //Remove Entities after created

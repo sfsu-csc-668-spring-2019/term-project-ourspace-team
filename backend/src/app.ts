@@ -47,24 +47,29 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+//non authenticated routes
 app.get("/", homepageManager.indexpage);
-app.get("/createDBTables", homepageManager.createTablesWithDummyData);
 app.post("/login", loginManager.login);
-app.get("/logout", passportConfig.isAuthenticated, loginManager.logout);
-//app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.post("/register", registerManager.saveNewUser);
+
+//authenticated routes
+app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
 
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
-//app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
 
-app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
+//work in progress
+app.get("/putCommentOnPlace", commentManager.addCommentToPlace);
+//app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
+//app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
 //app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);
 //app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 
-
+//testing routes
+//Hit this route once to set up tables for local testing
+//app.get("/createDBTables", homepageManager.createTablesWithDummyData);
 
 createConnection().then(async connection => {
   console.log("Connected to DB");

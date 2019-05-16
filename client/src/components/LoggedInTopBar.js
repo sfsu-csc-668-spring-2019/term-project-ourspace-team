@@ -3,17 +3,11 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import logo from '../assets/MapSpace.png';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuList from '@material-ui/core/MenuList';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import Grow from '@material-ui/core/Grow';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
 import '../App.css';
 
 const styles = {
@@ -74,7 +68,7 @@ class LoggedInTopBar extends React.Component {
         <AppBar position="static">
           <Toolbar>
             <a href="/home">
-            <img src={logo} className="logo" alt="MapSpace" />
+              <img src={logo} className="logo" alt="MapSpace" />
             </a>
             <a href="/trending" className={classes.link}>
               Trending
@@ -87,13 +81,13 @@ class LoggedInTopBar extends React.Component {
                 Messages </a> */}
             </span>
             <IconButton
-                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                aria-haspopup="true"
-                onClick={this.handleProfileMenuOpen}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
+              aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+              aria-haspopup="true"
+              onClick={this.handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
           </Toolbar>
         </AppBar>
         {renderMenu}

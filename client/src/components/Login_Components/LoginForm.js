@@ -44,11 +44,18 @@ const styles = theme => ({
 });
 
 class LoginForm extends React.Component {
-  state = {
-    username: "",
-    password: "",
-    showPassword: false
-  };
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      showPassword: false
+    }
+
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+  }
 
   componentDidMount() {
     //this.setState({responseToGet: "before"});
@@ -66,8 +73,8 @@ class LoginForm extends React.Component {
     // return jsonintotext;
   };
 
-  handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   handleClickShowPassword = () => {
@@ -75,10 +82,10 @@ class LoginForm extends React.Component {
   };
 
   // This function can be changed to send data to our API
-  clickedButton = async e => {
-    //alert(`${this.state.username} - ${this.state.password}`);
-    //req api call
+  onSubmit = async e => {
+
     e.preventDefault();
+
     const response = await fetch("/login", {
       method: "POST",
       headers: {
@@ -89,6 +96,8 @@ class LoginForm extends React.Component {
         password: this.state.password
       })
     });
+
+    console.log(response);
     // const body = await response.json();
     // const jsonintotext = JSON.stringify(body);
     // this.setState({STATEGOESHERE: body});
@@ -108,6 +117,7 @@ class LoginForm extends React.Component {
             {/* Username Field */}
             <TextField
               id="outlined-simple-start-adornment"
+              name="username"
               className={classes.field}
               variant="outlined"
               type="text"
@@ -115,7 +125,7 @@ class LoginForm extends React.Component {
               autoComplete="username"
               margin="normal"
               value={this.state.username}
-              onChange={this.handleChange("username")}
+              onChange={this.onChange}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">@</InputAdornment>
@@ -128,6 +138,7 @@ class LoginForm extends React.Component {
             {/* Password Field */}
             <TextField
               id="outlined-adornment-password"
+              name="password"
               className={classes.field}
               variant="outlined"
               type={this.state.showPassword ? "text" : "password"}
@@ -135,7 +146,7 @@ class LoginForm extends React.Component {
               autocomplete="current-password"
               margin="normal"
               value={this.state.password}
-              onChange={this.handleChange("password")}
+              onChange={this.onChange}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -161,7 +172,7 @@ class LoginForm extends React.Component {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={this.clickedButton}
+              onClick={this.onSubmit}
               classes={"align-items-xs-flex-end"}
               fullWidth
 

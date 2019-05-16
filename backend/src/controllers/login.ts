@@ -14,15 +14,13 @@ export class LoginController {
 
     //Post /login
     async login(req: Request, res: Response, next: NextFunction) {
+        console.log(req.body);
         let userRepo: UserRepo = new UserRepo();
         const username: string = req.body.username;
-        const useremail: string = req.body.email;
         const password: any = req.body.password;
-        //const name: string = req.body.name;
-        console.log("What is email shown as: " + useremail);
       
         console.log("Try to login");
-        const user = await userRepo.doesUserAlreadyExist(username, useremail);
+        const user = await userRepo.doesUserAlreadyExist(username);
 
         if (user.length != 0) {
             console.log('User exists');

@@ -10,11 +10,10 @@ export class UserRepo extends Repository<User> {
         return User.save(user);
     }
 
-    doesUserAlreadyExist(username, email): Promise<User[]> {
+    doesUserAlreadyExist(username): Promise<User[]> {
         return User.find({
             where: [
-                { username: username },
-                { email: email }
+                { username: username }
             ]
         }).then((data) => {
             return data;

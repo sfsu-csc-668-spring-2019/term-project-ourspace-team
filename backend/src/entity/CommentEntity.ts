@@ -6,17 +6,17 @@ import { Place } from "./PlaceEntity";
 @Entity("comment")
 export class Comment extends BaseEntity{
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    description: string;
+  @Column()
+  description: string;
 
-    //Many Comments to One Place
-    @ManyToOne(type => Place, place => place.comments)
-    placeid: number;
+  //Many Comments to One Place
+  @ManyToOne(type => Place, place => place.comments)
+  place: Place;
 
-    //Many comments have one User
-    @ManyToOne(type => User, user => user.comments)
-    user: User;
+  //Many comments have one User
+  @ManyToOne(type => User, user => user.comments)
+  user: User;
 }

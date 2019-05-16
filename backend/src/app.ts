@@ -60,7 +60,7 @@ app.get("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.post("/register", registerManager.saveNewUser);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
 app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication
-app.get("/search/like",  passportConfig.isAuthenticated, searchManager.returnPercentLikeUsers);//add check authentication
+app.get("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);//add check authentication
 
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);

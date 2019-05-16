@@ -10,16 +10,16 @@ import "reflect-metadata";
 export class SearchController{
     
     async returnAllUsers(req: Request, res: Response, next: NextFunction){
-        UserRepo = new UserRepo();
-        const UsersArray = await UserRepo.getAllUsers();
-        res.send(JSON.stringify(UsersArray));
+        const userRepo = new UserRepo();
+        const usersArray = await userRepo.getAllUsers();
+        res.send(JSON.stringify(usersArray));
     }
 
     async returnSearchUsers(req: Request, res: Response, next: NextFunction){
-        UserRepo = new UserRepo();
-        const UsersArray = await UserRepo.findSpecificUser(req.body.searchQuery);
-        console.log('the return: '+ UsersArray);
-        res.send(JSON.stringify(UsersArray));
+        const userRepo = new UserRepo();
+        const usersArray = await userRepo.findSpecificUser(req.body.searchQuery);
+        console.log('the return: '+ usersArray);
+        res.send(JSON.stringify(usersArray));
     }
 
 }

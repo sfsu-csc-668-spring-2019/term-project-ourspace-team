@@ -95,12 +95,18 @@ class LoginForm extends React.Component {
         username: this.state.username,
         password: this.state.password
       })
-    });
+    }).catch( error => console.log(error));
 
     const userData  = await response.json();
-
     console.log(userData);
-    console.log(userData.name);
+
+    if( userData.errorMessage !== undefined ) {
+      console.log( "Error Handling here ");
+      return;
+    }
+
+    // Save user Data to state
+
     return;
   };
 

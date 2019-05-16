@@ -29,23 +29,23 @@ export class LoginController {
         if (passwordsMatch === true) {
           // Valid Login
           req.login(user[0], (err) => {
-            res.json({
+            res.status(200).json({
               id: req.user.id,
               name: req.user.name,
               username: req.user.username,
               email: req.user.email
             });
           });
+        } else {
+          // Passwords do not match, not a valid login
+          res.status(203).json({
+            errorMessage: 'Invalid Password.'
+          });
         }
-
-        // Passwords do not Match
-        res.json({
-          errorMessage: 'Invalid Password.'
-        });
       }
     } else {
-      // Passwords do not Match
-      res.json({
+      // User doesn't exist
+      res.status(203).json({
         errorMessage: 'Username not found.'
       });
     }

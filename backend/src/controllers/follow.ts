@@ -1,7 +1,7 @@
 import { Response, Request, NextFunction} from "express";
 import { User } from "../entity/UserEntity";
 import { UserRepo } from "../repository/user-repository";
-import { FollowLogic } from "../logic/followData";
+import { FollowLogic } from "../logic/followLogic";
 
 export class FollowController {
 

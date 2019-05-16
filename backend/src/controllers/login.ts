@@ -14,39 +14,42 @@ export class LoginController {
 
   //Post /login
   async login(req: Request, res: Response, next: NextFunction) {
+
     let userRepo: UserRepo = new UserRepo();
     const username: string = req.body.username;
-    const useremail: string = req.body.email;
     const password: any = req.body.password;
-    //const name: string = req.body.name;
-    console.log("What is email shown as: " + useremail);
-    
-    console.log("Try to login");
-    const user = await userRepo.doesUserAlreadyExist(username, useremail);
+
+    const user = await userRepo.findSpecificUser(username);
 
     if (user.length != 0) {
-      console.log('User exists');
-      if (username === user[0].username) {
-        const match = await bcrypt.compare(password, user[0].password);
-        console.log(match);
-        if (match === true) {
-          console.log("passport autheticate");
-          req.login(user[0], function(err){
-            console.log("logging in");
-            res.send(req.user);
-          });
-        }
 
-        if (!match) {
-          res.send('login failed');
-          console.log('login failed');
+      if (username === user[0].username) {
+        const passwordsMatch = await bcrypt.compare(password, user[0].password);
+
+        if (passwordsMatch === true) {
+          // Valid Login
+          req.login(user[0], (err) => {
+            res.status(200).json({
+              id: req.user.id,
+              name: req.user.name,
+              username: req.user.username,
+              email: req.user.email
+            });
+          });
+        } else {
+          // Passwords do not match, not a valid login
+          res.status(203).json({
+            errorMessage: 'Invalid Password.'
+          });
         }
       }
     } else {
-      res.send('User not found');
-      console.log('User not found');
-    }
+      // User doesn't exist
+      res.status(203).json({
+        errorMessage: 'Username not found.'
+      });
 
+    }
   }
 
   async logout(req: Request, res: Response, next: NextFunction){

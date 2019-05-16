@@ -17,9 +17,9 @@ export class UserRepo extends Repository<User> {
         { username: username },
         { email: email }
       ]
-      }).then((data) => {
-        return data;
-      }).catch((e) => { console.log(`this is the e: ${e}`); return []; });
+    }).then((data) => {
+      return data;
+    }).catch((e) => { console.log(`this is the e: ${e}`); return []; });
   }
 
   getAllUsers(): Promise<User[]> {
@@ -29,16 +29,16 @@ export class UserRepo extends Repository<User> {
       .getMany();
     return userlist;
   }
-    
+
   //percent like users
-  findSpecificUser(nameToSearch): Promise<User[]> {
+  findSpecificUser(name): Promise<User[]> {
     const userlist = getRepository(User)
       .find({
-        username: Like(nameToSearch)
+        username: Like(name)
       });
     return userlist;
   }
-    
+
   //user as reference
   getAllUsersInformation(): Promise<User[]> {
     //code below gets all information from all users
@@ -49,5 +49,17 @@ export class UserRepo extends Repository<User> {
       .getMany();
     return list;
   }
-}
 
+  findUser(searchField: string) {
+    /* 
+    Authentication could be required
+
+    search for user based on:
+        username
+        email
+        user
+
+    return array of users that fit this criteria
+    */
+  }
+}

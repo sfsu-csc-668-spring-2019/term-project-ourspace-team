@@ -1,4 +1,4 @@
-import {PrimaryGeneratedColumn, OneToMany} from "typeorm";
+import {PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable} from "typeorm";
 import {Entity, Column, BaseEntity} from "typeorm";
 import {Map} from "./MapEntity";
 import {Comment} from "./CommentEntity";
@@ -27,4 +27,8 @@ export class User extends BaseEntity{
 
     @OneToMany(type => Comment, comment => comment.user)
     comments: Comment[];
+
+    @ManyToMany(type => User, user => user.follow)
+    @JoinTable()
+    follow: User[];
 }

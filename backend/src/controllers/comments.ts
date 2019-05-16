@@ -2,20 +2,10 @@ import { Response, Request, NextFunction} from "express";
 import { User } from "../entity/UserEntity";
 import { Comment } from "../entity/CommentEntity";
 import { Place } from "../entity/PlaceEntity";
-import { UserRepo } from "../repository/user-repository";
-import { PlaceRepo } from "../repository/place-repository";
 
 export class CommentController {
 
-  userRepo: UserRepo;
-  placeRepo: PlaceRepo;
-
-  constructor(){
-    this.userRepo = new UserRepo();
-    this.placeRepo = new PlaceRepo();
-  }
-
-  //get 
+  //post Comment onto place using authenticated user
   async addCommentToPlace(req: Request, res: Response, next: NextFunction) {
     
     const userid: number = req.user.id;

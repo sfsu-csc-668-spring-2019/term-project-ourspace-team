@@ -37,7 +37,7 @@ export class HomepageController {
     followUser.username = "IamJohn"
     followUser.password = "NonHashedPassword"
     followUser.email = "IamJohn@gmail.com"
-    await User.save(dummyUser);
+    await User.save(followUser);
 
     const dummyMap: Map = new Map();
     await Map.save(dummyMap);
@@ -84,12 +84,11 @@ export class HomepageController {
     await User.save(createFollow);
 
     //Remove Entities after created
-    // await Comment.remove(dummyComment);
-    // await Place.remove(dummyPlace);
-    // await Map.remove(dummyMap);
-    // await User.remove(dummyUser);
-    // await User.remove(followUser);
-    
+    await Comment.remove(dummyComment);
+    await Place.remove(dummyPlace);
+    await Map.remove(dummyMap);
+    await User.remove(dummyUser);
+    await User.remove(followUser);
 
     res.send("Created tables with data");
   }

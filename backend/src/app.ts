@@ -78,7 +78,7 @@ app.get("/search/like",  passportConfig.isAuthenticated, searchManager.returnSea
 
 //testing routes
 //Hit this route once to set up tables for local testing
-//app.get("/createDBTables", homepageManager.createTablesWithDummyData);
+app.get("/createDBTables", homepageManager.createTablesWithDummyData);
 
 createConnection().then(async connection => {
   console.log("Connected to DB");

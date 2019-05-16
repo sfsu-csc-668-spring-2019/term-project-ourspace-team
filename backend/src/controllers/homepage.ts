@@ -4,7 +4,7 @@ import { User } from "../entity/UserEntity";
 import { Place } from "../entity/PlaceEntity";
 import { Comment } from "../entity/CommentEntity";
 import { Map } from "../entity/MapEntity";
-
+import { FollowLogic } from "../logic/followLogic";
 
 export class HomepageController {
 
@@ -24,15 +24,23 @@ export class HomepageController {
 
   async createTablesWithDummyData(req: Request, res: Response, next: NextFunction){
     //Create basic entities
+    const followData: FollowLogic = new FollowLogic();
     const dummyUser: User = new User();
     dummyUser.name = "John";
     dummyUser.username = "IamJohn"
     dummyUser.password = "NonHashedPassword"
     dummyUser.email = "IamJohn@gmail.com"
-    const temp1 = await User.save(dummyUser);
+    await User.save(dummyUser);
+
+    const followUser: User = new User();
+    followUser.name = "John";
+    followUser.username = "IamJohn"
+    followUser.password = "NonHashedPassword"
+    followUser.email = "IamJohn@gmail.com"
+    await User.save(dummyUser);
 
     const dummyMap: Map = new Map();
-    const temp2 = await Map.save(dummyMap);
+    await Map.save(dummyMap);
 
     const dummyPlace: Place = new Place();
     dummyPlace.place_id = "ChIJgeLABbB9j4AR00VqlJ98eqU";
@@ -55,28 +63,33 @@ export class HomepageController {
     ];
     dummyPlace.icon = "https://maps.googleapis.com/maps/api/place/js/PhotoService.GetPhoto?1sCmRaAAAA439-jAeXUUTsppIX8jow_3tL1ZwCnwaH3zGqW8GrPZ19tb3-sSROWI1VtcKdGDwehlQH-QuA7nGSLIEyADrdIk2baOSlxKVBQ-sJWRf0NvGPipb5GOox4APkXK-rflbsEhAuZHlBtpzNnCHpL0S-oFYEGhSj0SvkBVrGfAmc-BowkQsSKdgYhg&3u3096&5m1&2e1&callback=none&key=AIzaSyBp1zbhrcngsbN8eIBJsrxBH2FGrsyHNjs&token=4597"
 
-    const temp3 = await Place.save(dummyPlace);
+    await Place.save(dummyPlace);
 
     const dummyComment: Comment = new Comment();
     dummyComment.description = "This is a comment contents example.";
-    const temp4 = await Comment.save(dummyComment);
+    await Comment.save(dummyComment);
 
     //Connect Relations with created saved entities
     dummyUser.maps = [dummyMap];
     dummyUser.comments = [dummyComment];
-    const temp5 = await User.save(dummyUser);
+    await User.save(dummyUser);
 
     dummyMap.places = [dummyPlace];
-    const temp6 = await Map.save(dummyMap);
+    await Map.save(dummyMap);
 
     dummyPlace.comments = [dummyComment];
-    const temp7 = await Place.save(dummyPlace);
+    await Place.save(dummyPlace);
+
+    const createFollow = await followData.setFollow(dummyUser, followUser);
+    await User.save(createFollow);
 
     //Remove Entities after created
     // await Comment.remove(dummyComment);
     // await Place.remove(dummyPlace);
     // await Map.remove(dummyMap);
     // await User.remove(dummyUser);
+    // await User.remove(followUser);
+    
 
     res.send("Created tables with data");
   }

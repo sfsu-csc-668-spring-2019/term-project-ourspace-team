@@ -55,7 +55,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 //non authenticated routes
-app.get("/", homepageManager.indexpage);
+app.get("/", homepageManager.indexPage);
 app.post("/login", loginManager.login);
 app.post("/register", registerManager.saveNewUser);
 

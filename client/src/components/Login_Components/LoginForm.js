@@ -97,10 +97,10 @@ class LoginForm extends React.Component {
       })
     });
 
-    console.log(response);
-    // const body = await response.json();
-    // const jsonintotext = JSON.stringify(body);
-    // this.setState({STATEGOESHERE: body});
+    const userData  = await response.json();
+
+    console.log(userData);
+    console.log(userData.name);
     return;
   };
 

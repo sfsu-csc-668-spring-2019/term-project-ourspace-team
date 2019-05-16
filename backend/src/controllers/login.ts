@@ -12,44 +12,48 @@ import request = require("request");
 
 export class LoginController {
 
-    //Post /login
-    async login(req: Request, res: Response, next: NextFunction) {
-        console.log(req.body);
-        let userRepo: UserRepo = new UserRepo();
-        const username: string = req.body.username;
-        const password: any = req.body.password;
-      
-        console.log("Try to login");
-        const user = await userRepo.doesUserAlreadyExist(username);
+  //Post /login
+  async login(req: Request, res: Response, next: NextFunction) {
+    console.log(req.body);
+    let userRepo: UserRepo = new UserRepo();
+    const username: string = req.body.username;
+    const password: any = req.body.password;
 
-        if (user.length != 0) {
-            console.log('User exists');
-            if (username === user[0].username) {
-                const match = await bcrypt.compare(password, user[0].password);
-                console.log(match);
-                if (match === true) {
-                    console.log("passport autheticate");
-                    req.login(user[0], (err) => {
-                        console.log("logging in");
-                        res.send(req.user);
-                    });
-                }
+    const user = await userRepo.findSpecificUser(username);
 
-                if (!match) {
-                    res.send('login failed');
-                    console.log('login failed');
-                }
-            }
-        } else {
-            res.send('User not found');
-            console.log('User not found');
+    if (user.length != 0) {
+
+      if (username === user[0].username) {
+        const passwordsMatch = await bcrypt.compare(password, user[0].password);
+
+        if (passwordsMatch === true) {
+          // Valid Login
+          req.login(user[0], (err) => {
+            res.json({
+              id: req.user.id,
+              name: req.user.name,
+              username: req.user.username,
+              email: req.user.email
+            });
+          });
         }
 
+        // Passwords do not Match
+        res.json({
+          errorMessage: 'Invalid Password.'
+        });
+      }
+    } else {
+      // Passwords do not Match
+      res.json({
+        errorMessage: 'Username not found.'
+      });
     }
+  }
 
-    async logout(req: Request, res: Response, next: NextFunction){
-        req.logout();
-        res.redirect("/");
-    }
+  async logout(req: Request, res: Response, next: NextFunction) {
+    req.logout();
+    res.redirect("/");
+  }
 
 }

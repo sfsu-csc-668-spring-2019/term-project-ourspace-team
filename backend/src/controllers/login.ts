@@ -14,7 +14,7 @@ export class LoginController {
 
   //Post /login
   async login(req: Request, res: Response, next: NextFunction) {
-    console.log(req.body);
+
     let userRepo: UserRepo = new UserRepo();
     const username: string = req.body.username;
     const password: any = req.body.password;
@@ -48,10 +48,11 @@ export class LoginController {
       res.status(203).json({
         errorMessage: 'Username not found.'
       });
+
     }
   }
 
-  async logout(req: Request, res: Response, next: NextFunction) {
+  async logout(req: Request, res: Response, next: NextFunction){
     req.logout();
     res.redirect("/");
   }

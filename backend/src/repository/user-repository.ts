@@ -1,5 +1,6 @@
 import { User } from "../entity/UserEntity";
 import { json } from "body-parser";
+
 import { getRepository, Like } from "typeorm";
 import { Entity, EntityRepository, Repository } from "typeorm";
 
@@ -20,7 +21,6 @@ export class UserRepo extends Repository<User> {
       return data;
     }).catch((e) => { console.log(`this is the e: ${e}`); return []; });
   }
-
 
   getAllUsers(): Promise<User[]> {
     const userlist = getRepository(User)
@@ -62,5 +62,4 @@ export class UserRepo extends Repository<User> {
     return array of users that fit this criteria
     */
   }
-
 }

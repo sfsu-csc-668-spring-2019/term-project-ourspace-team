@@ -1,8 +1,10 @@
 import { User } from "../entity/UserEntity";
 import { json } from "body-parser";
 import { getRepository, Like } from "typeorm";
+import { Entity, EntityRepository, Repository } from "typeorm";
 
-export class UserRepo {
+@EntityRepository(User)
+export class UserRepo extends Repository<User> {
 
     saveUser(user: User) {
         return User.save(user);

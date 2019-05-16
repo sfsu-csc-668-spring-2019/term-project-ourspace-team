@@ -19,6 +19,7 @@ import {MapController} from "./controllers/maps";
 import {SearchController} from "./controllers/search";
 import {PlaceController} from "./controllers/places";
 import {CommentController} from "./controllers/comments";
+import {FollowController} from "./controllers/follow";
 
 
 dotenv.config({path: ".env.example"});
@@ -32,7 +33,7 @@ const mapManager = new MapController();
 const searchManager = new SearchController();
 const placeManager = new PlaceController();
 const commentManager = new CommentController();
-
+const followManager = new FollowController();
 
 
 app.set("port", process.env.PORT || 5000);
@@ -66,6 +67,7 @@ app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
 //app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
+app.post("/follow", followManager.follow);
 
 //app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
 //app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);

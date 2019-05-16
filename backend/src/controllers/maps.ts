@@ -11,8 +11,8 @@ export class MapController {
 
   async getMyMaps(req: Request, res: Response, next: NextFunction){
   const userid: number = req.user.id;
-  const localuser: User = await User.findOne({where: {id: userid} });
-  res.send(localuser.maps);
+  const localUser: User = await User.findOne({where: {id: userid} });
+  res.send(localUser.maps);
   }
 
   //add map to auth user
@@ -20,9 +20,9 @@ export class MapController {
   //requires user id from authenticated user
   //respondes with nothing or returning updated user
 
-  const userid: number = req.user.id;
+  const userId: number = req.user.id;
   
-  const localuser: User = await User.findOne({where: {id: userid} });
+  const localUser: User = await User.findOne({where: {id: userId} });
 
   const newMap: Map = new Map();
   const mapRepo: MapRepo = new MapRepo();
@@ -30,13 +30,13 @@ export class MapController {
 
   const map = await mapRepo.saveMap(newMap);
 
-  if (localuser.maps == null){
-    localuser.maps = [newMap];
+  if (localUser.maps == null) {
+    localUser.maps = [newMap];
   } else {
-    localuser.maps.concat([newMap]);
+    localUser.maps.concat([newMap]);
   }
 
-  const value = await userRepo.saveUser(localuser);
+  await userRepo.saveUser(localUser);
 
   res.send("New Map for Auth User");
   }

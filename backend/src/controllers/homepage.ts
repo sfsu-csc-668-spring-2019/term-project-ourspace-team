@@ -9,16 +9,16 @@ import { FollowLogic } from "../logic/followLogic";
 export class HomepageController {
 
   //get "/""
-  async indexpage(req: Request, res: Response, next: NextFunction) {
+  async indexPage(req: Request, res: Response, next: NextFunction) {
     //Console logs for User authetication confirmations
-    // console.log(req.user);
-    // if (req.isAuthenticated() ==  false){
-    //     //
-    // } else {
-    //     console.log(req.user.id);
-    // }
+    //console.log(req.user);
+    //if (req.isAuthenticated() ==  false){
+    //
+    //} else {
+    //  console.log(req.user.id);
+    //}
     //console.log(req.user.id);
-    console.log(req.isAuthenticated());
+    //console.log(req.isAuthenticated());
     res.send("Index Page Hit");
   }
 

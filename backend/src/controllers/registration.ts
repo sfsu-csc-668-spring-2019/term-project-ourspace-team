@@ -21,6 +21,7 @@ export class RegistrationController {
     console.log("Received Save User => POST");
     let user = await userRepo.doesUserAlreadyExist(username, email);
     if (user.length === 0){
+
       const newUser: User = new User();
       const hashPassword = await bcrypt.hash(password, 10);
 
@@ -40,17 +41,18 @@ export class RegistrationController {
       } else {
         newUser.maps.concat([newMap]);
       }
-      const value = await userRepo.saveUser(newUser);
+      await userRepo.saveUser(newUser);
   
     }else if (user.length > 0) {
+
       if(user[0].username == username) {
         return console.log(`User: ${username} is taken`);
       }
 
-
       if(user[0].email == email){
         return console.log(`E-mail: ${email} is taken`);
       }
+
     } else {
       return console.log('something is broken');
     }

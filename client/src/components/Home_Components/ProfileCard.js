@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Gravatar from 'react-gravatar'
 import Avatar from '@material-ui/core/Avatar';
 
 const styles = theme => ({
@@ -22,7 +21,7 @@ const styles = theme => ({
     width: 75,
     height: 75,
   },
-  avatar:{
+  avatar: {
     margin: 'auto',
     display: 'block',
     width: 75,
@@ -42,7 +41,7 @@ class ProfileCard extends React.Component {
   // Gravatar.propTypes = {
   //   email: React.PropTypes.string.isRequired
   // };
-  
+
   render() {
     const { classes } = this.props;
     return (
@@ -51,8 +50,7 @@ class ProfileCard extends React.Component {
           <Grid container spacing={16}>
             <Grid item>
               <ButtonBase className={classes.image}>
-              <Avatar className ={classes.avatar} src="http://www.gravatar.com/avatar/"/>
-
+                <Avatar className={classes.avatar} src="http://www.gravatar.com/avatar/" />
               </ButtonBase>
             </Grid>
             <Grid item xs={12} sm container>

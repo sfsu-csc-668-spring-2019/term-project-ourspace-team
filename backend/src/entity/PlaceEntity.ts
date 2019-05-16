@@ -7,39 +7,39 @@ import {Comment} from "./CommentEntity";
 @Entity("place")
 export class Place extends BaseEntity{
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    place_id: string;
+  @Column()
+  place_id: string;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    address: string;
+  @Column()
+  address: string;
 
-    @Column()
-    phone: string;
+  @Column()
+  phone: string;
 
-    @Column("simple-array")
-    photos: string[];
+  @Column("simple-array")
+  photos: string[];
 
-    @Column()
-    icon: string;
+  @Column()
+  icon: string;
 
-    @Column("decimal", { precision: 12, scale: 10 })
-    latitude: number;
+  @Column("decimal", { precision: 12, scale: 10 })
+  latitude: number;
 
-    @Column("decimal", { precision: 13, scale: 10 })
-    longitude: number;
+  @Column("decimal", { precision: 13, scale: 10 })
+  longitude: number;
 
-    //Many places for Many Maps
-    @ManyToMany(type => Map, map => map.places)
-    maps: Map[];
+  //Many places for Many Maps
+  @ManyToMany(type => Map, map => map.places)
+  maps: Map[];
 
-    //One Place has many comments
-    @OneToMany(type => Comment, comment => comment.place)
-    comments: Comment[];
+  //One Place has many comments
+  @OneToMany(type => Comment, comment => comment.place)
+  comments: Comment[];
 
 }

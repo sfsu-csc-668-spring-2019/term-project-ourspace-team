@@ -55,14 +55,12 @@ app.post("/register", registerManager.saveNewUser);
 //authenticated routes
 app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
-
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
+app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
 
 //work in progress
-app.get("/putCommentOnPlace", commentManager.addCommentToPlace);
-//app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
 //app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
 //app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);
 //app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);

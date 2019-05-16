@@ -15,9 +15,9 @@ export class FollowController {
 
     const localFollower: User = await User.findOne( {where: {id: follower}} );
     const localToBeFollowed: User = await User.findOne( {where: {id: toBeFollowed}} );
-    
+
     const createFollow = await followData.setFollow(localFollower, localToBeFollowed);
-        
+
     User.save(createFollow);
   }
 }

@@ -72,10 +72,11 @@ export class HomepageController {
     dummyPlace.comments = [dummyComment];
     const temp7 = await Place.save(dummyPlace);
 
-
     //Remove Entities after created
-
-
+    // await Comment.remove(dummyComment);
+    // await Place.remove(dummyPlace);
+    // await Map.remove(dummyMap);
+    // await User.remove(dummyUser);
 
     res.send("Created tables with data");
   }

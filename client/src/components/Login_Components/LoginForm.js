@@ -11,6 +11,9 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import "./LoginForm.css";
 
+import { connect } from 'react-redux';
+import { saveUserData } from '../../actions/userActions'
+
 const styles = theme => ({
   main: {
     width: "auto",
@@ -106,6 +109,7 @@ class LoginForm extends React.Component {
     }
 
     // Save user Data to state
+    this.props.saveUserData(userData);
 
     return;
   };
@@ -196,7 +200,8 @@ class LoginForm extends React.Component {
 }
 
 LoginForm.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  saveUserData: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(LoginForm);
+export default connect(null, {saveUserData})(withStyles(styles)(LoginForm));

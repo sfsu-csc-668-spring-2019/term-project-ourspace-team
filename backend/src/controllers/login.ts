@@ -31,7 +31,7 @@ export class LoginController {
                 console.log(match);
                 if (match === true) {
                     console.log("passport autheticate");
-                    req.login(user[0], function(err){
+                    req.login(user[0], (err) => {
                         console.log("logging in");
                         res.send(req.user);
                     });

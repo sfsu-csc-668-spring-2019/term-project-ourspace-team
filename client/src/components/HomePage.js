@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import LoggedInTopBar from './LoggedInTopBar';
 import ProfileCard from './Home_Components/ProfileCard';
 import Map from './Map_Components/Map';
+import MapTabs from './MapTab_Components/MapTabs'
 import '../App.css';
 import PlacesList from './Home_Components/PlacesList';
 import CommentsSection from './Map_Components/CommentsSection'
@@ -39,6 +40,7 @@ class HomePage extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item xs={9} container direction="column" style={mapStyles}>
+                                <MapTabs />
                                 <Map />
                             </Grid>
                         </Grid>

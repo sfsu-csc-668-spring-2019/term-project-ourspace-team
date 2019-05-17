@@ -1,42 +1,65 @@
 import { User } from "../entity/UserEntity";
 import { json } from "body-parser";
- 
-export class UserRepo {
- 
-    saveUser(user: User) { 
-        return User.save(user);
-    }
 
-    doesUserAlreadyExist(username, email): Promise<User[]> {
-       return User.find({
-           where: [ 
-                {username: username}, 
-                {email: email}
-            ]
-        }).then((data) => {
-            return data;
-        }).catch((e) => {console.log(`this is the e: ${e}`); return [];});
-    }
+import { getRepository, Like } from "typeorm";
+import { Entity, EntityRepository, Repository } from "typeorm";
 
-    findUser(searchField: string){
-        /* 
-        Authentication could be required
+@EntityRepository(User)
+export class UserRepo extends Repository<User> {
 
-        search for user based on:
-            username
-            email
-            user
+  saveUser(user: User) {
+    return User.save(user);
+  }
 
-        return array of users that fit this criteria
-        */
-    }
-    
-    findSpecificUser(){
-        /*
-        Authentication should be required
+  doesUserAlreadyExist(username, email): Promise<User[]> {
+    return User.find({
+      where: [
+        { username: username },
+        { email: email }
+      ]
+    }).then((data) => {
+      return data;
+    }).catch((e) => { console.log(`this is the e: ${e}`); return []; });
+  }
 
-        find a single user based on username, email, id, name
-        return this user array
-        */
-    }
+  getAllUsers(): Promise<User[]> {
+    const userlist = getRepository(User)
+      .createQueryBuilder("user")
+      .select(["user.id", "user.name", "user.email",])
+      .getMany();
+    return userlist;
+  }
+
+  //percent like users
+  findSpecificUser(name): Promise<User[]> {
+    const userlist = getRepository(User)
+      .find({
+        username: Like(name)
+      });
+    return userlist;
+  }
+
+  //user as reference
+  getAllUsersInformation(): Promise<User[]> {
+    //code below gets all information from all users
+    const list = getRepository(User)
+      .createQueryBuilder()
+      .select("*")
+      .from(User, "*")
+      .getMany();
+    return list;
+  }
+
+  findUser(searchField: string) {
+    /* 
+    Authentication could be required
+
+    search for user based on:
+        username
+        email
+        user
+
+    return array of users that fit this criteria
+    */
+  }
 }

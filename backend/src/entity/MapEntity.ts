@@ -6,15 +6,15 @@ import {Place} from "./PlaceEntity";
 @Entity("map")
 export class Map extends BaseEntity{
 
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    //Many maps to one user
-    @ManyToOne(type => User, user => user.maps)
-    user: User;
+  //Many maps to one user
+  @ManyToOne(type => User, user => user.maps)
+  user: User;
 
-    //Many maps have many places (Map is owner of relationship)
-    @ManyToMany(type => Place, place => place.maps)
-    @JoinTable()
-    places: Place[]
+  //Many maps have many places (Map is owner of relationship)
+  @ManyToMany(type => Place, place => place.maps)
+  @JoinTable()
+  places: Place[];
 }

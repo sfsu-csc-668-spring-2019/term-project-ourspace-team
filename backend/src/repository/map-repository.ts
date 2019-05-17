@@ -2,9 +2,15 @@ import { Map } from "../entity/MapEntity";
 import { json } from "body-parser";
  
 export class MapRepo {
-    saveMap(map: Map){
-        console.log(Map);
-        return
-    }
+  saveMap(map: Map){
+    return Map.save(map)
+  }
 
+  updateMap(map: Map){
+    //return Map.update(map);
+  }
+
+  findMap(findid: number){
+    return Map.findOne( { where: { id: findid } } )
+  }
 }

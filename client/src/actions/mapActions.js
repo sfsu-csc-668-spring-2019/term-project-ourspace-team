@@ -1,5 +1,5 @@
 import { TOGGLE_SHOWING, SET_OPENED_PLACE, GET_OPENED_PLACE } from './types';
-import store from '../config/store';
+import { store } from '../config/store';
 
 export const toggleShowing = ( updateShowing ) => dispatch => {
   dispatch({

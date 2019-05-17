@@ -54,8 +54,9 @@ class LoginForm extends React.Component {
       username: '',
       password: '',
       showPassword: false
+      
     }
-
+    this.keyPress = this.keyPress.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -74,6 +75,12 @@ class LoginForm extends React.Component {
     // const jsonintotext = JSON.stringify(body);
     // if (response.status !== 200) throw Error(body.message);
     // return jsonintotext;
+  };
+  
+  keyPress = (e) => {
+    if(e.keyCode === 13){
+      this.onSubmit(e);
+    }
   };
 
   onChange = (e) => {
@@ -160,6 +167,7 @@ class LoginForm extends React.Component {
               margin="normal"
               value={this.state.password}
               onChange={this.onChange}
+              onKeyDown={this.keyPress}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">

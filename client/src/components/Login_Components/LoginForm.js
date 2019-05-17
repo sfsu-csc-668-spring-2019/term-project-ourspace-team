@@ -10,7 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 import "./LoginForm.css";
-
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { saveUserData } from '../../actions/userActions'
 
@@ -100,6 +100,7 @@ class LoginForm extends React.Component {
       })
     }).catch( error => console.log(error));
 
+
     const userData  = await response.json();
     console.log(userData);
 
@@ -110,6 +111,8 @@ class LoginForm extends React.Component {
 
     // Save user Data to state
     this.props.saveUserData(userData);
+
+    this.props.history.push('/home');
 
     return;
   };
@@ -204,4 +207,4 @@ LoginForm.propTypes = {
   saveUserData: PropTypes.func.isRequired
 };
 
-export default connect(null, {saveUserData})(withStyles(styles)(LoginForm));
+export default connect(null, {saveUserData})(withStyles(styles)(withRouter(LoginForm)));

@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
@@ -74,8 +69,8 @@ class SearchPage extends Component {
                     startAdornment: <InputAdornment position="start">@</InputAdornment>,
                   }}
                 />
-               
-               {/* Renders all the cards here*/}
+
+                {/* Renders all the cards here*/}
                 {cards}
               </Grid>
             </CardContent>

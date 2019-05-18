@@ -5,7 +5,7 @@ import Routes from './routes';
 import { store, persistor } from './config/store';
 import './App.css';
 import * as MapFunction from './components/Map_Components/functions/index'
-import { MuiThemeProvider,createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
   palette: {
@@ -22,14 +22,14 @@ const theme = createMuiTheme({
     //   contrastText: '#000',
     // },
   },
-  typography:{
-    fontFamily:['Raleway'],
-    title:{
+  typography: {
+    fontFamily: ['Raleway'],
+    title: {
       fontSize: '2.75rem',
       paddingLeft: '1rem',
       paddingBottom: '2rem',
     },
-    display1:{
+    display1: {
       fontSize: '1.25rem',
       paddingLeft: '1rem',
       paddingBottom: '.5rem',
@@ -40,8 +40,8 @@ const theme = createMuiTheme({
 
 class App extends Component {
 
-  render(){
-    return(
+  render() {
+    return (
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <MuiThemeProvider theme={theme}>

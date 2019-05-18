@@ -18,49 +18,48 @@ const styles = theme => ({
     marginLeft: '1rem',
     margin: 'auto',
     overflowY: 'auto',
-    maxHeight:'350px',
+    maxHeight: '350px',
   },
-  list:{
+  list: {
     flexDirection: 'column',
-    height:'100%',
+    height: '100%',
     overflowY: 'auto',
 
   },
-  listItem:{
-    flexGrow:'1',
+  listItem: {
+    flexGrow: '1',
   }
 
 });
 
 function generate(element) {
   return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(value =>
-      React.cloneElement(element, {
-          key: value,
-      }),
+    React.cloneElement(element, {
+      key: value,
+    }),
   );
 }
 
 class PlacesList extends React.Component {
 
-  
+
   render() {
     const { classes } = this.props;
     return (
       <Paper className={classes.paper}>
+        <div className={classes.list}>
+          <List >
+            {generate(
+              <ListItem className={classes.listItem}>
+                <ListItemText
+                  primary="Single-line item"
+                />
+              </ListItem>,
+            )}
+          </List>
+        </div>
 
-          <div className={classes.list}>
-              <List >
-                  {generate(
-                      <ListItem className={classes.listItem}>
-                          <ListItemText
-                              primary="Single-line item"
-                          />
-                      </ListItem>,
-                  )}
-              </List>
-          </div>
-
-  </Paper>
+      </Paper>
     );
 
   }

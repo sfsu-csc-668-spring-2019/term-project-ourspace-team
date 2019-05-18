@@ -10,8 +10,8 @@ import "reflect-metadata";
 export class MapController {
 
   async getMyMaps(req: Request, res: Response, next: NextFunction) {
-    //const userid: number = req.user.id;
-    const userid: number = 3;
+    const userid: number = req.user.id;
+    //const userid: number = 3;
     const localUser: User = await User.findOne( { where: {id: userid}, relations: ['maps'] } );
     console.log(localUser.maps);
     res.send(JSON.stringify(localUser.maps));
@@ -32,9 +32,11 @@ export class MapController {
   }
 
   async removeMap(req: Request, res: Response, next: NextFunction){
-    const mapid = req.body.id
+    const id = req.body.id;
+    const mapToRemove: Map = await Map.findOne( { where: { id: id } } );
+    await Map.remove(mapToRemove);
 
-    res.send("removeMap")
+    res.send("removeMap with id: " + id);
   }
 
 }

@@ -17,7 +17,7 @@ export class PlaceController {
     const mapRepo: MapRepo = new MapRepo();
     const placeRepo: PlaceRepo = new PlaceRepo();
 
-    const id = req.body.map_id;
+    const id = req.body.id;
     const tempMap: Map = await mapRepo.findMap(id);
 
     reqPlace.place_id = req.body.place_id;
@@ -43,13 +43,16 @@ export class PlaceController {
 
   //remove place from auth user map x
   async removePlaceFromMap(req: Request, res: Response, next: NextFunction) {
+    //take id from map
+    //take id from place
+    //remove the connection from place or map
     res.send("Under Construction");
   }
 
   //getplaces from map
   async getPlacesFromMap(req: Request, res: Response, next: NextFunction){
-    //const reqid = req.body.id;
-    const reqid = 3;
+    const reqid = req.body.id;
+    //const reqid = 3;
     const map: Map = await Map.findOne( { where: { id: reqid }, relations: ['places'] } );
     console.log(map);
     res.send(JSON.stringify(map.places));

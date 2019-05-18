@@ -51,11 +51,9 @@ export class PlaceController {
 
   //getplaces from map
   async getPlacesFromMap(req: Request, res: Response, next: NextFunction){
-    const reqid = req.body.id;
-    //const reqid = 3;
-    const map: Map = await Map.findOne( { where: { id: reqid }, relations: ['places'] } );
-    console.log(map);
-    res.send(JSON.stringify(map.places));
+    const id = req.body.mapId;
+    const map: Map = await Map.findOne( { where: { id: id }, relations: ['places'] } );
+    res.send(map.places);
   }
 
   //getplaces from maps from user

@@ -1,5 +1,5 @@
 import { TOGGLE_SHOWING, SET_OPENED_PLACE, GET_OPENED_PLACE, GET_MAP } from './types';
-import store from '../config/store';
+import  { store } from '../config/store';
 import * as MapFunction from '../components/Map_Components/functions/index';
 
 export const toggleShowing = ( updateShowing ) => dispatch => {

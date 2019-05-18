@@ -64,6 +64,6 @@ export class PlaceController {
   }
 
   async removePlaceMapConnection(req: Request, res: Response, next:NextFunction){
-    res.send("")
+    res.send("");
   }
 }

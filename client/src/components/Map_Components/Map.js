@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { toggleShowing, setOpenedPlace } from '../../actions/mapActions';
+import { toggleShowing, setOpenedPlace, setMap, setPosition, setZoom } from '../../actions/mapActions';
 import * as MapFunction from './functions/index'
 import CommentsSection from './CommentsSection'
 import './Map.css'
@@ -9,17 +9,15 @@ import './Map.css'
 class Map extends Component {
 
   state = {
-    sfPosition : {
-      lat: 37.775,
-      lng: -122.410
-    },
-    zoom: 12.5,
     infowindow: undefined,
     places : []
   }
 
   // Lifecycle Event
   componentDidMount() {
+    // Set to State
+    this.props.setPosition( { lat: 37.775, lng: -122.410 } );
+    this.props.setZoom( 12.5 );
     // TODO Render Map Specific Markers
     this.getPlaces( this.props.map_id );
   }
@@ -36,7 +34,7 @@ class Map extends Component {
   }
 
   initMap = () => {
-    const map = MapFunction.createNewMap( this.state.sfPosition, this.state.zoom );
+    const map = MapFunction.createNewMap( this.props.sfPosition, this.props.zoom );
 
     this.setState({ infowindow: new window.google.maps.InfoWindow() });
 
@@ -47,6 +45,9 @@ class Map extends Component {
     this.addSearchBoxAndAutoComplete( map );
     this.addCommentsSection( map );
     this.renderSavedPlaces( map );
+
+    // add Map to Redux
+    this.props.setMap( map );
   }
 
   // TODO - Delete this later or change to modal
@@ -218,11 +219,22 @@ var mapContainerStyle = {
 Map.propTypes = {
   classes: PropTypes.object.isRequired,
   toggleShowing: PropTypes.func.isRequired,
-  setOpenedPlace: PropTypes.func.isRequired
+  setOpenedPlace: PropTypes.func.isRequired,
+  setMap: PropTypes.func.isRequired,
+  setPosition: PropTypes.func.isRequired,
+  setZoom: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  isShowing: state.maps.isShowing
+  isShowing: state.maps.isShowing,
+  sfPosition: state.maps.sfPosition,
+  zoom: state.maps.zoom
 });
 
-export default connect(mapStateToProps, { toggleShowing, setOpenedPlace })(Map);
+export default 
+connect(mapStateToProps, { 
+  toggleShowing, 
+  setOpenedPlace, 
+  setMap, 
+  setPosition,
+  setZoom })(Map);

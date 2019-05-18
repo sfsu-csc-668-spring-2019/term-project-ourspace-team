@@ -30,7 +30,7 @@ export class PlaceController {
     reqPlace.icon = req.body.icon;
     const tempPlace: Place = await placeRepo.findOneOrAddPlace(reqPlace);
 
-    if (tempMap.places == null) {
+    if (tempMap.places == null || tempMap.places.length == 0) {
       tempMap.places = [tempPlace];
     } else {
       tempMap.places.concat([tempPlace]);
@@ -48,7 +48,7 @@ export class PlaceController {
 
   //getplaces from map
   async getPlacesFromMap(req: Request, res: Response, next: NextFunction){
-    //const reqid = req.body.map_id;
+    //const reqid = req.body.id;
     const reqid = 3;
     const map: Map = await Map.findOne( { where: { id: reqid }, relations: ['places'] } );
     console.log(map);

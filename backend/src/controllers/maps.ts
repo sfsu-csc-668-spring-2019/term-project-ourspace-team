@@ -32,6 +32,8 @@ export class MapController {
   }
 
   async removeMap(req: Request, res: Response, next: NextFunction){
+    const mapid = req.body.id
+
     res.send("removeMap")
   }
 

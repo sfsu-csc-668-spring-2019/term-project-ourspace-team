@@ -13,30 +13,38 @@ export class PlaceController {
     //requires place information and map id
     //Responded with success message or updated map
 
-    const reqPlace: Place = new Place();
+    const place: Place = new Place();
     const mapRepo: MapRepo = new MapRepo();
     const placeRepo: PlaceRepo = new PlaceRepo();
 
     const id = req.body.id;
     const tempMap: Map = await mapRepo.findMap(id);
 
-    reqPlace.place_id = req.body.place_id;
-    reqPlace.name = req.body.name;
-    reqPlace.address = req.body.address;
-    reqPlace.latitude = req.body.lat;
-    reqPlace.longitude = req.body.lng;
-    reqPlace.phone = req.body.phone;
-    reqPlace.photos = req.body.photos;
-    reqPlace.icon = req.body.icon;
-    const tempPlace: Place = await placeRepo.findOneOrAddPlace(reqPlace);
+    place.place_id = req.body.place.place_id;
+    place.name = req.body.place.name;
+    place.address = req.body.place.address;
+    place.latitude = req.body.place.lat;
+    place.longitude = req.body.place.lng;
+    place.phone = req.body.place.phone;
+    place.photos = req.body.place.photos;
+    place.icon = req.body.place.icon;
 
-    if (tempMap.places == null || tempMap.places.length == 0) {
+    const tempPlace: Place = await placeRepo.findOneOrAddPlace(place);
+    console.log("Temp Place------");
+    console.log(tempPlace);
+    console.log("Temp Map Places--------");
+    console.log(tempMap.places)
+
+    if (tempMap.places === null || tempMap.places.length === 0) {
       tempMap.places = [tempPlace];
     } else {
       tempMap.places.concat([tempPlace]);
     }
 
     const newMap = await mapRepo.saveMap(tempMap);
+
+    console.log("New Map------");
+    console.log(newMap);
 
     res.send("New Place for Map"); //or send back new updated map?
   }

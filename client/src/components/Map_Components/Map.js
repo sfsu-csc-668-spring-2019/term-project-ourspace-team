@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { toggleShowing, setOpenedPlace, setMap, setPosition, setZoom } from '../../actions/mapActions';
 import * as MapFunction from './functions/index'
 import CommentsSection from './CommentsSection'
+import MapTabs from '../MapTab_Components/MapTabs'
 import './Map.css'
 
 class Map extends Component {
@@ -102,10 +103,10 @@ class Map extends Component {
           address: place.formatted_address,
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng(),
-          phone: place.international_phone_number,
+          phone: (place.international_phone_number === undefined) ? '': place.international_phone_number,
           price_level: place.price_level,
           photos: ( place_photos === undefined) ? [] : place_photos,
-          icon: (place_photos === undefined) ? undefined : place_photos[0],
+          icon: (place_photos === undefined) ? '' : place_photos[0],
         }
 
         this.addNewPlaceToState(newPlace);
@@ -155,14 +156,17 @@ class Map extends Component {
   }
 
   clickedAddToMap = (place_id) => {
-    let index = this.state.places.map((place) => { return place.place_id; }).indexOf(place_id);
-
-    fetch(`/map/add/:mapId/${this.state.places[index].place_id}`, {
+    const index = this.state.places.map((place) => { return place.place_id; }).indexOf(place_id);
+    const place = this.state.places[index];
+    fetch(`/addPlaceToMap`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(this.state.places[index])
+      body: JSON.stringify({
+        id: 1, // This needs to be dynamic somehow
+        place: place
+      })
 
     }).then(( response ) => {
       // TODO different stuff based on response
@@ -182,6 +186,7 @@ class Map extends Component {
         clasName="mapContainer"
         style={mapContainerStyle} 
       >
+        <MapTabs/>
 
         <link rel="stylesheet"
               href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"

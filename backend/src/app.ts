@@ -68,7 +68,7 @@ app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlace
 app.post("/removeMap", passportConfig.isAuthenticated, mapManager.removeMap);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
 app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
-app.post("/follow", followManager.follow);
+app.post("/follow", passportConfig.isAuthenticated, followManager.follow);
 app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication
 app.get("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);//add check authentication
 

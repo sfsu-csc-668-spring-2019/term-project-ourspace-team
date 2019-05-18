@@ -62,7 +62,8 @@ app.post("/register", registerManager.saveNewUser);
 //authenticated routes
 app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
-app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
+//app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
+app.get("/getUserMaps", mapManager.getMyMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
 app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
@@ -72,6 +73,7 @@ app.get("/search/like",  passportConfig.isAuthenticated, searchManager.returnSea
 
 
 //work in progress
+app.get("/getPlacesFromMap", placeManager.getPlacesFromMap);
 //app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
 //app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);
 //app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);

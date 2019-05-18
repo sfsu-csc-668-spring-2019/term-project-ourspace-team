@@ -17,7 +17,7 @@ export class PlaceController {
     const mapRepo: MapRepo = new MapRepo();
     const placeRepo: PlaceRepo = new PlaceRepo();
 
-    const id = req.body.mapId;
+    const id = req.body.map_id;
     const tempMap: Map = await mapRepo.findMap(id);
 
     reqPlace.place_id = req.body.place_id;
@@ -36,16 +36,27 @@ export class PlaceController {
       tempMap.places.concat([tempPlace]);
     }
 
-    await mapRepo.saveMap(tempMap);
-
-    console.log();
+    const newMap = await mapRepo.saveMap(tempMap);
 
     res.send("New Place for Map"); //or send back new updated map?
   }
 
-
   //remove place from auth user map x
   async removePlaceFromMap(req: Request, res: Response, next: NextFunction) {
     res.send("Under Construction");
+  }
+
+  //getplaces from map
+  async getPlacesFromMap(req: Request, res: Response, next: NextFunction){
+    //const reqid = req.body.map_id;
+    const reqid = 3;
+    const map: Map = await Map.findOne( { where: { id: reqid }, relations: ['places'] } );
+    console.log(map);
+    res.send(JSON.stringify(map.places));
+  }
+
+  //getplaces from maps from user
+  async getPlacesFromUserMaps(req: Request, res: Response, next: NextFunction){
+    res.send();
   }
 }

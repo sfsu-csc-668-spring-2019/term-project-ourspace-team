@@ -68,15 +68,15 @@ app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlace
 app.post("/removeMap", passportConfig.isAuthenticated, mapManager.removeMap);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
 app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
+app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 app.post("/follow", passportConfig.isAuthenticated, followManager.follow);
-app.post("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication
+app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication
 app.post("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);//add check authentication
 
 
 //work in progress
 //app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
 //app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);
-//app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 
 //local test routes
 //uncomment and hit this route once to set up tables for existing DB with no tables

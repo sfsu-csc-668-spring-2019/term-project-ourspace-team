@@ -60,6 +60,10 @@ export class PlaceController {
 
   //getplaces from maps from user
   async getPlacesFromUserMaps(req: Request, res: Response, next: NextFunction){
-    res.send();
+    res.send("");
+  }
+
+  async removePlaceMapConnection(req: Request, res: Response, next:NextFunction){
+    res.send("")
   }
 }

@@ -23,4 +23,11 @@ export class CommentController {
 
     res.send("Comment Applied");
   }
+
+  async removeComment(req: Request, res: Response, next: NextFunction){
+    const commentId = req.body.id;
+    const commentToRemove: Comment = await Comment.findOne( { where: { id: commentId } } );
+    await Comment.remove(commentToRemove);
+    res.send("Comment Deleted: ")
+  }
 }

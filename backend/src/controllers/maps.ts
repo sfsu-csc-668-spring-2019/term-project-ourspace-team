@@ -9,36 +9,38 @@ import "reflect-metadata";
 
 export class MapController {
 
-  async getMyMaps(req: Request, res: Response, next: NextFunction) {
+  async getUserMaps(req: Request, res: Response, next: NextFunction) {
     const userid: number = req.user.id;
-    const localUser: User = await User.findOne({ where: { id: userid } });
-    res.send(localUser.maps);
+    //const userid: number = 3;
+    const localUser: User = await User.findOne( { where: {id: userid}, relations: ['maps'] } );
+    console.log(localUser.maps);
+    res.send(JSON.stringify(localUser.maps));
   }
 
   //add map to auth user
   async newMapForAuthUser(req: Request, res: Response, next: NextFunction) {
     //requires user id from authenticated user
-    //respondes with nothing or returning updated user
-
     const userId: number = req.user.id;
+    const newMap: Map = new Map();
 
     const localUser: User = await User.findOne({ where: { id: userId } });
-
-    const newMap: Map = new Map();
-    const mapRepo: MapRepo = new MapRepo();
-    const userRepo: UserRepo = new UserRepo();
-
-    const map = await mapRepo.saveMap(newMap);
-
-    if (localUser.maps == null) {
-      localUser.maps = [newMap];
-    } else {
-      localUser.maps.concat([newMap]);
-    }
-
-    await userRepo.saveUser(localUser);
+    
+    newMap.user = localUser;
+    const map = await Map.save(newMap);
 
     res.send("New Map for Auth User");
+  }
+
+  //remove map with map id
+  async removeMap(req: Request, res: Response, next: NextFunction){
+    const mapId = req.body.map_id;
+    const mapToRemove: Map = await Map.findOne( { where: { id: mapId } } );
+
+    if (mapToRemove == undefined) {} else {
+      await Map.remove(mapToRemove);
+    }
+
+    res.send("removeMap with id: " + mapId);
   }
 
 }

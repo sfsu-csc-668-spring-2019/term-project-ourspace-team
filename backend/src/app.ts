@@ -35,7 +35,6 @@ const placeManager = new PlaceController();
 const commentManager = new CommentController();
 const followManager = new FollowController();
 
-
 app.set("port", process.env.PORT || 5000);
 
 //Session secure is default
@@ -45,9 +44,9 @@ app.use(session({
   secret: 'qopiewuropquierkjhdsfd',
   //cookie: {secure: true}
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -58,27 +57,30 @@ app.use(bodyParser.json());
 app.get("/", homepageManager.indexPage);
 app.post("/login", loginManager.login);
 app.post("/register", registerManager.saveNewUser);
+app.get("/getPlacesFromMap", placeManager.getPlacesFromMap);
 
 //authenticated routes
 app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
-app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
+app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getUserMaps);
+//app.get("/getUserMaps", mapManager.getMyMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
+app.post("/removeMap", passportConfig.isAuthenticated, mapManager.removeMap);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
 app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
-app.post("/follow", followManager.follow);
+app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
+app.post("/follow", passportConfig.isAuthenticated, followManager.follow);
 app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication
-app.get("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);//add check authentication
+app.post("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);//add check authentication
 
 
 //work in progress
 //app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
 //app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);
-//app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 
-//testing routes
-//Hit this route once to set up tables for local testing
-app.get("/createDBTables", homepageManager.createTablesWithDummyData);
+//local test routes
+//uncomment and hit this route once to set up tables for existing DB with no tables
+//app.get("/createDBTables", homepageManager.createTablesWithDummyData);
 
 createConnection().then(async connection => {
   console.log("Connected to DB");

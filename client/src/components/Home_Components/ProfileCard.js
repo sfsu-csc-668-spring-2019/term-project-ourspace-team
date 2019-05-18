@@ -6,8 +6,10 @@ import Paper from '@material-ui/core/Paper';
 import Gravatar from 'react-gravatar';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
+<<<<<<< HEAD
 import { connect } from 'react-redux';
 import { saveUserData } from '../../actions/userActions';
+
 
 const styles = theme => ({
   root: {
@@ -23,6 +25,7 @@ const styles = theme => ({
     width: 75,
     height: 75,
   },
+
   gravatar: {
     margin: 'auto',
     display: 'block',

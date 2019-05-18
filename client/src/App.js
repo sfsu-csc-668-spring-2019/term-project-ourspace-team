@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react'
 import Routes from './routes';
-import store from './config/store';
+import { store, persistor } from './config/store';
 import './App.css';
 import * as MapFunction from './components/Map_Components/functions/index'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -37,15 +38,16 @@ const theme = createMuiTheme({
   }
 });
 
-
 class App extends Component {
 
   render() {
     return (
       <Provider store={store}>
-        <MuiThemeProvider theme={theme}>
-          <Routes />
-        </MuiThemeProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <MuiThemeProvider theme={theme}>
+            <Routes />
+          </MuiThemeProvider>
+        </PersistGate>
       </Provider>
     );
   }

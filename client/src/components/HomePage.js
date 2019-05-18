@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import LoggedInTopBar from './LoggedInTopBar';
 import ProfileCard from './Home_Components/ProfileCard';
 import Map from './Map_Components/Map';
+import MapTabs from './MapTab_Components/MapTabs'
 import '../App.css';
 import PlacesList from './Home_Components/PlacesList';
 import CommentsSection from './Map_Components/CommentsSection';
@@ -17,6 +18,7 @@ var mapStyles = {
 };
 
 class HomePage extends Component {
+
   render() {
     return (
       <div>
@@ -43,6 +45,7 @@ class HomePage extends Component {
       </div>
     );
   }
+
 }
 
 export default HomePage;

@@ -35,7 +35,6 @@ const placeManager = new PlaceController();
 const commentManager = new CommentController();
 const followManager = new FollowController();
 
-
 app.set("port", process.env.PORT || 5000);
 
 //Session secure is default
@@ -45,9 +44,9 @@ app.use(session({
   secret: 'qopiewuropquierkjhdsfd',
   //cookie: {secure: true}
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -58,13 +57,15 @@ app.use(bodyParser.json());
 app.get("/", homepageManager.indexPage);
 app.post("/login", loginManager.login);
 app.post("/register", registerManager.saveNewUser);
+app.get("/getPlacesFromMap", placeManager.getPlacesFromMap);
 
 //authenticated routes
 app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
-//app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
-app.get("/getUserMaps", mapManager.getMyMaps);
+app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getMyMaps);
+//app.get("/getUserMaps", mapManager.getMyMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
+app.post("/removeMap", passportConfig.isAuthenticated, mapManager.removeMap);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
 app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
 app.post("/follow", followManager.follow);
@@ -73,14 +74,13 @@ app.get("/search/like",  passportConfig.isAuthenticated, searchManager.returnSea
 
 
 //work in progress
-app.get("/getPlacesFromMap", placeManager.getPlacesFromMap);
 //app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
 //app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);
 //app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 
-//testing routes
-//Hit this route once to set up tables for local testing
-app.get("/createDBTables", homepageManager.createTablesWithDummyData);
+//local test routes
+//uncomment and hit this route once to set up tables for existing DB with no tables
+//app.get("/createDBTables", homepageManager.createTablesWithDummyData);
 
 createConnection().then(async connection => {
   console.log("Connected to DB");

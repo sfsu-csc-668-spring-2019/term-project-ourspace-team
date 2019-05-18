@@ -31,12 +31,16 @@ export class MapController {
     res.send("New Map for Auth User");
   }
 
+  //remove map with map id
   async removeMap(req: Request, res: Response, next: NextFunction){
-    const id = req.body.id;
-    const mapToRemove: Map = await Map.findOne( { where: { id: id } } );
-    await Map.remove(mapToRemove);
+    const mapId = req.body.map_id;
+    const mapToRemove: Map = await Map.findOne( { where: { id: mapId } } );
 
-    res.send("removeMap with id: " + id);
+    if (mapToRemove == undefined) {} else {
+      await Map.remove(mapToRemove);
+    }
+
+    res.send("removeMap with id: " + mapId);
   }
 
 }

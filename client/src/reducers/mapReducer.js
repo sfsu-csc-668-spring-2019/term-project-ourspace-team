@@ -1,16 +1,22 @@
-import { TOGGLE_SHOWING, SET_OPENED_PLACE, GET_OPENED_PLACE, GET_MAP } from '../actions/types';
+import { 
+  TOGGLE_SHOWING, 
+  SET_OPENED_PLACE, 
+  GET_OPENED_PLACE, 
+  SET_POSITION,
+  SET_ZOOM,
+  GET_MAP, 
+  SET_MAP } from '../actions/types';
 
 const initialState = {
   isShowing: 'none',
   openedPlace: {},
-
   // For initial map position
   sfPosition : {
-    lat: 37.775,
-    lng: -122.410
+    lat: undefined,
+    lng: undefined
   },
-  zoom: 12.5,
-  map: {}
+  zoom: undefined,
+  map: undefined
 }
 
 export default ( state = initialState, action ) => {
@@ -32,11 +38,31 @@ export default ( state = initialState, action ) => {
         ...state,
         openedPlace: action.payload
       }
-    /*case GET_MAP:
+    
+    case SET_POSITION:
+      return {
+        ...state,
+        sfPosition: action.payload
+      }
+
+    case SET_ZOOM:
+      return{
+        ...state,
+        zoom: action.payload
+      }
+      
+    case GET_MAP:
       return {
         ...state,
         map: action.payload
-      }*/
+      }
+    
+    case SET_MAP: {
+      return {
+        ...state,
+        map: action.payload
+      }
+    }
     default: 
       return state;
   }

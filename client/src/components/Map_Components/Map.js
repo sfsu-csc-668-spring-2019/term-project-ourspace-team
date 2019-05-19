@@ -1,25 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { toggleShowing, setOpenedPlace } from '../../actions/mapActions';
+import { toggleShowing, setOpenedPlace, setMap, setPosition, setZoom } from '../../actions/mapActions';
 import * as MapFunction from './functions/index'
 import CommentsSection from './CommentsSection'
+import MapTabs from '../MapTab_Components/MapTabs'
 import './Map.css'
 
 class Map extends Component {
 
   state = {
-    sfPosition : {
-      lat: 37.775,
-      lng: -122.410
-    },
-    zoom: 12.5,
     infowindow: undefined,
     places : []
   }
 
   // Lifecycle Event
   componentDidMount() {
+    // Set to State
+    this.props.setPosition( { lat: 37.775, lng: -122.410 } );
+    this.props.setZoom( 12.5 );
     // TODO Render Map Specific Markers
     this.getPlaces( this.props.map_id );
   }
@@ -36,7 +35,7 @@ class Map extends Component {
   }
 
   initMap = () => {
-    const map = MapFunction.createNewMap( this.state.sfPosition, this.state.zoom );
+    const map = MapFunction.createNewMap( this.props.sfPosition, this.props.zoom );
 
     this.setState({ infowindow: new window.google.maps.InfoWindow() });
 
@@ -47,6 +46,9 @@ class Map extends Component {
     this.addSearchBoxAndAutoComplete( map );
     this.addCommentsSection( map );
     this.renderSavedPlaces( map );
+
+    // add Map to Redux
+    this.props.setMap( map );
   }
 
   // TODO - Delete this later or change to modal
@@ -101,10 +103,10 @@ class Map extends Component {
           address: place.formatted_address,
           lat: place.geometry.location.lat(),
           lng: place.geometry.location.lng(),
-          phone: place.international_phone_number,
+          phone: (place.international_phone_number === undefined) ? '': place.international_phone_number,
           price_level: place.price_level,
           photos: ( place_photos === undefined) ? [] : place_photos,
-          icon: (place_photos === undefined) ? undefined : place_photos[0],
+          icon: (place_photos === undefined) ? '' : place_photos[0],
         }
 
         this.addNewPlaceToState(newPlace);
@@ -154,14 +156,17 @@ class Map extends Component {
   }
 
   clickedAddToMap = (place_id) => {
-    let index = this.state.places.map((place) => { return place.place_id; }).indexOf(place_id);
-
-    fetch(`/map/add/:mapId/${this.state.places[index].place_id}`, {
+    const index = this.state.places.map((place) => { return place.place_id; }).indexOf(place_id);
+    const place = this.state.places[index];
+    fetch(`/addPlaceToMap`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(this.state.places[index])
+      body: JSON.stringify({
+        id: 1, // This needs to be dynamic somehow
+        place: place
+      })
 
     }).then(( response ) => {
       // TODO different stuff based on response
@@ -181,6 +186,7 @@ class Map extends Component {
         clasName="mapContainer"
         style={mapContainerStyle} 
       >
+        <MapTabs/>
 
         <link rel="stylesheet"
               href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
@@ -218,11 +224,22 @@ var mapContainerStyle = {
 Map.propTypes = {
   classes: PropTypes.object.isRequired,
   toggleShowing: PropTypes.func.isRequired,
-  setOpenedPlace: PropTypes.func.isRequired
+  setOpenedPlace: PropTypes.func.isRequired,
+  setMap: PropTypes.func.isRequired,
+  setPosition: PropTypes.func.isRequired,
+  setZoom: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  isShowing: state.maps.isShowing
+  isShowing: state.maps.isShowing,
+  sfPosition: state.maps.sfPosition,
+  zoom: state.maps.zoom
 });
 
-export default connect(mapStateToProps, { toggleShowing, setOpenedPlace })(Map);
+export default 
+connect(mapStateToProps, { 
+  toggleShowing, 
+  setOpenedPlace, 
+  setMap, 
+  setPosition,
+  setZoom })(Map);

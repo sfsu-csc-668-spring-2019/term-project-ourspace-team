@@ -80,7 +80,7 @@ app.post("/search/like",  passportConfig.isAuthenticated, searchManager.returnSe
 
 //local test routes
 //uncomment and hit this route once to set up tables for existing DB with no tables
-//app.get("/createDBTables", homepageManager.createTablesWithDummyData);
+app.get("/createDBTables", homepageManager.createTablesWithDummyData);
 
 createConnection().then(async connection => {
   console.log("Connected to DB");

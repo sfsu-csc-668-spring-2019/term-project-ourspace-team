@@ -22,10 +22,20 @@ export class UserRepo extends Repository<User> {
     }).catch((e) => { console.log(`this is the e: ${e}`); return []; });
   }
 
+  findUserSigningIn(username): Promise<User[]> {
+    return User.find({
+      where: [
+        { username: username }
+      ]
+    }).then((data) => {
+      return data;
+    }).catch((e) => { console.log(`this is the e: ${e}`); return []; });
+  }
+
   getAllUsers(): Promise<User[]> {
     const userlist = getRepository(User)
       .createQueryBuilder("user")
-      .select(["user.id", "user.name", "user.email",])
+      .select(["user.id", "user.name", "user.username", "user.email",])
       .getMany();
     return userlist;
   }
@@ -33,9 +43,11 @@ export class UserRepo extends Repository<User> {
   //percent like users
   findSpecificUser(name): Promise<User[]> {
     const userlist = getRepository(User)
-      .find({
-        username: Like(name)
-      });
+      .createQueryBuilder("user")
+      .select(["user.id", "user.name", "user.username", "user.email"])
+      // Makes the %like case insensitive
+      .where("LOWER(username) LIKE :username", { username: `%${name.toLowerCase()}%` })
+      .getMany();
     return userlist;
   }
 
@@ -50,16 +62,4 @@ export class UserRepo extends Repository<User> {
     return list;
   }
 
-  findUser(searchField: string) {
-    /* 
-    Authentication could be required
-
-    search for user based on:
-        username
-        email
-        user
-
-    return array of users that fit this criteria
-    */
-  }
 }

@@ -11,24 +11,83 @@ import './SearchPage_Components/SearchPage.css';
 import LoggedInTopBar from './LoggedInTopBar';
 
 class SearchPage extends Component {
+constructor(props){
+  super(props)
 
-  state = {
-    search: '',
-    results: [
-      {
-        name: "Tony",
-        name2: "Tony2"
-      },
-      {
-        name: "Tiger",
-        name2: "Tiger2"
-      },
-      {
-        name: "Meow",
-        name2: "Meow2"
-      }
-    ]
+  this.state = {
+    searchQuery: '',
+    results: []
   };
+
+  this.keyPress = this.keyPress.bind(this);
+  this.onSubmit = this.onSubmit.bind(this);
+}
+  
+
+  keyPress = (e) => {
+    if(e.keyCode === 13){
+      this.onSubmit(e);
+    }
+  };
+
+  /*
+ 
+  */
+
+  onSubmit = async e => {
+
+    e.preventDefault();
+    if(this.state.searchQuery !== ''){
+      const response = await fetch("/search/like", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          searchQuery: this.state.searchQuery
+        })
+      }).catch( error => console.log(error));
+  
+      
+      const userData  = await response.json();
+      console.log(userData);
+      this.setState({results: userData})
+  
+      if( userData.errorMessage !== undefined ) {
+        console.log( "Error Handling here ");
+        return;
+      }
+    
+    } else {
+      fetch('/search')
+      .then(results => {
+        return results.json();
+      }).then(data => {
+        this.setState({results: data})
+        console.log(this.state.results);
+      });
+    }
+
+
+    // const response = await fetch("/search", {
+    //   method: "GET",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     search: this.state.search,
+    //   })
+    // }).catch( error => console.log(error));
+
+    // const result  = await response.json();
+    // console.log(result);
+
+    // if( result.errorMessage !== undefined ) {
+    //   console.log( "Error Handling here ");
+    //   return;
+    // }
+    
+  }
 
   handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
@@ -38,7 +97,10 @@ class SearchPage extends Component {
     let cards = this.state.results.map(name => {
       return (
         // Props name is resulting, passing in the state stuff to SearchResults
-        <SearchResults resulting={name} />
+        <div key={name.id}>
+          <SearchResults resulting={name} />
+        </div>
+        
       );
     });
     return (
@@ -57,18 +119,22 @@ class SearchPage extends Component {
               <Grid
                 className="searchFieldGrid"
               >
+                <form >
                 <TextField
                   className="searchField"
-                  id="search"
+                  id="searchQuery"
+                  name="searchQuery"
                   variant="outlined"
                   type="text"
-                  value={this.state.search}
-                  onChange={this.handleChange('search')}
+                  value={this.state.searchQuery}
+                  onChange={this.handleChange('searchQuery')}
+                  onKeyDown={this.keyPress}
                   placeholder="Search Username"
                   InputProps={{
                     startAdornment: <InputAdornment position="start">@</InputAdornment>,
                   }}
                 />
+                </form>
 
                 {/* Renders all the cards here*/}
                 {cards}

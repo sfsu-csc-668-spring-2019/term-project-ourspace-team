@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { toggleShowing, setOpenedPlace, setMap, setPosition, setZoom } from '../../actions/mapActions';
+import { addPlaceToMap, getOpenedMapPlaces, toggleShowing, setOpenedPlace, setMap, setPosition, setZoom } from '../../actions/mapActions';
 import * as MapFunction from './functions/index'
 import CommentsSection from './CommentsSection'
 import MapTabs from '../MapTab_Components/MapTabs'
@@ -20,11 +20,12 @@ class Map extends Component {
     this.props.setPosition( { lat: 37.775, lng: -122.410 } );
     this.props.setZoom( 12.5 );
     // TODO Render Map Specific Markers
-    this.getPlaces( this.props.map_id );
+    this.getPlaces( this.props.openedMapId );
   }
 
-  getPlaces = (map_id) => {
+  getPlaces = ( mapId ) => {
     // TODO Query DB to get places associated with map ID
+    this.props.getOpenedMapPlaces( mapId );
     // As of now we have existing places
     this.renderMap(); // This should be called after the API call
   }
@@ -158,22 +159,8 @@ class Map extends Component {
   clickedAddToMap = (place_id) => {
     const index = this.state.places.map((place) => { return place.place_id; }).indexOf(place_id);
     const place = this.state.places[index];
-    fetch(`/addPlaceToMap`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: 1, // This needs to be dynamic somehow
-        place: place
-      })
-
-    }).then(( response ) => {
-      // TODO different stuff based on response
-      console.log(response);
-    });
+    this.props.addPlaceToMap( this.props.openedMapId, place );
   }
-
   // clickedRemoveFromMap = () => {
 
   // }
@@ -223,6 +210,8 @@ var mapContainerStyle = {
 
 Map.propTypes = {
   classes: PropTypes.object.isRequired,
+  addPlaceToMap: PropTypes.func.isRequired,
+  getOpenedMapPlaces: PropTypes.func.isRequired,
   toggleShowing: PropTypes.func.isRequired,
   setOpenedPlace: PropTypes.func.isRequired,
   setMap: PropTypes.func.isRequired,
@@ -233,11 +222,15 @@ Map.propTypes = {
 const mapStateToProps = state => ({
   isShowing: state.maps.isShowing,
   sfPosition: state.maps.sfPosition,
-  zoom: state.maps.zoom
+  zoom: state.maps.zoom,
+  openedMapId: state.user.openedMapId,
+  places: state.maps.places
 });
 
 export default 
 connect(mapStateToProps, { 
+  addPlaceToMap,
+  getOpenedMapPlaces,
   toggleShowing, 
   setOpenedPlace, 
   setMap, 

@@ -1,10 +1,11 @@
 import { 
-  TOGGLE_SHOWING, 
-  SET_OPENED_PLACE, 
-  GET_OPENED_PLACE, 
+  TOGGLE_SHOWING,
+  SET_OPENED_PLACE,
+  GET_OPENED_PLACE,
+  SET_OPENED_MAP_PLACES,
   SET_POSITION,
   SET_ZOOM,
-  GET_MAP, 
+  GET_MAP,
   SET_MAP } from '../actions/types';
 
 const initialState = {
@@ -16,7 +17,8 @@ const initialState = {
     lng: undefined
   },
   zoom: undefined,
-  map: undefined
+  map: undefined,
+  places: []
 }
 
 export default ( state = initialState, action ) => {
@@ -38,6 +40,13 @@ export default ( state = initialState, action ) => {
         ...state,
         openedPlace: action.payload
       }
+    
+    case SET_OPENED_MAP_PLACES: {
+      return {
+        ...state,
+        places: action.payload
+      }
+    }
     
     case SET_POSITION:
       return {

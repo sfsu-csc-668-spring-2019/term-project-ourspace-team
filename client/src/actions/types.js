@@ -6,5 +6,6 @@ export const SET_POSITION = 'SET_POSITION';
 export const SET_ZOOM = 'SET_ZOOM';
 export const GET_MAP = 'GET_MAP';
 export const SET_MAP = 'SET_MAP';
+export const SET_OPENED_MAP_PLACES = 'SET_OPENED_MAP_PLACES';
 export const SET_USER_DATA = 'SET_USER_DATA';
 export const CLEAR_USER_DATA = 'CLEAR_USER_DATA';

@@ -13,4 +13,8 @@ export class MapRepo {
   findMap(findid: number){
     return Map.findOne( { where: { id: findid } } )
   }
+  
+  findPlacesRelation(id: number) {
+    return Map.findOne(id, { relations: ["places"] });
+  }
 }

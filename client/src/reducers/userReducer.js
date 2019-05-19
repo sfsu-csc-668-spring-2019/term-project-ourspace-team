@@ -1,10 +1,12 @@
-import { SET_USER_DATA, CLEAR_USER_DATA } from '../actions/types';
+import { SET_USER_DATA, CLEAR_USER_DATA, GET_USER_MAP_IDS } from '../actions/types';
 
 const initialState = {
   id: undefined,
   name: '',
   username: '',
-  email: ''
+  email: '',
+  mapIds: [],
+  openedMapId: undefined
 }
 
 export default ( state = initialState, action ) => {
@@ -26,7 +28,14 @@ export default ( state = initialState, action ) => {
         username: action.payload.empty,
         email: action.payload.empty
       }
-      
+    
+    case GET_USER_MAP_IDS:
+      return {
+        ...state,
+        madIds: action.payload,
+        openedMapId: action.payload[0]
+      }
+
     default: 
       return state;
   }

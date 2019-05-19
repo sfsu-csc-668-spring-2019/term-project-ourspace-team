@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleShowing, setOpenedPlace, setMap, setPosition, setZoom } from '../../actions/mapActions';
+import { getUserMapIds } from '../../actions/userActions'
 import * as MapFunction from './functions/index'
 import CommentsSection from './CommentsSection'
 import MapTabs from '../MapTab_Components/MapTabs'
@@ -19,6 +20,7 @@ class Map extends Component {
     // Set to State
     this.props.setPosition( { lat: 37.775, lng: -122.410 } );
     this.props.setZoom( 12.5 );
+    this.props.getUserMapIds();
     // TODO Render Map Specific Markers
     this.getPlaces( this.props.map_id );
   }
@@ -224,6 +226,7 @@ var mapContainerStyle = {
 Map.propTypes = {
   classes: PropTypes.object.isRequired,
   toggleShowing: PropTypes.func.isRequired,
+  getUserMapIds: PropTypes.func.isRequired,
   setOpenedPlace: PropTypes.func.isRequired,
   setMap: PropTypes.func.isRequired,
   setPosition: PropTypes.func.isRequired,
@@ -233,11 +236,12 @@ Map.propTypes = {
 const mapStateToProps = state => ({
   isShowing: state.maps.isShowing,
   sfPosition: state.maps.sfPosition,
-  zoom: state.maps.zoom
+  zoom: state.maps.zoom,
 });
 
 export default 
 connect(mapStateToProps, { 
+  getUserMapIds,
   toggleShowing, 
   setOpenedPlace, 
   setMap, 

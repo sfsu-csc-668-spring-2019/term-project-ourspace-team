@@ -166,7 +166,7 @@ class Map extends Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        id: 1, // This needs to be dynamic somehow
+        mapId: this.props.openedMapId, // This needs to be dynamic somehow
         place: place
       })
 
@@ -237,6 +237,7 @@ const mapStateToProps = state => ({
   isShowing: state.maps.isShowing,
   sfPosition: state.maps.sfPosition,
   zoom: state.maps.zoom,
+  openedMapId: state.user.openedMapId
 });
 
 export default 

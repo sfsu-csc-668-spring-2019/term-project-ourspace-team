@@ -2,24 +2,24 @@ import { Response, Request, NextFunction } from "express";
 
 import { Map } from "../entity/MapEntity";
 import { Place } from "../entity/PlaceEntity";
+import { MapPlace } from "../entity/MapPlaceEntity";
 
 import { MapRepo } from "../repository/map-repository";
 import { PlaceRepo } from "../repository/place-repository";
+import { MapPlaceRepo } from "../repository/map-place-repository";
 
 export class PlaceController {
 
   //add place to auth user map x
   async newPlaceForMap(req: Request, res: Response, next: NextFunction) {
-    //requires place information and map id
-    //Responded with success message or updated map
+    // Adds a new MapPlace to Map
+    const userId = req.user.id;
+    const mapId = req.body.mapId;
 
     const place: Place = new Place();
-    const mapRepo: MapRepo = new MapRepo();
     const placeRepo: PlaceRepo = new PlaceRepo();
 
-    const id = req.body.id;
-    const tempMap: Map = await mapRepo.findMap(id);
-
+    // Create new Place Object to search or add to DB
     place.place_id = req.body.place.place_id;
     place.name = req.body.place.name;
     place.address = req.body.place.address;
@@ -29,24 +29,18 @@ export class PlaceController {
     place.photos = req.body.place.photos;
     place.icon = req.body.place.icon;
 
-    const tempPlace: Place = await placeRepo.findOneOrAddPlace(place);
-    console.log("Temp Place------");
-    console.log(tempPlace);
-    console.log("Temp Map Places--------");
-    console.log(tempMap.places)
+    // Check for Existence of place in Place Repo
+    const foundPlace: Place = await placeRepo.findOneOrAddPlace(place);
+    console.log(foundPlace)
 
-    if (tempMap.places === null || tempMap.places.length === 0) {
-      tempMap.places = [tempPlace];
-    } else {
-      tempMap.places.concat([tempPlace]);
-    }
+    const mapPlaceRepo: MapPlaceRepo = new MapPlaceRepo();
+    const newMapPlace: MapPlace = new MapPlace();
+    
+    newMapPlace.mapId = mapId;
+    newMapPlace.userId = userId;
+    newMapPlace.placeId = foundPlace.id;
 
-    const newMap = await mapRepo.saveMap(tempMap);
-
-    console.log("New Map------");
-    console.log(newMap);
-
-    res.send("New Place for Map"); //or send back new updated map?
+    await mapPlaceRepo.saveMapPlace(newMapPlace);
   }
 
   //remove place from auth user map x

@@ -14,7 +14,7 @@ export class MapController {
     //const userid: number = 3;
     const localUser: User = await User.findOne( { where: {id: userid}, relations: ['maps'] } );
     console.log(localUser.maps);
-    res.send(JSON.stringify(localUser.maps));
+    res.send(localUser.maps);
   }
 
   //add map to auth user

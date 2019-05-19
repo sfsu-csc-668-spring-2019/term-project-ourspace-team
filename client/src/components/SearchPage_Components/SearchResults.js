@@ -57,7 +57,7 @@ class SearchResults extends Component {
               {/*Have to read variables inside the object passed back by the JSON from search
                 Should be username, but only getting name back from backend
               */}
-              @  {this.props.resulting.name}
+              @  {this.props.resulting.username}
               <AccountCircle className={classes.AccountCircleIcon} />
               <Button className={classes.viewProfileButton} href="#">View Profile</Button>
               <Button className={classes.followButton}> + Follow</Button>

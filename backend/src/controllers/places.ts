@@ -2,19 +2,17 @@ import { Response, Request, NextFunction } from "express";
 
 import { Map } from "../entity/MapEntity";
 import { Place } from "../entity/PlaceEntity";
-import { MapPlace } from "../entity/MapPlaceEntity";
-
 import { MapRepo } from "../repository/map-repository";
 import { PlaceRepo } from "../repository/place-repository";
-import { MapPlaceRepo } from "../repository/map-place-repository";
 
 export class PlaceController {
 
   //add place to auth user map x
   async newPlaceForMap(req: Request, res: Response, next: NextFunction) {
     // Adds a new MapPlace to Map
-    const userId = req.user.id;
     const mapId = req.body.mapId;
+    const mapRepo: MapRepo = new MapRepo();
+    const tempMap: Map = await mapRepo.findPlacesRelation(mapId);
 
     const place: Place = new Place();
     const placeRepo: PlaceRepo = new PlaceRepo();
@@ -31,16 +29,11 @@ export class PlaceController {
 
     // Check for Existence of place in Place Repo
     const foundPlace: Place = await placeRepo.findOneOrAddPlace(place);
-    console.log(foundPlace)
+    tempMap.places.push(foundPlace);
+    await mapRepo.saveMap(tempMap);
 
-    const mapPlaceRepo: MapPlaceRepo = new MapPlaceRepo();
-    const newMapPlace: MapPlace = new MapPlace();
-    
-    newMapPlace.mapId = mapId;
-    newMapPlace.userId = userId;
-    newMapPlace.placeId = foundPlace.id;
-
-    await mapPlaceRepo.saveMapPlace(newMapPlace);
+    // Change this to something useful later
+    res.send("We gottem");
   }
 
   //remove place from auth user map x

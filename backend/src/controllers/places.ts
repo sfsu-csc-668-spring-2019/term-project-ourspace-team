@@ -4,6 +4,7 @@ import { Map } from "../entity/MapEntity";
 import { Place } from "../entity/PlaceEntity";
 import { MapRepo } from "../repository/map-repository";
 import { PlaceRepo } from "../repository/place-repository";
+import { getConnection } from "typeorm";
 
 export class PlaceController {
 
@@ -36,27 +37,25 @@ export class PlaceController {
     res.send("We gottem");
   }
 
-  //remove place from auth user map x
-  async removePlaceFromMap(req: Request, res: Response, next: NextFunction) {
-    //take id from map
-    //take id from place
-    //remove the connection from place or map
-    res.send("Under Construction");
-  }
-
-  //getplaces from map
+  //get: places from map
   async getPlacesFromMap(req: Request, res: Response, next: NextFunction){
     const id = req.body.mapId;
     const map: Map = await Map.findOne( { where: { id: id }, relations: ['places'] } );
     res.send(map.places);
   }
 
-  //getplaces from maps from user
-  async getPlacesFromUserMaps(req: Request, res: Response, next: NextFunction){
-    res.send("");
+  //post: remove place from map
+  async removePlaceMapConnection(req: Request, res: Response, next:NextFunction){
+    const placeId: number = req.body.place_id;
+    const mapId: number = req.body.map_id;
+    const mapRepo: MapRepo = new MapRepo();
+
+    const map = await Map.findOne( { where: { id: mapId }, relations: ['places'] } );
+    const place = await Place.findOne ( { where: { id: placeId } } );
+    
+    await mapRepo.deletePlacesRelation(place, map);
+
+    res.send("Place map connection disconnected.");
   }
 
-  async removePlaceMapConnection(req: Request, res: Response, next:NextFunction){
-    res.send("");
-  }
 }

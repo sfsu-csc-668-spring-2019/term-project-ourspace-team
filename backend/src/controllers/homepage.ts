@@ -63,7 +63,18 @@ export class HomepageController {
     ];
     dummyPlace.icon = "https://maps.googleapis.com/maps/api/place/js/PhotoService.GetPhoto?1sCmRaAAAA439-jAeXUUTsppIX8jow_3tL1ZwCnwaH3zGqW8GrPZ19tb3-sSROWI1VtcKdGDwehlQH-QuA7nGSLIEyADrdIk2baOSlxKVBQ-sJWRf0NvGPipb5GOox4APkXK-rflbsEhAuZHlBtpzNnCHpL0S-oFYEGhSj0SvkBVrGfAmc-BowkQsSKdgYhg&3u3096&5m1&2e1&callback=none&key=AIzaSyBp1zbhrcngsbN8eIBJsrxBH2FGrsyHNjs&token=4597"
 
+    const place2: Place = new Place();
+    place2.place_id = "suhhh";
+    place2.name = "yes";
+    place2.address = "poiuqwer";
+    place2.latitude = 37.72189700000001;
+    place2.longitude = -122.47820939999997;
+    place2.phone = "+1 415-338-1111";
+    place2.photos = [];
+    place2.icon = "";
+
     await Place.save(dummyPlace);
+    await Place.save(place2);
 
     const dummyComment: Comment = new Comment();
     dummyComment.description = "This is a comment contents example.";
@@ -74,7 +85,7 @@ export class HomepageController {
     dummyUser.comments = [dummyComment];
     await User.save(dummyUser);
 
-    dummyMap.places = [dummyPlace];
+    dummyMap.places = [dummyPlace, place2];
     await Map.save(dummyMap);
 
     dummyPlace.comments = [dummyComment];
@@ -84,11 +95,11 @@ export class HomepageController {
     await User.save(createFollow);
 
     //Remove Entities after created
-    await Comment.remove(dummyComment);
-    await Place.remove(dummyPlace);
-    await Map.remove(dummyMap);
-    await User.remove(dummyUser);
-    await User.remove(followUser);
+    // await Comment.remove(dummyComment);
+    // await Place.remove(dummyPlace);
+    // await Map.remove(dummyMap);
+    // await User.remove(dummyUser);
+    // await User.remove(followUser);
 
     res.send("Created tables with data");
   }

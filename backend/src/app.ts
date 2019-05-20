@@ -6,23 +6,23 @@ import session from "express-session";
 import passport from "passport";
 
 import "reflect-metadata";
-import {createConnection} from "typeorm";
+import { createConnection } from "typeorm";
 
 
 import * as passportConfig from "./config/passport";
 
-import {HomepageController} from "./controllers/homepage";
-import {LoginController} from "./controllers/login";
-import {RegistrationController} from "./controllers/registration";
-import {MapController} from "./controllers/maps";
+import { HomepageController } from "./controllers/homepage";
+import { LoginController } from "./controllers/login";
+import { RegistrationController } from "./controllers/registration";
+import { MapController } from "./controllers/maps";
 
-import {SearchController} from "./controllers/search";
-import {PlaceController} from "./controllers/places";
-import {CommentController} from "./controllers/comments";
-import {FollowController} from "./controllers/follow";
+import { SearchController } from "./controllers/search";
+import { PlaceController } from "./controllers/places";
+import { CommentController } from "./controllers/comments";
+import { FollowController } from "./controllers/follow";
 
 
-dotenv.config({path: ".env.example"});
+dotenv.config({ path: ".env.example" });
 
 const app = express();
 const loginManager = new LoginController();
@@ -42,7 +42,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: 'qopiewuropquierkjhdsfd',
-  //cookie: {secure: true}
+  //cookie: {secure: true},
 }));
 
 app.use(passport.initialize());
@@ -62,7 +62,6 @@ app.post("/getPlacesFromMap", placeManager.getPlacesFromMap);
 //authenticated routes
 //login
 app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
-app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getUserMaps);
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getUserMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
 app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlaceMapConnection);

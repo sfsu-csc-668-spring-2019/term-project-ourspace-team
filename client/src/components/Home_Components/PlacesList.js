@@ -22,13 +22,13 @@ const styles = theme => ({
     overflowY: 'auto',
     maxHeight:'350px',
   },
-  list:{
+  list: {
     flexDirection: 'column',
     height:'100%',
     overflowY: 'auto',
 
   },
-  listItem:{
+  listItem: {
     flexGrow:'1',
   }
 
@@ -64,10 +64,8 @@ class PlacesList extends React.Component {
               <List >
                 {placesList}
               </List>
-
           </div>
-
-  </Paper>
+      </Paper>
     );
 
   }

@@ -54,7 +54,10 @@ class SearchResults extends Component {
               value={this.state.result}
               onChange={this.handleChange('results')}
             >
-              @  {this.props.resulting.name2}
+              {/*Have to read variables inside the object passed back by the JSON from search
+                Should be username, but only getting name back from backend
+              */}
+              @  {this.props.resulting.username}
               <AccountCircle className={classes.AccountCircleIcon} />
               <Button className={classes.viewProfileButton} href="#">View Profile</Button>
               <Button className={classes.followButton}> + Follow</Button>

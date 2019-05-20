@@ -56,9 +56,10 @@ class Map extends Component {
 
   // TODO - Delete this later or change to modal
   clickedViewMore = (place_id) => {
-    let index = this.state.places.map((place) => { return place.place_id; }).indexOf(place_id);
-    let place = this.state.places[index];
+    let index = this.props.places.map((place) => { return place.place_id; }).indexOf(place_id);
+    let place = this.props.places[index];
 
+    console.log(place);
     this.props.setOpenedPlace( place );
 
     this.state.infowindow.close();
@@ -112,7 +113,7 @@ class Map extends Component {
           icon: (place_photos === undefined) ? '' : place_photos[0],
         }
 
-        this.addNewPlaceToState(newPlace);
+        this.props.places.push(newPlace);
 
         // Create a marker and set its content
         let marker = MapFunction.getMarker(map, newPlace);
@@ -151,19 +152,10 @@ class Map extends Component {
       this.state.infowindow.open(map, marker);
     })
   }
-  
-  addNewPlaceToState = (place) => {
-    let updatedPlaces = this.state.places.slice();
-    updatedPlaces.push(place);
-
-    this.setState({
-      places: updatedPlaces
-    });
-  }
 
   clickedAddToMap = (place_id) => {
-    const index = this.state.places.map((place) => { return place.place_id; }).indexOf(place_id);
-    const place = this.state.places[index];
+    const index = this.props.places.map((place) => { return place.place_id; }).indexOf(place_id);
+    const place = this.props.places[index];
     this.props.addPlaceToMap( this.props.openedMapId, place);
   }
   // clickedRemoveFromMap = () => {

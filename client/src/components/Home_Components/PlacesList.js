@@ -50,13 +50,19 @@ class PlacesList extends React.Component {
   
   render() {
     const { classes } = this.props;
-    const placesList = this.props.places.map( place => (
-      <ListItem className={classes.listItem}>
-        <ListItemText
-          primary={place.name}
-        />
-      </ListItem>
-    ));
+    let placesList;
+    
+    if( this.props.places !== undefined) {
+      placesList = this.props.places.map( place => (
+        <ListItem className={classes.listItem}>
+          <ListItemText
+            primary={place.name}
+          />
+        </ListItem>
+      ));
+    } else {
+      placesList = <ListItem className={classes.listItem}></ListItem>
+    }
 
     return (
       <Paper className={classes.paper}>

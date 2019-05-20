@@ -41,4 +41,12 @@ export class MapController {
     res.send("removeMap with id: " + mapId);
   }
 
+  async changeMapToTrending(req: Request, res: Response, next: NextFunction) {
+    const mapRepo: MapRepo = new MapRepo();
+    const mapid: number = req.body.mapid;
+    
+    await mapRepo.makeMapTrending(mapid);
+    res.status(200).send("Map is now Trending");
+  }
+
 }

@@ -2,7 +2,6 @@ import { Response, Request, NextFunction } from "express";
 
 import { Map } from "../entity/MapEntity";
 import { Place } from "../entity/PlaceEntity";
-
 import { MapRepo } from "../repository/map-repository";
 import { PlaceRepo } from "../repository/place-repository";
 

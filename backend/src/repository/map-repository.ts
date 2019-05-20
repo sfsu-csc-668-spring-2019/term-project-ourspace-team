@@ -3,7 +3,7 @@ import { json } from "body-parser";
  
 export class MapRepo {
   saveMap(map: Map){
-    return Map.save(map)
+    return Map.save(map);
   }
 
   updateMap(map: Map){
@@ -11,7 +11,11 @@ export class MapRepo {
   }
 
   findMap(findid: number){
-    return Map.findOne( { where: { id: findid } } )
+    return Map.findOne( { where: { id: findid } } );
+  }
+
+  findPlacesRelation( id: number) {
+    return Map.findOne(id, { relations: ["places"]});
   }
   
   findPlacesRelation(id: number) {

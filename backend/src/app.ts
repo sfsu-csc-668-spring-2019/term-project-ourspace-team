@@ -69,6 +69,7 @@ app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.ad
 app.post("/follow", followManager.follow);
 app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication
 app.get("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);//add check authentication
+app.get("/makeMapTrending", passportConfig.isAuthenticated, mapManager.changeMapToTrending);
 
 
 //work in progress

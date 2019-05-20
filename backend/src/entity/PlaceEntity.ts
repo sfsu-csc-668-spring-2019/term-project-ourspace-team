@@ -41,5 +41,4 @@ export class Place extends BaseEntity{
   //One Place has many comments
   @OneToMany(type => Comment, comment => comment.place)
   comments: Comment[];
-
 }

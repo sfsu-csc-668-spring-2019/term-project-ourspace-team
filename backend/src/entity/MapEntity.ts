@@ -3,11 +3,11 @@ import { Entity, Column, BaseEntity } from "typeorm";
 import { User } from "./UserEntity";
 import { Place } from "./PlaceEntity";
 
-export enum MapType{
+export enum MapType {
   NORMAL = "normal",
   HOT = "hot",
   TRENDING = "trending",
-}
+};
 
 @Entity("map")
 export class Map extends BaseEntity{

@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { toggleShowing } from '../../actions/mapActions'
 import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid'
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
@@ -59,21 +62,21 @@ class CommentsSection extends Component {
 
     let placePhotos;
     if( this.props.openedPlace.photos !== undefined ) {
-      placePhotos = <div className="column"><GridList cellHeight={160} className={classes.gridList} cols={3}>
+      placePhotos = <GridList cellHeight={160} className={classes.gridList} cols={3}>
         {this.props.openedPlace.photos.map(tile => (
           <GridListTile key={tile}>
             <img src={tile} alt={tile} />
           </GridListTile>
         ))}
-      </GridList></div>
+      </GridList>
     } else {
-      placePhotos = <div className="column"><GridList></GridList></div>
+      placePhotos = <GridList></GridList>
     }
 
     return (
         <div
           id="place-comments"
-          style={{height: "80%", width:"70%", marginBottom: "2%", marginLeft: "9.5%", display: this.props.isShowing, overflowY: "scroll" }}
+          style={{height: "80%", width:"90%", marginBottom: "5%", marginLeft: "7%", display: this.props.isShowing, overflowY: "scroll" }}
           className="container"
         >
           <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
@@ -92,12 +95,36 @@ class CommentsSection extends Component {
                 <p id="place-comments-address">{this.props.openedPlace.address}</p>
                 <p id="place-comments-phone">{this.props.openedPlace.phone}</p>
               </div>
-              <div className="row">
-                {placePhotos}
-                <div className="column">
-                  Hello Test
-                </div>
-              </div>
+              <Grid container>
+                <Grid item>
+                  {placePhotos}
+                </Grid>
+                <Grid item></Grid>
+                <Grid item style={{width: 500}}>
+                  <TextField
+                    id="filled-full-width"
+                    label="Join the Conversation"
+                    style={{ margin: 8 }}
+                    placeholder="Enter a Comment"
+                    fullWidth
+                    margin="normal"
+                    variant="filled"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+
+                  <Button 
+                    variant="contained" 
+                    color="primary" 
+                    className={classes.button} 
+                    style={{float: "right"}}
+                    // TODO set an on click
+                    >
+                    Share
+                  </Button>
+                </Grid>
+              </Grid>
             </div>
           </div>
 

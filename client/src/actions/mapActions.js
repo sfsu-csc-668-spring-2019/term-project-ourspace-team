@@ -1,7 +1,9 @@
-import { 
+import {
+  UPDATE_OPENED_MAP_PLACES,
   TOGGLE_SHOWING, 
   SET_OPENED_PLACE, 
   GET_OPENED_PLACE, 
+  SET_OPENED_MAP_PLACES,
   SET_POSITION, 
   SET_ZOOM, 
   GET_MAP, 
@@ -40,6 +42,40 @@ export const getOpenedPlace = () => dispatch => {
   dispatch({
     type: GET_OPENED_PLACE,
     payload: store.getState().openedPlace
+  });
+}
+
+export const getOpenedMapPlaces = ( mapId ) => dispatch => {
+  fetch(`/getPlacesFromMap`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      mapId: mapId
+    })
+
+  }).then((response) => response.json())
+    .then((result) => {
+    
+    dispatch({
+      type: SET_OPENED_MAP_PLACES,
+      payload: result
+    });
+
+  });
+}
+
+export const addPlaceToMap = ( mapId, place ) => dispatch =>{
+  fetch('/addPlaceToMap', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: mapId,
+      place: place
+    })
   });
 }
 

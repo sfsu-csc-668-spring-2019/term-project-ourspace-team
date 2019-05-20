@@ -19,7 +19,7 @@ const initialState = {
   },
   zoom: undefined,
   map: undefined,
-  places: [],
+  places: []
 }
 
 export default ( state = initialState, action ) => {

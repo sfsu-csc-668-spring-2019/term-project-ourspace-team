@@ -22,8 +22,8 @@ export class PlaceController {
     place.place_id = req.body.place.place_id;
     place.name = req.body.place.name;
     place.address = req.body.place.address;
-    place.latitude = req.body.place.lat;
-    place.longitude = req.body.place.lng;
+    place.latitude = req.body.place.latitude;
+    place.longitude = req.body.place.longitude;
     place.phone = req.body.place.phone;
     place.photos = req.body.place.photos;
     place.icon = req.body.place.icon;

@@ -23,4 +23,7 @@ export class MapRepo {
       .remove(place)
   }
 
+  findPlacesRelation(id: number) {
+    return Map.findOne(id, { relations: ["places"] });
+  }
 }

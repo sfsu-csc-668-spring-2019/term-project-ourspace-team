@@ -11,15 +11,13 @@ export class MapController {
 
   async getUserMaps(req: Request, res: Response, next: NextFunction) {
     const userid: number = req.user.id;
-    //const userid: number = 3;
-    const localUser: User = await User.findOne( { where: { id: userid }, relations: ['maps'] } );
-    console.log(localUser.maps);
-    res.send(localUser.maps);
+    const localUser: User = await User.findOne( { where: {id: userid}, relations: ['maps'] } );
+    
+    res.send(JSON.stringify(localUser.maps));
   }
 
   //add map to auth user
   async newMapForAuthUser(req: Request, res: Response, next: NextFunction) {
-    //requires user id from authenticated user
     const userId: number = req.user.id;
     const newMap: Map = new Map();
 

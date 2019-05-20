@@ -57,7 +57,7 @@ app.use(bodyParser.json());
 app.get("/", homepageManager.indexPage);
 app.post("/login", loginManager.login);
 app.post("/register", registerManager.saveNewUser);
-app.get("/getPlacesFromMap", placeManager.getPlacesFromMap);
+app.post("/getPlacesFromMap", placeManager.getPlacesFromMap);
 
 //authenticated routes
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);

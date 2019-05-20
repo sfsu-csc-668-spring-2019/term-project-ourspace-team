@@ -11,15 +11,13 @@ export class MapController {
 
   async getUserMaps(req: Request, res: Response, next: NextFunction) {
     const userid: number = req.user.id;
-    //const userid: number = 3;
     const localUser: User = await User.findOne( { where: {id: userid}, relations: ['maps'] } );
-    console.log(localUser.maps);
+    
     res.send(JSON.stringify(localUser.maps));
   }
 
   //add map to auth user
   async newMapForAuthUser(req: Request, res: Response, next: NextFunction) {
-    //requires user id from authenticated user
     const userId: number = req.user.id;
     const newMap: Map = new Map();
 
@@ -41,6 +39,14 @@ export class MapController {
     }
 
     res.send("removeMap with id: " + mapId);
+  }
+
+  async changeMapToTrending(req: Request, res: Response, next: NextFunction) {
+    const mapRepo: MapRepo = new MapRepo();
+    const mapid: number = req.body.mapid;
+    
+    await mapRepo.makeMapTrending(mapid);
+    res.status(200).send("Map is now Trending");
   }
 
 }

@@ -1,5 +1,14 @@
-import { TOGGLE_SHOWING, SET_OPENED_PLACE, GET_OPENED_PLACE, GET_MAP } from './types';
-import  { store } from '../config/store';
+import {
+  UPDATE_OPENED_MAP_PLACES,
+  TOGGLE_SHOWING, 
+  SET_OPENED_PLACE, 
+  GET_OPENED_PLACE, 
+  SET_OPENED_MAP_PLACES,
+  SET_POSITION, 
+  SET_ZOOM, 
+  GET_MAP, 
+  SET_MAP } from './types';
+import { store } from '../config/store';
 import * as MapFunction from '../components/Map_Components/functions/index';
 
 export const toggleShowing = ( updateShowing ) => dispatch => {
@@ -9,6 +18,19 @@ export const toggleShowing = ( updateShowing ) => dispatch => {
   });
 }
 
+export const setPosition = (position) => dispatch => {
+  dispatch({
+    type: SET_POSITION,
+    payload: position
+  })
+}
+
+export const setZoom = (zoom) => dispatch => {
+  dispatch({
+    type: SET_ZOOM,
+    payload: zoom
+  });
+}
 export const setOpenedPlace = ( place ) => dispatch => {
   dispatch({
     type: SET_OPENED_PLACE,
@@ -23,15 +45,50 @@ export const getOpenedPlace = () => dispatch => {
   });
 }
 
-/*
-// Re-render same map
-export const getMap = () => dispatch => {
-  console.log("Trying to create map")
-  const map = MapFunction.createNewMap( store.getState().sfPosition, store.getState().zoom );
-  var infoWindow = new window.google.maps.InfoWindow(); 
-  dispatch({
-    type: GET_MAP,
-    payload: {map, infoWindow}
+export const getOpenedMapPlaces = ( mapId ) => dispatch => {
+  fetch(`/getPlacesFromMap`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      mapId: mapId
+    })
+
+  }).then((response) => response.json())
+    .then((result) => {
+    
+    dispatch({
+      type: SET_OPENED_MAP_PLACES,
+      payload: result
+    });
+
   });
 }
-*/
+
+export const addPlaceToMap = ( mapId, place ) => dispatch =>{
+  fetch('/addPlaceToMap', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: mapId,
+      place: place
+    })
+  });
+}
+
+export const setMap = (map) => dispatch =>{
+  dispatch({
+    type: SET_MAP,
+    payload: map
+  });
+}
+
+export const getMap = () => dispatch => {
+  dispatch({
+    type: GET_MAP,
+    payload: store.getState().map
+  });
+}

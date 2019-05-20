@@ -19,10 +19,10 @@ export class LoginController {
     const username: string = req.body.username;
     const password: any = req.body.password;
 
-    const user = await userRepo.findSpecificUser(username);
-
+    const user = await userRepo.findUserSigningIn(username);
+    
     if (user.length != 0) {
-
+      
       if (username === user[0].username) {
         const passwordsMatch = await bcrypt.compare(password, user[0].password);
 

@@ -1,16 +1,56 @@
-import { Map } from "../entity/MapEntity";
+import { Map, MapType } from "../entity/MapEntity";
+import { Place } from "../entity/PlaceEntity";
 import { json } from "body-parser";
- 
-export class MapRepo {
-  saveMap(map: Map){
-    return Map.save(map)
-  }
+import { getRepository, getConnection } from "typeorm";
 
-  updateMap(map: Map){
-    //return Map.update(map);
+export class MapRepo {
+
+  saveMap(map: Map) {
+    return Map.save(map);
   }
 
   findMap(findid: number){
-    return Map.findOne( { where: { id: findid } } )
+    return Map.findOne( { where: { id: findid } } );
   }
+
+  findPlacesRelation( id: number) {
+    return Map.findOne(id, { relations: ["places"] } );
+  }
+
+  deletePlacesRelation(place: Place, map: Map) {
+    return getConnection()
+      .createQueryBuilder()
+      .relation(Map, "places")
+      .of(map)
+      .remove(place)
+  }
+
+  //If time change to changeMapType with extra parameter
+  makeMapNORMAL(mapid: number) {
+    getRepository(Map)
+      .createQueryBuilder()
+      .update(Map)
+      .set({ type: MapType.NORMAL })
+      .where("id = :id", { id: mapid })
+      .execute();
+  }
+
+  makeMapTrending(mapid: number) {
+    getRepository(Map)
+      .createQueryBuilder()
+      .update(Map)
+      .set({ type: MapType.TRENDING })
+      .where("id = :id", { id: mapid })
+      .execute();
+  }
+
+  makeMapHot(mapid: number) {
+    getRepository(Map)
+      .createQueryBuilder()
+      .update(Map)
+      .set({ type: MapType.HOT })
+      .where("id = :id", { id: mapid })
+      .execute();
+  }
+
 }

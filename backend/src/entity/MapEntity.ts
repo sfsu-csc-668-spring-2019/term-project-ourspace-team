@@ -1,13 +1,26 @@
-import {PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable} from "typeorm";
-import {Entity, Column, BaseEntity} from "typeorm";
-import {User} from "./UserEntity";
-import {Place} from "./PlaceEntity";
+import { PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, BaseEntity } from "typeorm";
+import { User } from "./UserEntity";
+import { Place } from "./PlaceEntity";
+
+export enum MapType{
+  NORMAL = "normal",
+  HOT = "hot",
+  TRENDING = "trending",
+}
 
 @Entity("map")
 export class Map extends BaseEntity{
 
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({
+    type: "enum",
+    enum: MapType,
+    default: MapType.NORMAL
+  })
+  type: MapType
 
   //Many maps to one user
   @ManyToOne(type => User, user => user.maps)
@@ -17,4 +30,5 @@ export class Map extends BaseEntity{
   @ManyToMany(type => Place, place => place.maps)
   @JoinTable()
   places: Place[];
+
 }

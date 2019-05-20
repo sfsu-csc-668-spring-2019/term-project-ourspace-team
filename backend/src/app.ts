@@ -6,23 +6,23 @@ import session from "express-session";
 import passport from "passport";
 
 import "reflect-metadata";
-import {createConnection} from "typeorm";
+import { createConnection } from "typeorm";
 
 
 import * as passportConfig from "./config/passport";
 
-import {HomepageController} from "./controllers/homepage";
-import {LoginController} from "./controllers/login";
-import {RegistrationController} from "./controllers/registration";
-import {MapController} from "./controllers/maps";
+import { HomepageController } from "./controllers/homepage";
+import { LoginController } from "./controllers/login";
+import { RegistrationController } from "./controllers/registration";
+import { MapController } from "./controllers/maps";
 
-import {SearchController} from "./controllers/search";
-import {PlaceController} from "./controllers/places";
-import {CommentController} from "./controllers/comments";
-import {FollowController} from "./controllers/follow";
+import { SearchController } from "./controllers/search";
+import { PlaceController } from "./controllers/places";
+import { CommentController } from "./controllers/comments";
+import { FollowController } from "./controllers/follow";
 
 
-dotenv.config({path: ".env.example"});
+dotenv.config({ path: ".env.example" });
 
 const app = express();
 const loginManager = new LoginController();
@@ -42,7 +42,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   secret: 'qopiewuropquierkjhdsfd',
-  //cookie: {secure: true}
+  //cookie: {secure: true},
 }));
 
 app.use(passport.initialize());
@@ -60,30 +60,23 @@ app.post("/register", registerManager.saveNewUser);
 app.post("/getPlacesFromMap", placeManager.getPlacesFromMap);
 
 //authenticated routes
+//login
 app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
-app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getUserMaps);
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getUserMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
 app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlaceMapConnection);
 app.post("/removeMap", passportConfig.isAuthenticated, mapManager.removeMap);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
+app.get("/getComments", passportConfig.isAuthenticated, commentManager.getComments);
 app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
 app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 app.post("/follow", passportConfig.isAuthenticated, followManager.follow);
-app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication
+app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers);
+app.post("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);
 app.get("/makeMapTrending", passportConfig.isAuthenticated, mapManager.changeMapToTrending);
-app.post("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);//add check authentication
 
-
-
-//work in progress
-//app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);
-
-//local test routes
-//uncomment and hit this route once to set up tables for existing DB with no tables
-//app.get("/createDBTables", homepageManager.createTablesWithDummyData);
-
-
+//uncomment and hit to create local db for testing
+//app.get("/createDB", homepageManager.createTablesWithDummyData);
 
 createConnection().then(async connection => {
   console.log("Connected to DB");

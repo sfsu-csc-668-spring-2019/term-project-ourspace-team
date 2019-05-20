@@ -76,10 +76,7 @@ export const addPlaceToMap = ( mapId, place ) => dispatch =>{
       id: mapId,
       place: place
     })
-  }).then(() => dispatch({
-      type: UPDATE_OPENED_MAP_PLACES,
-      payload: place
-    }));
+  });
 }
 
 export const setMap = (map) => dispatch =>{

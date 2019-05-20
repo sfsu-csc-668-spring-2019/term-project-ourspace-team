@@ -4,6 +4,7 @@ import { Map } from "../entity/MapEntity";
 import { Place } from "../entity/PlaceEntity";
 import { MapRepo } from "../repository/map-repository";
 import { PlaceRepo } from "../repository/place-repository";
+import { getConnection } from "typeorm";
 
 export class PlaceController {
 
@@ -51,12 +52,17 @@ export class PlaceController {
     res.send(map.places);
   }
 
-  //getplaces from maps from user
-  async getPlacesFromUserMaps(req: Request, res: Response, next: NextFunction){
-    res.send("");
-  }
-
   async removePlaceMapConnection(req: Request, res: Response, next:NextFunction){
-    res.send("");
+    const placeId = req.body.place_id;
+    const mapId = req.body.map_id;
+
+    const map_return = await Map.findOne( { where: { id: mapId }, relations: ['places'] } );
+    const deleted = await getConnection()
+    .createQueryBuilder()
+    .relation(Map, "places")
+    .of(map_return)
+    .remove(placeId)
+
+    res.send("Place map connection should be ");
   }
 }

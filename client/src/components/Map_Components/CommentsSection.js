@@ -59,13 +59,15 @@ class CommentsSection extends Component {
 
     let placePhotos;
     if( this.props.openedPlace.photos !== undefined ) {
-      placePhotos = <GridList cellHeight={160} className={classes.gridList} cols={3}>
+      placePhotos = <div className="column"><GridList cellHeight={160} className={classes.gridList} cols={3}>
         {this.props.openedPlace.photos.map(tile => (
           <GridListTile key={tile}>
             <img src={tile} alt={tile} />
           </GridListTile>
         ))}
-      </GridList>
+      </GridList></div>
+    } else {
+      placePhotos = <div className="column"><GridList></GridList></div>
     }
 
     return (
@@ -85,11 +87,16 @@ class CommentsSection extends Component {
               </ul>
             </div>
             <div className="card-body">
-              <h5 className="card-title"id="place-comments-title">{this.props.openedPlace.name}</h5>
-              <p id="place-comments-address">{this.props.openedPlace.address}</p>
-              <p id="place-comments-phone">{this.props.openedPlace.phone}</p>
+              <div>
+                <h5 className="card-title"id="place-comments-title">{this.props.openedPlace.name}</h5>
+                <p id="place-comments-address">{this.props.openedPlace.address}</p>
+                <p id="place-comments-phone">{this.props.openedPlace.phone}</p>
+              </div>
               <div className="row">
                 {placePhotos}
+                <div className="column">
+                  Hello Test
+                </div>
               </div>
             </div>
           </div>

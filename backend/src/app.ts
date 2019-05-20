@@ -76,6 +76,9 @@ app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers);
 app.post("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);
 app.get("/makeMapTrending", passportConfig.isAuthenticated, mapManager.changeMapToTrending);
 
+//uncomment and hit to create local db for testing
+//app.get("/createDB", homepageManager.createTablesWithDummyData);
+
 createConnection().then(async connection => {
   console.log("Connected to DB");
 }).catch(error => console.log("TypeORM connection error: ", error));

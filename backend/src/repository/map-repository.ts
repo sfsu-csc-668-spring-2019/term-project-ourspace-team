@@ -1,4 +1,5 @@
 import { Map, MapType } from "../entity/MapEntity";
+import { Place } from "../entity/PlaceEntity";
 import { json } from "body-parser";
 import { getRepository, getConnection } from "typeorm";
 
@@ -13,7 +14,7 @@ export class MapRepo {
   }
 
   findPlacesRelation( id: number) {
-    return Map.findOne(id, { relations: ["places"]});
+    return Map.findOne(id, { relations: ["places"] } );
   }
 
   deletePlacesRelation(place: Place, map: Map) {
@@ -22,10 +23,6 @@ export class MapRepo {
       .relation(Map, "places")
       .of(map)
       .remove(place)
-  }
-
-  findPlacesRelation(id: number) {
-    return Map.findOne(id, { relations: ["places"] });
   }
 
   //If time change to changeMapType with extra parameter

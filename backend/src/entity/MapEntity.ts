@@ -1,7 +1,7 @@
-import {PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, PrimaryColumn} from "typeorm";
-import {Entity, Column, BaseEntity} from "typeorm";
-import {User} from "./UserEntity";
-import {Place} from "./PlaceEntity";
+import { PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, BaseEntity } from "typeorm";
+import { User } from "./UserEntity";
+import { Place } from "./PlaceEntity";
 
 export enum MapType{
   NORMAL = "normal",

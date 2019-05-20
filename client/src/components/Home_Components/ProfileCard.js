@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import Gravatar from 'react-gravatar';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import Gravatar from 'react-gravatar'
-import Avatar from '@material-ui/core/Avatar';
+import { connect } from 'react-redux';
+import { saveUserData } from '../../actions/userActions';
+
 
 const styles = theme => ({
   root: {
@@ -22,27 +24,26 @@ const styles = theme => ({
     width: 75,
     height: 75,
   },
-  avatar:{
+
+  gravatar: {
     margin: 'auto',
     display: 'block',
     width: 75,
     height: 75,
+    borderRadius: '50px',
   }
 });
 
 class ProfileCard extends React.Component {
 
-  //  gravatarUrl(email) {
-  //   const lowerCaseEmail = email.toLowerCase()
-  //   return `http://www.gravatar.com/avatar/${md5(lowerCaseEmail)}`;
-  // }
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      email: ''
+    }
+  }
 
-  // const Gravatar = ({email}) => <img src={gravatarUrl(email)} />;
-
-  // Gravatar.propTypes = {
-  //   email: React.PropTypes.string.isRequired
-  // };
-  
   render() {
     const { classes } = this.props;
     return (
@@ -51,15 +52,14 @@ class ProfileCard extends React.Component {
           <Grid container spacing={16}>
             <Grid item>
               <ButtonBase className={classes.image}>
-              <Avatar className ={classes.avatar} src="http://www.gravatar.com/avatar/"/>
-
+                <Gravatar email={this.props.email} className={classes.gravatar}/>
               </ButtonBase>
             </Grid>
             <Grid item xs={12} sm container>
               <Grid item xs container direction="row" spacing={16}>
                 <Grid item xs>
                   <Typography gutterBottom variant="subtitle1">
-                    @Username
+                    @ {this.props.username}
                   </Typography>
                 </Grid>
               </Grid>
@@ -71,7 +71,14 @@ class ProfileCard extends React.Component {
 
   }
 }
+
+const mapStateToProps = state => ({
+  email: state.user.email,
+  username: state.user.username,
+});
+
 ProfileCard.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(ProfileCard);
+
+export default connect(mapStateToProps,{saveUserData})( withStyles(styles)(ProfileCard));

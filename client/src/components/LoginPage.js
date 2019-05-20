@@ -8,7 +8,6 @@ class LoginPage extends React.Component {
     return (
       <div>
         <TopBar />
-
         <div>
           <LoginForm />
         </div>

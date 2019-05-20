@@ -8,14 +8,14 @@ import TrendingPage from './components/TrendingPage';
 import Login from './components/LoginPage';
 
 export default props => (
-    <BrowserRouter>
-        <Switch>
-          <Route exact path='/' component={ Landing} />
-          <Route exact path='/login' component={ Login } />
-          <Route exact path='/search' component={ SearchPage } />
-          <Route exact path='/home' component={Home}/>
-          <Route exact path='/profile' component={ProfilePage}/>
-          <Route exact path='/trending' component={TrendingPage}/>
-        </Switch>
-    </BrowserRouter>
-  )
+  <BrowserRouter>
+    <Switch>
+      <Route exact path='/' component={Landing} />
+      <Route exact path='/login' component={Login} />
+      <Route exact path='/search' component={SearchPage} />
+      <Route exact path='/home' component={Home} />
+      <Route exact path='/profile' component={ProfilePage} />
+      <Route exact path='/trending' component={TrendingPage} />
+    </Switch>
+  </BrowserRouter>
+)

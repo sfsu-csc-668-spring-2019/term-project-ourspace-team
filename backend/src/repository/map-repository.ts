@@ -5,15 +5,23 @@ import { getRepository, getConnection } from "typeorm";
 export class MapRepo {
 
   saveMap(map: Map) {
-    return Map.save(map)
+    return Map.save(map);
   }
 
   updateMap(map: Map) {
     //return Map.update(map);
   }
 
-  findMap(findid: number) {
-    return Map.findOne({ where: { id: findid } })
+  findMap(findid: number){
+    return Map.findOne( { where: { id: findid } } );
+  }
+
+  findPlacesRelation( id: number) {
+    return Map.findOne(id, { relations: ["places"]});
+  }
+  
+  findPlacesRelation(id: number) {
+    return Map.findOne(id, { relations: ["places"] });
   }
 
   //If time change to changeMapType with extra parameter

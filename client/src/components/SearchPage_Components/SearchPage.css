@@ -2,7 +2,7 @@
 .innerCardStyle {
     width: 80%;
     margin-right: 575px;
-    margin-top: 50px;
+    margin-bottom: 1rem;
     height: 50px;
     transition-duration: 0.3s;
   }
@@ -20,6 +20,10 @@
     padding-top: 10px;
     padding-left: 75px;
     
+}
+
+.searchField{
+    margin-bottom: 1rem !important;
 }
 
 /*Typography*/

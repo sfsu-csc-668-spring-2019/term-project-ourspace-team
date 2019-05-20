@@ -1,31 +1,33 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { toggleShowing, setOpenedPlace } from '../../actions/mapActions';
+import { addPlaceToMap, getOpenedMapPlaces, toggleShowing, setOpenedPlace, setMap, setPosition, setZoom } from '../../actions/mapActions';
+import { getUserMapIds } from '../../actions/userActions'
 import * as MapFunction from './functions/index'
 import CommentsSection from './CommentsSection'
+import MapTabs from '../MapTab_Components/MapTabs'
 import './Map.css'
 
 class Map extends Component {
 
   state = {
-    sfPosition : {
-      lat: 37.775,
-      lng: -122.410
-    },
-    zoom: 12.5,
     infowindow: undefined,
     places : []
   }
 
   // Lifecycle Event
   componentDidMount() {
+    // Set to State
+    this.props.setPosition( { lat: 37.775, lng: -122.410 } );
+    this.props.setZoom( 12.5 );
+    this.props.getUserMapIds();
     // TODO Render Map Specific Markers
-    this.getPlaces( this.props.map_id );
+    this.getPlaces( this.props.openedMapId );
   }
 
-  getPlaces = (map_id) => {
+  getPlaces = ( mapId ) => {
     // TODO Query DB to get places associated with map ID
+    this.props.getOpenedMapPlaces( mapId );
     // As of now we have existing places
     this.renderMap(); // This should be called after the API call
   }
@@ -36,7 +38,7 @@ class Map extends Component {
   }
 
   initMap = () => {
-    const map = MapFunction.createNewMap( this.state.sfPosition, this.state.zoom );
+    const map = MapFunction.createNewMap( this.props.sfPosition, this.props.zoom );
 
     this.setState({ infowindow: new window.google.maps.InfoWindow() });
 
@@ -44,9 +46,12 @@ class Map extends Component {
     window.clickedAddToMap = this.clickedAddToMap
     window.clickedRemoveFromMap = this.clickedRemoveFromMap
 
+    this.renderSavedPlaces( map );
     this.addSearchBoxAndAutoComplete( map );
     this.addCommentsSection( map );
-    this.renderSavedPlaces( map );
+
+    // add Map to Redux
+    this.props.setMap( map );
   }
 
   // TODO - Delete this later or change to modal
@@ -99,18 +104,20 @@ class Map extends Component {
           place_id: place.place_id,
           name: place.name,
           address: place.formatted_address,
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng(),
-          phone: place.international_phone_number,
+          latitude: place.geometry.location.lat(),
+          longitude: place.geometry.location.lng(),
+          phone: (place.international_phone_number === undefined) ? '': place.international_phone_number,
           price_level: place.price_level,
           photos: ( place_photos === undefined) ? [] : place_photos,
-          icon: (place_photos === undefined) ? undefined : place_photos[0],
+          icon: (place_photos === undefined) ? '' : place_photos[0],
         }
 
         this.addNewPlaceToState(newPlace);
 
         // Create a marker and set its content
-        this.setMarkerInfoWindow(map, MapFunction.getMarker(map, newPlace), newPlace, false)
+        let marker = MapFunction.getMarker(map, newPlace);
+        let contentString = MapFunction.getContentString( newPlace, false );
+        this.setMarkerInfoWindow(map, marker, contentString );
 
         if (place.geometry.viewport) {
           // Only geocodes have viewport.
@@ -129,12 +136,22 @@ class Map extends Component {
   }
 
   renderSavedPlaces = ( map ) => {
-    // TODO UNCOMMENT THIS WHEN READY TO DEPLOY
-    // this.state.places.map((place) => {
-    //   this.setMarkerInfoWindow(map, MapFunction.getMarker(map, place), place, true);
-    // });
+    this.props.places.map((place) => {
+      let marker = MapFunction.getMarker(map, place);
+      let contentString = MapFunction.getContentString(place, true);
+      this.setMarkerInfoWindow(map, marker, contentString );
+    });
   }
 
+  setMarkerInfoWindow = ( map,  marker, contentString ) => {
+    marker.addListener('click', () => {
+      // Change content
+      this.state.infowindow.setContent(contentString);
+      // Open info window
+      this.state.infowindow.open(map, marker);
+    })
+  }
+  
   addNewPlaceToState = (place) => {
     let updatedPlaces = this.state.places.slice();
     updatedPlaces.push(place);
@@ -144,31 +161,11 @@ class Map extends Component {
     });
   }
 
-  setMarkerInfoWindow = ( map,  marker, place, saved) => {
-    marker.addListener('click', () => {
-      // Change content
-      this.state.infowindow.setContent(MapFunction.getContentString(place, saved));
-      // Open info window
-      this.state.infowindow.open(map, marker);
-    })
-  }
-
   clickedAddToMap = (place_id) => {
-    let index = this.state.places.map((place) => { return place.place_id; }).indexOf(place_id);
-
-    fetch(`/map/add/:mapId/${this.state.places[index].place_id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(this.state.places[index])
-
-    }).then(( response ) => {
-      // TODO different stuff based on response
-      console.log(response);
-    });
+    const index = this.state.places.map((place) => { return place.place_id; }).indexOf(place_id);
+    const place = this.state.places[index];
+    this.props.addPlaceToMap( this.props.openedMapId, place);
   }
-
   // clickedRemoveFromMap = () => {
 
   // }
@@ -181,6 +178,7 @@ class Map extends Component {
         clasName="mapContainer"
         style={mapContainerStyle} 
       >
+        <MapTabs/>
 
         <link rel="stylesheet"
               href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
@@ -217,12 +215,31 @@ var mapContainerStyle = {
 
 Map.propTypes = {
   classes: PropTypes.object.isRequired,
+  addPlaceToMap: PropTypes.func.isRequired,
+  getOpenedMapPlaces: PropTypes.func.isRequired,
   toggleShowing: PropTypes.func.isRequired,
-  setOpenedPlace: PropTypes.func.isRequired
+  getUserMapIds: PropTypes.func.isRequired,
+  setOpenedPlace: PropTypes.func.isRequired,
+  setMap: PropTypes.func.isRequired,
+  setPosition: PropTypes.func.isRequired,
+  setZoom: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  isShowing: state.maps.isShowing
+  isShowing: state.maps.isShowing,
+  sfPosition: state.maps.sfPosition,
+  zoom: state.maps.zoom,
+  openedMapId: state.user.openedMapId,
+  places: state.maps.places
 });
 
-export default connect(mapStateToProps, { toggleShowing, setOpenedPlace })(Map);
+export default 
+connect(mapStateToProps, { 
+  addPlaceToMap,
+  getOpenedMapPlaces,
+  getUserMapIds,
+  toggleShowing, 
+  setOpenedPlace, 
+  setMap, 
+  setPosition,
+  setZoom })(Map);

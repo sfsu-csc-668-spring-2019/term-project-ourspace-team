@@ -60,7 +60,6 @@ app.post("/register", registerManager.saveNewUser);
 app.post("/getPlacesFromMap", placeManager.getPlacesFromMap);
 
 //authenticated routes
-app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
 app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getUserMaps);
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getUserMaps);

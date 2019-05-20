@@ -1,7 +1,7 @@
 import { User } from "../entity/UserEntity";
 import { json } from "body-parser";
 
-import { getRepository, Like } from "typeorm";
+import { getRepository, Like, getConnection } from "typeorm";
 import { Entity, EntityRepository, Repository } from "typeorm";
 
 @EntityRepository(User)
@@ -51,5 +51,20 @@ export class UserRepo extends Repository<User> {
       .where("LOWER(username) LIKE :username", { username: `%${name.toLowerCase()}%` })
       .getMany();
     return userlist;
+  }
+  establishFollow (follower: User, toBeFollowed: User) {
+    return getConnection()
+      .createQueryBuilder()
+      .relation(User, "follow")
+      .of(follower)
+      .add(toBeFollowed);
+  }
+
+  removeFollow(follower: User, toBeUnfollowed: User){
+    return getConnection()
+      .createQueryBuilder()
+      .relation(User, "follow")
+      .of(follower)
+      .remove(toBeUnfollowed);
   }
 }

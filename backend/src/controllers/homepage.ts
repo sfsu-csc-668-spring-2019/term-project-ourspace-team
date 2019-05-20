@@ -4,7 +4,7 @@ import { User } from "../entity/UserEntity";
 import { Place } from "../entity/PlaceEntity";
 import { Comment } from "../entity/CommentEntity";
 import { Map } from "../entity/MapEntity";
-import { FollowLogic } from "../logic/followLogic";
+import { FollowQueries } from "../queries/followQueries";
 
 export class HomepageController {
 
@@ -24,7 +24,7 @@ export class HomepageController {
 
   async createTablesWithDummyData(req: Request, res: Response, next: NextFunction){
     //Create basic entities
-    const followData: FollowLogic = new FollowLogic();
+    const followData: FollowQueries = new FollowQueries();
     const dummyUser: User = new User();
     dummyUser.name = "John";
     dummyUser.username = "IamJohn"
@@ -91,8 +91,8 @@ export class HomepageController {
     dummyPlace.comments = [dummyComment];
     await Place.save(dummyPlace);
 
-    const createFollow = await followData.setFollow(dummyUser, followUser);
-    await User.save(createFollow);
+    // const createFollow = await followData.setFollow(dummyUser, followUser);
+    // await User.save(createFollow);
 
     //Remove Entities after created
     await Comment.remove(dummyComment);

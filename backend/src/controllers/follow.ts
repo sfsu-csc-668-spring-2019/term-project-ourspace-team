@@ -1,23 +1,55 @@
-import { Response, Request, NextFunction} from "express";
+import { Response, Request, NextFunction, response} from "express";
 import { User } from "../entity/UserEntity";
 import { UserRepo } from "../repository/user-repository";
-import { FollowLogic } from "../logic/followLogic";
 
 export class FollowController {
 
-  userRepo: UserRepo = new UserRepo();
-
   async follow(req: Request, res: Response, next: NextFunction) {
-    const followData: FollowLogic = new FollowLogic();
+    const userRepo: UserRepo = new UserRepo();
 
-    const follower: number = req.body.follower;
-    const toBeFollowed: number = req.body.toBeFollowed;
+    const follower: string = req.body.follower;
+    const toBeFollowed: string = req.body.toBeFollowed;
 
-    const localFollower: User = await User.findOne( {where: {id: follower}} );
-    const localToBeFollowed: User = await User.findOne( {where: {id: toBeFollowed}} );
+    const localFollower: User = await User.findOne( {where: {username: follower}} );
+    const localToBeFollowed: User = await User.findOne( {where: {username: toBeFollowed}} );
 
-    const createFollow = await followData.setFollow(localFollower, localToBeFollowed);
-    User.save(createFollow);
-  }
   
+  
+    userRepo.establishFollow(localFollower, localToBeFollowed)
+      .then(response => {
+        res.status(200);
+      }).catch(error => {
+        res.status(201).json({errorMessage:"Couldn't Follow"});
+      })
+  }
+
+  async unfollow(req: Request, res: Response, next: NextFunction) {
+    const userRepo: UserRepo = new UserRepo();
+
+    const follower: string = req.body.follower;
+    const toBeUnfollowed: string = req.body.toBeUnfollowed;
+
+    const localFollower: User = await User.findOne( {where: {username: follower}} );
+    const localToBeUnfollowed: User = await User.findOne( {where: {username: toBeUnfollowed}} );
+
+      userRepo.removeFollow(localFollower, localToBeUnfollowed)
+      .then(response => {
+        res.status(200);
+      }).catch(error => {
+        res.status(201).json({errorMessage:"Couldn't Follow"});
+      })
+  }
+
+  // async followers(req: Request, res: Response, next: NextFunction){
+  //   const followQueries: FollowQueries = new FollowQueries();
+  //   const user: number = 1;
+  //   const localUser: User = await User.findOne( {where: {id: user}} );
+
+  //   followQueries.countFollowers(localUser)
+  //   .then(response => {
+  //     console.log(response)
+  //   }).catch(error =>{
+  //     console.error(error)
+  //   });
+  // }
 }

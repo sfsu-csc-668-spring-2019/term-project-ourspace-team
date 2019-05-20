@@ -72,8 +72,11 @@ app.get("/getComments", passportConfig.isAuthenticated, commentManager.getCommen
 app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
 app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 app.post("/follow", passportConfig.isAuthenticated, followManager.follow);
+app.post("/unfollow", passportConfig.isAuthenticated, followManager.unfollow);
+// app.get("/followers", followManager.followers);
 app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers);
 app.post("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);
+app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication
 app.get("/makeMapTrending", passportConfig.isAuthenticated, mapManager.changeMapToTrending);
 
 //uncomment and hit to create local db for testing

@@ -43,5 +43,4 @@ export class User extends BaseEntity{
   @ManyToMany(type => User, user => user.follow)
   @JoinTable()
   follow: User[];
-  
 }

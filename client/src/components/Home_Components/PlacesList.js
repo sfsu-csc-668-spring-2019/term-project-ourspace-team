@@ -29,7 +29,7 @@ const styles = theme => ({
 
   },
   listItem: {
-    flexGrow:'1',
+    flexGrow: '1',
   }
 
 });

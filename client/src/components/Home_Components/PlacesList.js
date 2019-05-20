@@ -7,6 +7,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux';
+import { getOpenedMapPlaces } from '../../actions/mapActions';
 
 
 const styles = theme => ({
@@ -32,39 +34,51 @@ const styles = theme => ({
 
 });
 
-function generate(element) {
-  return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(value =>
-    React.cloneElement(element, {
-      key: value,
-    }),
-  );
-}
-
 class PlacesList extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      places: [],
+    }
+  }
+  
+  componentWillMount() {
+    this.props.getOpenedMapPlaces();
+  }
 
+  
   render() {
     const { classes } = this.props;
+    const placesList = this.props.places.map( place => (
+      <ListItem className={classes.listItem}>
+        <ListItemText
+          primary={place.name}
+        />
+      </ListItem>
+    ));
+
     return (
       <Paper className={classes.paper}>
-        <div className={classes.list}>
-          <List >
-            {generate(
-              <ListItem className={classes.listItem}>
-                <ListItemText
-                  primary="Single-line item"
-                />
-              </ListItem>,
-            )}
-          </List>
-        </div>
-
+          <div className={classes.list}>
+              <List >
+                {placesList}
+              </List>
+          </div>
       </Paper>
     );
 
   }
 }
+
+const mapStateToProps = state => ({
+  places: state.maps.places,
+});
+
 PlacesList.propTypes = {
   classes: PropTypes.object.isRequired,
+  places: PropTypes.array.isRequired,
+  getOpenedMapPlaces: PropTypes.func.isRequired,
 };
-export default withStyles(styles)(PlacesList);
+
+export default connect(mapStateToProps, { getOpenedMapPlaces }) (withStyles(styles)(PlacesList));

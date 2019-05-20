@@ -1,20 +1,11 @@
 import { Response, Request, NextFunction, response } from "express";
-import { User } from "../entity/UserEntity";
 import { UserRepo } from "../repository/user-repository";
 import * as bcrypt from 'bcryptjs';
-
-import "reflect-metadata";
-import passport from "passport";
-import "../config/passport";
-import { doesNotReject } from "assert";
-import { IVerifyOptions } from "passport-local";
-import request = require("request");
 
 export class LoginController {
 
   //Post /login
   async login(req: Request, res: Response, next: NextFunction) {
-
     let userRepo: UserRepo = new UserRepo();
     const username: string = req.body.username;
     const password: any = req.body.password;
@@ -33,26 +24,22 @@ export class LoginController {
               id: req.user.id,
               name: req.user.name,
               username: req.user.username,
-              email: req.user.email
+              email: req.user.email,
             });
           });
         } else {
           // Passwords do not match, not a valid login
-          res.status(203).json({
-            errorMessage: 'Invalid Password.'
-          });
+          res.status(203).json({ errorMessage: 'Invalid Password.' });
         }
       }
     } else {
       // User doesn't exist
-      res.status(203).json({
-        errorMessage: 'Username not found.'
-      });
-
+      res.status(203).json({ errorMessage: 'Username not found.' });
     }
   }
 
-  async logout(req: Request, res: Response, next: NextFunction){
+  //logout authenticated user
+  async logout(req: Request, res: Response, next: NextFunction) {
     req.logout();
     res.redirect("/");
   }

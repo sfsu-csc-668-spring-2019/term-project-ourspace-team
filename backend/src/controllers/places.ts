@@ -38,20 +38,20 @@ export class PlaceController {
   }
 
   //get: places from map
-  async getPlacesFromMap(req: Request, res: Response, next: NextFunction){
+  async getPlacesFromMap(req: Request, res: Response, next: NextFunction) {
     const id = req.body.mapId;
-    const map: Map = await Map.findOne( { where: { id: id }, relations: ['places'] } );
+    const map: Map = await Map.findOne({ where: { id: id }, relations: ['places'] });
     res.send(map.places);
   }
 
   //post: remove place from map
-  async removePlaceMapConnection(req: Request, res: Response, next:NextFunction){
+  async removePlaceMapConnection(req: Request, res: Response, next:NextFunction) {
     const placeId: number = req.body.place_id;
     const mapId: number = req.body.map_id;
     const mapRepo: MapRepo = new MapRepo();
 
-    const map = await Map.findOne( { where: { id: mapId }, relations: ['places'] } );
-    const place = await Place.findOne ( { where: { id: placeId } } );
+    const map = await Map.findOne({where: { id: mapId }, relations: ['places']});
+    const place = await Place.findOne ({where: { id: placeId }});
     
     await mapRepo.deletePlacesRelation(place, map);
 

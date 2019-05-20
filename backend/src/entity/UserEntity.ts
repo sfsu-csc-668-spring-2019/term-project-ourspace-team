@@ -1,12 +1,12 @@
-import {PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable} from "typeorm";
-import {Entity, Column, BaseEntity} from "typeorm";
-import {Map} from "./MapEntity";
-import {Comment} from "./CommentEntity";
+import { PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable } from "typeorm";
+import { Entity, Column, BaseEntity } from "typeorm";
+import { Map } from "./MapEntity";
+import { Comment } from "./CommentEntity";
 
 export enum UserRole{
   DEFAULT = "user",
-  ADMIN = "admin"
-}
+  ADMIN = "admin",
+};
 
 @Entity("user")
 export class User extends BaseEntity{

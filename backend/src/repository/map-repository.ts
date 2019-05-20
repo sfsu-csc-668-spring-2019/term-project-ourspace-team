@@ -1,6 +1,5 @@
 import { Map, MapType } from "../entity/MapEntity";
 import { Place } from "../entity/PlaceEntity";
-import { json } from "body-parser";
 import { getRepository, getConnection } from "typeorm";
 
 export class MapRepo {
@@ -52,5 +51,4 @@ export class MapRepo {
       .where("id = :id", { id: mapid })
       .execute();
   }
-
 }

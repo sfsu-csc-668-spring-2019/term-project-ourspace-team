@@ -1,20 +1,26 @@
 import { Map } from "../entity/MapEntity";
-import { json } from "body-parser";
- 
+import { Place } from "../entity/PlaceEntity";
+import { getConnection } from "typeorm";
 export class MapRepo {
+
   saveMap(map: Map){
     return Map.save(map);
   }
 
-  updateMap(map: Map){
-    //return Map.update(map);
-  }
-
-  findMap(findid: number){
+  findMap(findid: number) {
     return Map.findOne( { where: { id: findid } } );
   }
 
   findPlacesRelation( id: number) {
     return Map.findOne(id, { relations: ["places"]});
   }
+
+  deletePlacesRelation(place: Place, map: Map) {
+    return getConnection()
+      .createQueryBuilder()
+      .relation(Map, "places")
+      .of(map)
+      .remove(place)
+  }
+
 }

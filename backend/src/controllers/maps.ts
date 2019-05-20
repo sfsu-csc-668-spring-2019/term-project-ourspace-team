@@ -12,7 +12,7 @@ export class MapController {
   async getUserMaps(req: Request, res: Response, next: NextFunction) {
     const userid: number = req.user.id;
     //const userid: number = 3;
-    const localUser: User = await User.findOne( { where: {id: userid}, relations: ['maps'] } );
+    const localUser: User = await User.findOne( { where: { id: userid }, relations: ['maps'] } );
     console.log(localUser.maps);
     res.send(localUser.maps);
   }

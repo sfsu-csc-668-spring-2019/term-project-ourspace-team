@@ -60,11 +60,12 @@ app.post("/register", registerManager.saveNewUser);
 app.get("/getPlacesFromMap", placeManager.getPlacesFromMap);
 
 //authenticated routes
-app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.get("/exampleAuth", passportConfig.isAuthenticated, homepageManager.exampleget);
+app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getUserMaps);
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getUserMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
+app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlaceMapConnection);
 app.post("/removeMap", passportConfig.isAuthenticated, mapManager.removeMap);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
 app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
@@ -75,12 +76,13 @@ app.post("/search/like",  passportConfig.isAuthenticated, searchManager.returnSe
 
 
 //work in progress
-//app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlace);
 //app.get("/getCommentsForPlace", passportConfig.isAuthenticated, commentManager.getComments);
 
 //local test routes
 //uncomment and hit this route once to set up tables for existing DB with no tables
-app.get("/createDBTables", homepageManager.createTablesWithDummyData);
+//app.get("/createDBTables", homepageManager.createTablesWithDummyData);
+
+
 
 createConnection().then(async connection => {
   console.log("Connected to DB");

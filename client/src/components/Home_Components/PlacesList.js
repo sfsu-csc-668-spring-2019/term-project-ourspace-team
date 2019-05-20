@@ -35,11 +35,16 @@ const styles = theme => ({
 });
 
 class PlacesList extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       places: [],
     }
+  }
+  
+  componentWillMount() {
+    this.props.getOpenedMapPlaces();
   }
 
   
@@ -74,6 +79,8 @@ const mapStateToProps = state => ({
 
 PlacesList.propTypes = {
   classes: PropTypes.object.isRequired,
+  places: PropTypes.array.isRequired,
+  getOpenedMapPlaces: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, { getOpenedMapPlaces }) (withStyles(styles)(PlacesList));

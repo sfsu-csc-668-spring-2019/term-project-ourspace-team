@@ -20,11 +20,11 @@ const styles = theme => ({
     marginLeft: '1rem',
     margin: 'auto',
     overflowY: 'auto',
-    maxHeight:'350px',
+    maxHeight: '350px',
   },
   list: {
     flexDirection: 'column',
-    height:'100%',
+    height: '100%',
     overflowY: 'auto',
 
   },

@@ -1,4 +1,5 @@
 import {
+  UPDATE_OPENED_MAP_PLACES,
   TOGGLE_SHOWING, 
   SET_OPENED_PLACE, 
   GET_OPENED_PLACE, 
@@ -65,8 +66,8 @@ export const getOpenedMapPlaces = ( mapId ) => dispatch => {
   });
 }
 
-export const addPlaceToMap = ( mapId, place ) => {
-  fetch(`/addPlaceToMap`, {
+export const addPlaceToMap = ( mapId, place ) => dispatch =>{
+  fetch('/addPlaceToMap', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -75,11 +76,10 @@ export const addPlaceToMap = ( mapId, place ) => {
       id: mapId,
       place: place
     })
-
-  }).then((response) => {
-    // Reset Places in Store to include new Place
-    this.getOpenedMapPlaces( mapId );
-  });
+  }).then(() => dispatch({
+      type: UPDATE_OPENED_MAP_PLACES,
+      payload: place
+    }));
 }
 
 export const setMap = (map) => dispatch =>{

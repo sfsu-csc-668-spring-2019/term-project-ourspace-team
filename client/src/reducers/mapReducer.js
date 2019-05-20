@@ -3,6 +3,7 @@ import {
   SET_OPENED_PLACE,
   GET_OPENED_PLACE,
   SET_OPENED_MAP_PLACES,
+  UPDATE_OPENED_MAP_PLACES,
   SET_POSITION,
   SET_ZOOM,
   GET_MAP,
@@ -45,6 +46,13 @@ export default ( state = initialState, action ) => {
       return {
         ...state,
         places: action.payload
+      }
+    }
+
+    case UPDATE_OPENED_MAP_PLACES: {
+      return {
+        ...state,
+        places: state.places.push(action.payload)
       }
     }
     

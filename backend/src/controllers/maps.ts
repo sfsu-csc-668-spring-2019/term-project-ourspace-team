@@ -46,7 +46,7 @@ export class MapController {
     const mapid: number = req.body.mapid;
     
     await mapRepo.makeMapTrending(mapid);
-    res.status(200).send("Map now Trending");
+    res.status(200).send("Map is now Trending");
   }
 
 }

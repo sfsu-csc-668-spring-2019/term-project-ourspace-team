@@ -5,6 +5,15 @@ import { Place } from "../entity/PlaceEntity";
 
 export class CommentController {
 
+  //get comments from place
+  async getComments(req: Request, res: Response, next: NextFunction) {
+    const placeid: number = req.body.id;
+    
+    const place: Place = await Place.findOne( { where: { id: placeid }, relations: ["comments"] } );
+
+    res.send(JSON.stringify(place));
+  }
+
   //post Comment onto place using authenticated user
   async addCommentToPlace(req: Request, res: Response, next: NextFunction) {
     
@@ -25,9 +34,13 @@ export class CommentController {
   }
 
   async removeComment(req: Request, res: Response, next: NextFunction){
+    
     const commentId = req.body.id;
+
     const commentToRemove: Comment = await Comment.findOne( { where: { id: commentId } } );
+
     await Comment.remove(commentToRemove);
+
     res.send("Comment Deleted: ")
   }
 }

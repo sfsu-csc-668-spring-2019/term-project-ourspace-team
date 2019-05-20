@@ -8,10 +8,6 @@ export class MapRepo {
     return Map.save(map);
   }
 
-  updateMap(map: Map) {
-    //return Map.update(map);
-  }
-
   findMap(findid: number){
     return Map.findOne( { where: { id: findid } } );
   }
@@ -19,7 +15,15 @@ export class MapRepo {
   findPlacesRelation( id: number) {
     return Map.findOne(id, { relations: ["places"]});
   }
-  
+
+  deletePlacesRelation(place: Place, map: Map) {
+    return getConnection()
+      .createQueryBuilder()
+      .relation(Map, "places")
+      .of(map)
+      .remove(place)
+  }
+
   findPlacesRelation(id: number) {
     return Map.findOne(id, { relations: ["places"] });
   }

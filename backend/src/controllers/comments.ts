@@ -9,7 +9,7 @@ export class CommentController {
   async getComments(req: Request, res: Response, next: NextFunction) {
     const placeid: number = req.body.id;
     const place: Place = await Place.findOne( { where: { id: placeid }, relations: ["comments"] } );
-    res.send(JSON.stringify(place));
+    res.send(place.comments);
   }
 
   //post Comment onto place using authenticated user

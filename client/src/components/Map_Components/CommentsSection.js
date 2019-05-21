@@ -8,6 +8,10 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Gravatar from 'react-gravatar';
 
 const styles = theme => ({
   root: {
@@ -73,10 +77,67 @@ class CommentsSection extends Component {
       placePhotos = <GridList></GridList>
     }
 
+    let comments;
+    const dummyData = [
+      {
+        description: "test",
+        user: {
+          name: "robert",
+          email: "robert@robert.com"
+        }
+      }, {
+        description: "test1",
+        user: {
+          name: "robert",
+          email: "robert@robert.com"
+        }
+      },
+      {
+        description: "test1",
+        user: {
+          name: "robert",
+          email: "robert@robert.com"
+        }
+      },
+      {
+        description: "test1",
+        user: {
+          name: "robert",
+          email: "robert@robert.com"
+        }
+      },
+      {
+        description: "test1",
+        user: {
+          name: "robert",
+          email: "robert@robert.com"
+        }
+      },
+      {
+        description: "test1",
+        user: {
+          name: "robert",
+          email: "robert@robert.com"
+        }
+      }
+    ]
+    if( dummyData !== undefined) {
+      comments = dummyData.map( comment => (
+        <ListItem className={classes.listItem}>
+            <Gravatar email={comment.user.email} className={classes.gravatar}/>          <ListItemText
+            primary={comment.description}
+            secondary={comment.user.name}
+          />
+        </ListItem>
+      ));
+    } else {
+      comments = <ListItem className={classes.listItem}></ListItem>
+    }
+
     return (
         <div
           id="place-comments"
-          style={{height: "80%", width:"90%", marginBottom: "5%", marginLeft: "7%", display: this.props.isShowing, overflowY: "scroll" }}
+          style={{height: "80%", width:"90%", marginBottom: "5%", display: this.props.isShowing, overflowY: "scroll" }}
           className="container"
         >
           <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
@@ -96,7 +157,7 @@ class CommentsSection extends Component {
                 <p id="place-comments-phone">{this.props.openedPlace.phone}</p>
               </div>
               <Grid container>
-                <Grid item>
+                <Grid item style={{overflowY: "scroll"}}>
                   {placePhotos}
                 </Grid>
                 <Grid item></Grid>
@@ -123,6 +184,10 @@ class CommentsSection extends Component {
                     >
                     Share
                   </Button>
+
+                  <List >
+                    {comments}
+                  </List>
                 </Grid>
               </Grid>
             </div>

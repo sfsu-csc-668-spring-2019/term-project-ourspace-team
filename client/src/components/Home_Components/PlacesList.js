@@ -65,11 +65,11 @@ class PlacesList extends React.Component {
 
     return (
       <Paper className={classes.paper}>
-          <div className={classes.list}>
-              <List >
-                {placesList}
-              </List>
-          </div>
+        <div className={classes.list}>
+          <List >
+            {placesList}
+          </List>
+        </div>
       </Paper>
     );
 

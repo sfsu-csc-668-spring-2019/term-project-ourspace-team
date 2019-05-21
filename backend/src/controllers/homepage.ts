@@ -4,7 +4,6 @@ import { User } from "../entity/UserEntity";
 import { Place } from "../entity/PlaceEntity";
 import { Comment } from "../entity/CommentEntity";
 import { Map } from "../entity/MapEntity";
-import { FollowQueries } from "../queries/followQueries";
 
 export class HomepageController {
 
@@ -24,7 +23,7 @@ export class HomepageController {
 
   async createTablesWithDummyData(req: Request, res: Response, next: NextFunction){
     //Create basic entities
-    const followData: FollowQueries = new FollowQueries();
+    // const followData: FollowQueries = new FollowQueries();
     const dummyUser: User = new User();
     dummyUser.name = "John";
     dummyUser.username = "IamJohn"

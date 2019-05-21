@@ -62,18 +62,24 @@ app.post("/getPlacesFromMap", placeManager.getPlacesFromMap);
 //authenticated routes
 //login
 app.post("/logout", passportConfig.isAuthenticated, loginManager.logout);
+
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getUserMaps);
 app.get("/getUserMaps", passportConfig.isAuthenticated, mapManager.getUserMaps);
 app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlaceForMap);
 app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlaceMapConnection);
+
 app.post("/removeMap", passportConfig.isAuthenticated, mapManager.removeMap);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
+
 app.get("/getComments", passportConfig.isAuthenticated, commentManager.getComments);
 app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
 app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
+
 app.post("/follow", passportConfig.isAuthenticated, followManager.follow);
 app.post("/unfollow", passportConfig.isAuthenticated, followManager.unfollow);
-// app.get("/followers", followManager.followers);
+app.post("/followers", passportConfig.isAuthenticated, followManager.followers);
+app.post("/following", passportConfig.isAuthenticated, followManager.following);
+
 app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers);
 app.post("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);
 app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication

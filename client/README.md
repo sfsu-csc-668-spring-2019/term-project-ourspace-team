@@ -66,3 +66,12 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+### Setting Up `.env` File
+Firstly, you need to create the `.env` file in the `client` directory.
+
+Once, you created the `.env` file add this attibute to the file.
+
+```
+REACT_APP_GOOGLE_API_KEY= the_key_rob_gave_you
+```

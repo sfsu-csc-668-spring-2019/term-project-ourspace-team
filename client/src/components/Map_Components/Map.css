@@ -1,0 +1,75 @@
+ /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+#map {
+  padding: 1rem;
+  height: 100%;
+  overflow: hidden;
+  margin-top: .5rem;
+}
+
+#description {
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+#infowindow-content .title {
+  font-weight: bold;
+}
+
+#infowindow-content {
+  display: none;
+}
+
+#map #infowindow-content {
+  display: inline;
+}
+
+.pac-card {
+  margin: 10px 10px 0 0;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  background-color: #fff;
+  font-family: Roboto;
+}
+
+
+.mapContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.searchBox {
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  width: 70%;
+  height: 37px;
+  margin: 10px 10px 0px 5px;
+  padding: 0 12px;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  font-family: Roboto;
+  outline: none;
+  text-overflow: ellipses;
+}
+
+.row {
+  display: flex;
+}
+
+.column {
+  flex: 50%;
+}
+
+.icon {
+  height: 150px;
+  width: 150px;
+}
+
+.roboto{
+  font-family: Roboto;
+}

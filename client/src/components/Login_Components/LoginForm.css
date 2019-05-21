@@ -1,0 +1,18 @@
+.textField {
+margin-bottom: 1rem !important;
+/* padding-bottom: 1rem !important; */
+}
+
+.nameField, .userNameField, .emailField, .passwordField, .confirmPasswordField {
+  width: 100%;
+}
+
+.card {
+  min-width: 275,
+}
+
+.rightButton {
+  /* margin-left: auto; */
+  float: right;
+  margin-bottom: 1rem !important;
+}

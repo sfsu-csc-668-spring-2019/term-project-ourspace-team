@@ -8,6 +8,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import logo from '../assets/MapSpace.png';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { withRouter } from 'react-router-dom';
 import '../App.css';
 
 const styles = {
@@ -45,6 +46,17 @@ class LoggedInTopBar extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  handleLogout = () => {
+    fetch("/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }).catch( error => console.log(error));
+
+    this.props.history.push('/');
+  }
+
   render() {
     const { classes } = this.props;
     const { anchorEl } = this.state;
@@ -59,7 +71,7 @@ class LoggedInTopBar extends React.Component {
         onClose={this.handleMenuClose}
       >
         <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-        <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
+        <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
       </Menu>
     );
 
@@ -102,4 +114,4 @@ LoggedInTopBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(LoggedInTopBar);
+export default withStyles(styles)(withRouter(LoggedInTopBar));

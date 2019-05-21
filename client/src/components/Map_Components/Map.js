@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addPlaceToMap, getOpenedMapPlaces, toggleShowing, setOpenedPlace, setMap, setPosition, setZoom } from '../../actions/mapActions';
+import { addPlaceToMap, getComments, getOpenedMapPlaces, toggleShowing, setOpenedPlace, setMap, setPosition, setZoom } from '../../actions/mapActions';
 import { getUserMapIds } from '../../actions/userActions'
 import * as MapFunction from './functions/index'
 import CommentsSection from './CommentsSection'
@@ -60,7 +60,7 @@ class Map extends Component {
 
     console.log(place);
     this.props.setOpenedPlace( place );
-
+    this.props.getComments( place.place_id );
     this.state.infowindow.close();
 
     const updateShowing = (this.props.isShowing === "none") ? "" : "none";
@@ -209,6 +209,7 @@ Map.propTypes = {
   getOpenedMapPlaces: PropTypes.func.isRequired,
   toggleShowing: PropTypes.func.isRequired,
   getUserMapIds: PropTypes.func.isRequired,
+  getComments: PropTypes.func.isRequired,
   setOpenedPlace: PropTypes.func.isRequired,
   setMap: PropTypes.func.isRequired,
   setPosition: PropTypes.func.isRequired,
@@ -228,6 +229,7 @@ connect(mapStateToProps, {
   addPlaceToMap,
   getOpenedMapPlaces,
   getUserMapIds,
+  getComments,
   toggleShowing, 
   setOpenedPlace, 
   setMap, 

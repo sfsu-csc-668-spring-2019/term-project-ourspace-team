@@ -67,7 +67,7 @@ app.post("/addPlaceToMap", passportConfig.isAuthenticated, placeManager.newPlace
 app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.removePlaceMapConnection);
 app.post("/removeMap", passportConfig.isAuthenticated, mapManager.removeMap);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
-app.get("/getComments", passportConfig.isAuthenticated, commentManager.getComments);
+app.post("/getComments", passportConfig.isAuthenticated, commentManager.getComments);
 app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
 app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 app.post("/follow", passportConfig.isAuthenticated, followManager.follow);

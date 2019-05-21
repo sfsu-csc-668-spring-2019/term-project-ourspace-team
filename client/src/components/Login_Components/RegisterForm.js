@@ -7,6 +7,7 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
+import { withRouter } from 'react-router-dom';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 //import './LoginForm.css'
@@ -35,21 +36,26 @@ class RegisterForm extends React.Component {
   };
 
   // This function can be changed to send data to our API
-  clickedButton = async e => {
+  onSubmit = async e => {
     //alert(`${this.state.username} - ${this.state.password}`);
     //req api call
     e.preventDefault();
-    const response = await fetch('/register', {
+
+   const response = await fetch('/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({username: this.state.username, password: this.state.password, email: this.state.email, name: this.state.name})
-    });
-    // const body = await response.json();
-    // const jsonintotext = JSON.stringify(body);
-    // console.log(jsonintotext);
-    //this.setState({STATEGOESHERE: jsonintotext});
+      body: JSON.stringify({ 
+        username: this.state.username, 
+        password: this.state.password, 
+        email: this.state.email, 
+        name: this.state.name
+      })
+    }).catch( error => console.log(error));
+
+    this.props.history.push('/home');
+
     return;
   }
 
@@ -164,7 +170,7 @@ class RegisterForm extends React.Component {
             />
 
             {/* Register Button */}
-            <Button variant="contained" color="primary" className="button rightButton" float="right" onClick={this.clickedButton} >
+            <Button variant="contained" color="primary" className="button rightButton" float="right" onClick={this.onSubmit} >
               Sign Up
             </Button>
             <br/><br/>
@@ -179,4 +185,4 @@ RegisterForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default (RegisterForm);
+export default (withRouter(RegisterForm));

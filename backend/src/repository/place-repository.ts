@@ -1,4 +1,5 @@
 import { Place } from "../entity/PlaceEntity";
+import { getManager } from "typeorm";
 
 export class PlaceRepo {
 
@@ -15,16 +16,11 @@ export class PlaceRepo {
       return isPlace
     }
   }
-
-  // topFivePlaces(): Promise<Place[]> {
-  //   const topFiveList = createQueryBuilder("place", "map")
-  //     .innerJoin("place", "map")
-  //     .where({
-  //       "place.id",
-  //     })
-  //     .select("*")
-  //     .where()
-  //   return topFiveList;
-  // }
+  
+  //This function return the top 5 placeId that occur in the table map_places_place in descending order
+  topFivePlaces(): Promise<Place[]> {
+    const manager = getManager();
+    return manager.query('SELECT "placeId", COUNT("placeId") AS "value_occurence" FROM map_places_place GROUP BY "placeId" ORDER BY "value_occurence" DESC LIMIT 5');
+  }
 
 }

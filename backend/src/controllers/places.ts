@@ -4,7 +4,6 @@ import { Map } from "../entity/MapEntity";
 import { Place } from "../entity/PlaceEntity";
 import { MapRepo } from "../repository/map-repository";
 import { PlaceRepo } from "../repository/place-repository";
-import { getConnection } from "typeorm";
 
 export class PlaceController {
 
@@ -12,6 +11,7 @@ export class PlaceController {
   async newPlaceForMap(req: Request, res: Response, next: NextFunction) {
     // Adds a new MapPlace to Map
     const mapId = req.body.mapId;
+    console.log(mapId);
     const mapRepo: MapRepo = new MapRepo();
     const tempMap: Map = await mapRepo.findPlacesRelation(mapId);
 
@@ -56,6 +56,13 @@ export class PlaceController {
     await mapRepo.deletePlacesRelation(place, map);
 
     res.send("Place map connection disconnected.");
+  }
+
+  async getTrendingPlaces(req: Request, res: Response, next:NextFunction){
+    const placeRepo: PlaceRepo = new PlaceRepo;
+    const topFive = await placeRepo.topFivePlaces();
+
+    res.status(200).send(topFive);
   }
 
 }

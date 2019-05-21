@@ -103,8 +103,10 @@ class CommentsSection extends Component {
     if( this.props.placeComments !== undefined) {
       comments = this.props.placeComments.map( comment => (
         <ListItem className={classes.listItem}>
+          <Gravatar email={comment.email} className={classes.gravatar}/>
           <ListItemText
             primary={comment.description}
+            secondary={comment.username}
           />
         </ListItem>
       ));

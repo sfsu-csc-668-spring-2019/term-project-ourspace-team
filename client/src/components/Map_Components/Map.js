@@ -58,7 +58,6 @@ class Map extends Component {
     let index = this.props.places.map((place) => { return place.place_id; }).indexOf(place_id);
     let place = this.props.places[index];
 
-    console.log(place);
     this.props.setOpenedPlace( place );
     this.props.getComments( place.place_id );
     this.state.infowindow.close();

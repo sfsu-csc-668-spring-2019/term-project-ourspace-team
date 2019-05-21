@@ -12,6 +12,12 @@ export class Comment extends BaseEntity{
   @Column()
   description: string;
 
+  @Column()
+  username: string;
+
+  @Column()
+  email: string;
+
   //Many Comments to One Place
   @ManyToOne(type => Place, place => place.comments)
   place: Place;

@@ -22,6 +22,8 @@ export class CommentController {
     const newComment: Comment = new Comment();
 
     newComment.description = req.body.description;
+    newComment.username = localuser.username;
+    newComment.email = localuser.email;
     newComment.user = localuser;
     newComment.place = localplace;
 

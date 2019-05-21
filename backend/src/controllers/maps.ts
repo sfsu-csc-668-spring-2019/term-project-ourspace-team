@@ -1,10 +1,7 @@
 import { Response, Request, NextFunction } from "express";
 import { Map } from "../entity/MapEntity";
 import { User } from "../entity/UserEntity";
-
 import { MapRepo } from "../repository/map-repository";
-import { UserRepo } from "../repository/user-repository";
-
 import "reflect-metadata";
 
 export class MapController {
@@ -24,20 +21,17 @@ export class MapController {
     const localUser: User = await User.findOne({ where: { id: userId } });
     
     newMap.user = localUser;
-    const map = await Map.save(newMap);
+    await Map.save(newMap);
 
     res.send("New Map for Auth User");
   }
 
   //remove map with map id
-  async removeMap(req: Request, res: Response, next: NextFunction){
+  async removeMap(req: Request, res: Response, next: NextFunction) {
     const mapId = req.body.map_id;
-    const mapToRemove: Map = await Map.findOne( { where: { id: mapId } } );
+    const mapToRemove: Map = await Map.findOne({where: { id: mapId }});
 
-    if (mapToRemove == undefined) {} else {
-      await Map.remove(mapToRemove);
-    }
-
+    if (mapToRemove == undefined) {} else { await Map.remove(mapToRemove); }
     res.send("removeMap with id: " + mapId);
   }
 

@@ -18,12 +18,11 @@ export class RegistrationController {
     const password: any = req.body.password;
     const name : string = req.body.name;
 
-    console.log("Received Save User => POST");
     let user = await userRepo.doesUserAlreadyExist(username, email);
-    if (user.length === 0){
+    if (user.length === 0) {
 
       const newUser: User = new User();
-      const hashPassword = await bcrypt.hash(password, 10);
+      const hashPassword: any = await bcrypt.hash(password, 10);
 
       newUser.name = name;
       newUser.username = username;
@@ -34,25 +33,21 @@ export class RegistrationController {
       
       //Add 1st map for new User
       const newMap: Map = new Map();
-      const map = await mapRepo.saveMap(newMap);
+      await mapRepo.saveMap(newMap);
   
-      if (newUser.maps == null){
-        newUser.maps = [newMap];
-      } else {
-        newUser.maps.concat([newMap]);
-      }
+      newUser.maps = [newMap]
       await userRepo.saveUser(newUser);
   
-    }else if (user.length > 0) {
+    } else if (user.length > 0) {
 
-      if(user[0].username == username) {
+      if (user[0].username == username) {
         return console.log(`User: ${username} is taken`);
       }
 
-      if(user[0].email == email){
+      if (user[0].email == email) {
         return console.log(`E-mail: ${email} is taken`);
       }
-
+      
     } else {
       return console.log('something is broken');
     }

@@ -83,6 +83,7 @@ app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers);
 app.post("/search/like",  passportConfig.isAuthenticated, searchManager.returnSearchUsers);
 app.get("/search", passportConfig.isAuthenticated,searchManager.returnAllUsers); //make check authentication
 app.get("/makeMapTrending", passportConfig.isAuthenticated, mapManager.changeMapToTrending);
+app.get("/trendingPlaces", passportConfig.isAuthenticated, placeManager.getTrendingPlaces);
 
 //uncomment and hit to create local db for testing
 //app.get("/createDB", homepageManager.createTablesWithDummyData);

@@ -40,6 +40,7 @@ export class FollowController {
 
   async followers(req: Request, res: Response, next: NextFunction) {
     const userRepo: UserRepo = new UserRepo();
+
     const user: string = req.body.user;
     const localUser: User = await User.findOne({where: {username: user}});
 
@@ -53,6 +54,7 @@ export class FollowController {
 
   async following(req: Request, res: Response, next: NextFunction) {
     const userRepo: UserRepo = new UserRepo();
+    
     const user: string = req.body.user;
     const localUser: User = await User.findOne({where: {username: user}});
 

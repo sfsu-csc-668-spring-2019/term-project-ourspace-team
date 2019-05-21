@@ -51,7 +51,6 @@ class PlacesList extends React.Component {
   render() {
     const { classes } = this.props;
     let placesList;
-    
     if( this.props.places !== undefined) {
       placesList = this.props.places.map( place => (
         <ListItem className={classes.listItem}>
@@ -66,11 +65,11 @@ class PlacesList extends React.Component {
 
     return (
       <Paper className={classes.paper}>
-          <div className={classes.list}>
-              <List >
-                {placesList}
-              </List>
-          </div>
+        <div className={classes.list}>
+          <List >
+            {placesList}
+          </List>
+        </div>
       </Paper>
     );
 

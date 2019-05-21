@@ -5,7 +5,6 @@ import { addPlaceToMap, getOpenedMapPlaces, toggleShowing, setOpenedPlace, setMa
 import { getUserMapIds } from '../../actions/userActions'
 import * as MapFunction from './functions/index'
 import CommentsSection from './CommentsSection'
-import MapTabs from '../MapTab_Components/MapTabs'
 import './Map.css'
 
 class Map extends Component {
@@ -170,7 +169,6 @@ class Map extends Component {
         clasName="mapContainer"
         style={mapContainerStyle} 
       >
-        <MapTabs/>
 
         <link rel="stylesheet"
               href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"

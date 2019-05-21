@@ -1,5 +1,5 @@
 import {
-  UPDATE_OPENED_MAP_PLACES,
+  GET_COMMENTS,
   TOGGLE_SHOWING, 
   SET_OPENED_PLACE, 
   GET_OPENED_PLACE, 
@@ -9,7 +9,6 @@ import {
   GET_MAP, 
   SET_MAP } from './types';
 import { store } from '../config/store';
-import * as MapFunction from '../components/Map_Components/functions/index';
 
 export const toggleShowing = ( updateShowing ) => dispatch => {
   dispatch({
@@ -66,7 +65,25 @@ export const getOpenedMapPlaces = ( mapId ) => dispatch => {
   });
 }
 
-export const addPlaceToMap = ( mapId, place ) => dispatch =>{
+export const getComments = ( place_id ) => dispatch => {
+  fetch('/getComments', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      place_id: place_id
+    })
+  }).then((response) => response.json())
+    .then((result) => {
+      dispatch({
+        type: GET_COMMENTS,
+        payload: result
+      });
+    });
+}
+
+export const addPlaceToMap = ( mapId, place ) =>{
   fetch('/addPlaceToMap', {
     method: 'POST',
     headers: {

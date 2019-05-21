@@ -7,8 +7,8 @@ export class CommentController {
 
   //get comments from place
   async getComments(req: Request, res: Response, next: NextFunction) {
-    const placeid: number = req.body.id;
-    const place: Place = await Place.findOne( { where: { id: placeid }, relations: ["comments"] } );
+    const place_id: string = req.body.place_id;
+    const place: Place = await Place.findOne( { where: { place_id: place_id }, relations: ["comments"] } );
     res.send(place.comments);
   }
 
@@ -22,6 +22,8 @@ export class CommentController {
     const newComment: Comment = new Comment();
 
     newComment.description = req.body.description;
+    newComment.username = localuser.username;
+    newComment.email = localuser.email;
     newComment.user = localuser;
     newComment.place = localplace;
 

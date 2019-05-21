@@ -69,8 +69,7 @@ app.post("/removePlaceFromMap", passportConfig.isAuthenticated, placeManager.rem
 
 app.post("/removeMap", passportConfig.isAuthenticated, mapManager.removeMap);
 app.post("/addMapToUser", passportConfig.isAuthenticated, mapManager.newMapForAuthUser);
-
-app.get("/getComments", passportConfig.isAuthenticated, commentManager.getComments);
+app.post("/getComments", passportConfig.isAuthenticated, commentManager.getComments);
 app.post("/putCommentOnPlace", passportConfig.isAuthenticated, commentManager.addCommentToPlace);
 app.get("/removeComment", passportConfig.isAuthenticated, commentManager.removeComment);
 

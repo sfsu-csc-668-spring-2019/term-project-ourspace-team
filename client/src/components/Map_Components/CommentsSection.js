@@ -25,6 +25,9 @@ const styles = theme => ({
     width: 500,
     height: 450,
   },
+  submit: {
+    marginLeft: 435
+  }
 });
 
 class CommentsSection extends Component {
@@ -34,17 +37,21 @@ class CommentsSection extends Component {
     this.state = {
       isShowing: '',
       openedPlace: '',
-      slideIndex: 1
+      slideIndex: 1,
+      comment: ''
     }
 
     this.onClick = this.onClick.bind(this);
+    this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onClick = ( e ) => {
     e.preventDefault();
-
+    this.setState({
+      comment: ''
+    });
     const updateShowing = ( this.props.isShowing === "none") ? "" : "none";
-
     this.props.toggleShowing( updateShowing );
   }
 
@@ -55,10 +62,25 @@ class CommentsSection extends Component {
     });
   }
 
-  componentWillReceiveProps( nextProps ){
-    if( nextProps.openedPlace ) {
-      this.setState({ openedPlace: nextProps.openedPlace });
-    }
+  onChange = (e) => {
+    this.setState({ [e.target.name]: e.target.value });
+  };
+
+  onSubmit = async e =>{
+   e.preventDefault();
+
+   const response = await fetch("/putCommentOnPlace", {
+     method: "POST",
+     headers: {
+       "Content-Type": "application/json"
+     },
+     body: JSON.stringify({
+       description: this.state.comment,
+       place_id: this.props.openedPlace.place_id
+     })
+   }).catch(error => console.log(error));
+
+   return;
   }
 
   render() {
@@ -78,55 +100,13 @@ class CommentsSection extends Component {
     }
 
     let comments;
-    const dummyData = [
-      {
-        description: "test",
-        user: {
-          name: "robert",
-          email: "robert@robert.com"
-        }
-      }, {
-        description: "test1",
-        user: {
-          name: "robert",
-          email: "robert@robert.com"
-        }
-      },
-      {
-        description: "test1",
-        user: {
-          name: "robert",
-          email: "robert@robert.com"
-        }
-      },
-      {
-        description: "test1",
-        user: {
-          name: "robert",
-          email: "robert@robert.com"
-        }
-      },
-      {
-        description: "test1",
-        user: {
-          name: "robert",
-          email: "robert@robert.com"
-        }
-      },
-      {
-        description: "test1",
-        user: {
-          name: "robert",
-          email: "robert@robert.com"
-        }
-      }
-    ]
-    if( dummyData !== undefined) {
-      comments = dummyData.map( comment => (
+    if( this.props.placeComments !== undefined) {
+      comments = this.props.placeComments.map( comment => (
         <ListItem className={classes.listItem}>
-            <Gravatar email={comment.user.email} className={classes.gravatar}/>          <ListItemText
+          <Gravatar email={comment.email} className={classes.gravatar}/>
+          <ListItemText
             primary={comment.description}
-            secondary={comment.user.name}
+            secondary={comment.username}
           />
         </ListItem>
       ));
@@ -173,15 +153,19 @@ class CommentsSection extends Component {
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    name="comment"
+                    value={this.state.comment}
+                    onChange={this.onChange}
                   />
 
-                  <Button 
-                    variant="contained" 
-                    color="primary" 
-                    className={classes.button} 
-                    style={{float: "right"}}
-                    // TODO set an on click
-                    >
+                  {/* Login Button */}
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                    onClick={this.onSubmit}
+                    classes={"align-items-xs-flex-end"}
+                  >
                     Share
                   </Button>
 
@@ -205,7 +189,8 @@ CommentsSection.propTypes = {
 
 const mapStateToProps = state => ({
   isShowing: state.maps.isShowing,
-  openedPlace: state.maps.openedPlace
+  openedPlace: state.maps.openedPlace,
+  placeComments: state.maps.placeComments
 });
 
 export default connect(mapStateToProps, { toggleShowing })(withStyles(styles)(CommentsSection));

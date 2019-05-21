@@ -1,4 +1,5 @@
 import { 
+  GET_COMMENTS,
   TOGGLE_SHOWING,
   SET_OPENED_PLACE,
   GET_OPENED_PLACE,
@@ -19,7 +20,8 @@ const initialState = {
   },
   zoom: undefined,
   map: undefined,
-  places: []
+  places: [],
+  placeComments: []
 }
 
 export default ( state = initialState, action ) => {
@@ -56,6 +58,12 @@ export default ( state = initialState, action ) => {
       }
     }
     
+    case GET_COMMENTS: {
+      return {
+        ...state,
+        placeComments: action.payload
+      }
+    }
     case SET_POSITION:
       return {
         ...state,

@@ -44,16 +44,16 @@ export class RegistrationController {
           id: req.user.id,
           name: req.user.name,
           username: req.user.username,
-          email: req.user.email
+          email: req.user.email,
         });
       });
-    }else if (user.length > 0) {
+    } else if (user.length > 0) {
 
-      if(user[0].username == username) {
+      if (user[0].username == username) {
         res.status(201).json({errorMessage: "Username Taken"});
       }
 
-      if(user[0].email == email){
+      if (user[0].email == email){
         res.status(201).json({errorMessage: "Email Taken"});
       }
       

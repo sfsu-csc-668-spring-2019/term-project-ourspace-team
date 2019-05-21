@@ -18,7 +18,8 @@ export class RegistrationController {
     const password: any = req.body.password;
     const name : string = req.body.name;
 
-    let user = await userRepo.doesUserAlreadyExist(username, email);
+    const user = await userRepo.doesUserAlreadyExist(username, email);
+
     if (user.length === 0) {
 
       const newUser: User = new User();
@@ -37,19 +38,27 @@ export class RegistrationController {
   
       newUser.maps = [newMap]
       await userRepo.saveUser(newUser);
-  
+
+      req.login(user[0], (err) => {
+        res.status(200).json({
+          id: req.user.id,
+          name: req.user.name,
+          username: req.user.username,
+          email: req.user.email,
+        });
+      });
     } else if (user.length > 0) {
 
       if (user[0].username == username) {
-        return console.log(`User: ${username} is taken`);
+        res.status(201).json({errorMessage: "Username Taken"});
       }
 
-      if (user[0].email == email) {
-        return console.log(`E-mail: ${email} is taken`);
+      if (user[0].email == email){
+        res.status(201).json({errorMessage: "Email Taken"});
       }
       
     } else {
-      return console.log('something is broken');
+      res.status(201).json({errorMessage: "Ohhh, snap! What did you do!?"});
     }
   }
 }
